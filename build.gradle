@@ -1,0 +1,30 @@
+// global gradle settings that are applied to all subprojects
+
+allprojects {
+    group = 'ch.zhaw.pm3.smartervote'
+    version = '2021.3'
+}
+
+subprojects {
+    apply plugin: 'java'
+
+    repositories {
+        mavenCentral()
+    }
+
+    // use java 11 by default
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+
+	// use unicode
+	compileJava.options.encoding = "UTF-8"
+	compileTestJava.options.encoding = "UTF-8"
+
+    test {
+        useJUnitPlatform()
+		testLogging {
+            showStandardStreams = true
+        }
+    }
+
+}

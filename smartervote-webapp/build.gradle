@@ -1,0 +1,16 @@
+// these are the local project build settings for the smartervote-webapp project
+// for the global gradle settings please see ../build.gradle
+
+plugins {
+	id 'org.springframework.boot' version '2.4.3'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+}
+
+dependencies {
+	// own dependencies
+	implementation project(':smartervote-interface')
+
+	// external dependencies
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}

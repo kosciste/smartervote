@@ -1,0 +1,12 @@
+// these are the local project build settings for the smartervote-persistency project
+// for the global gradle settings please see ../build.gradle
+
+dependencies {
+	// external dependencies
+	implementation 'org.postgresql:postgresql:42.2.19'
+	implementation 'org.hibernate:hibernate-core:5.4.29.Final'
+
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+	testImplementation 'org.mockito:mockito-core:2.+'
+}
