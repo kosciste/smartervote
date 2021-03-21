@@ -1,4 +1,4 @@
-package ch.zhaw.smartervote.webapp;
+package ch.zhaw.smartervote.webapp.rest;
 
 public class Greeting {
 

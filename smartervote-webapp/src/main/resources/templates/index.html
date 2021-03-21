@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Smartervote</title>
+
+        <!-- stylesheets -->
+        <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">-->
+        <link rel="stylesheet" th:href="@{/styles/bulma.min.css}">
+        <link rel="stylesheet" th:href="@{/styles/style.css}">
+
+    </head>
+    <body>
+        <div class="container content">
+            <h1>Smartervote</h1>
+            <div class="notification is-primary">
+                Text der ersten Frage: <span th:text="${text}"></span>
+            </div>
+        </div>
+    </body>
+</html>
