@@ -4,10 +4,10 @@ This project contains all source files for the PM3 smarter vote project.
 ## Branching concept
 This repository uses the [GitHub flow](https://guides.github.com/pdfs/githubflow-online.pdf) branching workflow:
 * It is not allowed to directly push/commit changes to the master branch
-* Commit messages need to have this format: *<issue-number>* - commit description 
+* Commit messages need to have this format: *[issue-number]* - commit description 
 * Workflow for each new feature or bug:
   * New issue is created
-  * A new feature branch is created with following naming convention: issue-*<issue-number>*
+  * A new feature branch is created with following naming convention: issue-*[issue-number]*
   * To merge the changes to the master branch, a pull request has to be created that needs to be reviewed by at least one other team member. Pull requests should have a meaningful title and at least some minimal description of the changes that are introduced by the pull request
   
 ## Project setup
