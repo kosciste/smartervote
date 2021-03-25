@@ -1,5 +1,6 @@
 package ch.zhaw.smartervote.persistency.entities;
 
+import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
@@ -15,7 +16,7 @@ public class PersonalQuestionUpvote extends BaseEntity {
         return personalQuestionId;
     }
 
-    public String gettext() {
+    public String getIpAddress() {
         return ipAddress;
     }
 
@@ -23,7 +24,7 @@ public class PersonalQuestionUpvote extends BaseEntity {
         this.personalQuestionId = personalQuestionId;
     }
 
-    public void setText(String ipAddress) {
+    public void setIpAddress(String ipAddress) {
         this.ipAddress = ipAddress;
     }
 

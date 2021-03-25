@@ -1,5 +1,7 @@
 package ch.zhaw.smartervote.persistency.entities;
 
+import javax.persistence.*;
+
 @Entity
 @NamedQuery(
         name="Question.findByText",

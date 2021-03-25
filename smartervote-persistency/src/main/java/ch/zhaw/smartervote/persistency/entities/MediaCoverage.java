@@ -1,5 +1,6 @@
 package ch.zhaw.smartervote.persistency.entities;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
@@ -37,7 +38,7 @@ public class MediaCoverage extends BaseEntity {
         return link;
     }
 
-    public String getEventDate() {
+    public Date getEventDate() {
         return eventDate;
     }
 

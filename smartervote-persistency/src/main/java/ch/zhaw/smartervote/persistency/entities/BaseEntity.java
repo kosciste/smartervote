@@ -20,7 +20,8 @@ public class BaseEntity {
     @PrePersist
     public void prePersist() {
         id = UUID.randomUUID();
-        creationTime = changeTime = new Date()
+        creationTime = new Date();
+        changeTime = (Date)creationTime.clone();
     }
 
     public UUID getId() {

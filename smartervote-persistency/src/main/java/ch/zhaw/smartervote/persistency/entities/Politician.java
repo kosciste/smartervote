@@ -1,5 +1,6 @@
 package ch.zhaw.smartervote.persistency.entities;
 
+import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
@@ -59,7 +60,7 @@ public class Politician extends BaseEntity {
         this.birthyear = birthyear;
     }
 
-    public void setGender(Gender name) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
