@@ -1,6 +1,7 @@
 package ch.zhaw.smartervote.persistency.entities;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Column;
 
 @Entity
 public class Party extends BaseEntity {
