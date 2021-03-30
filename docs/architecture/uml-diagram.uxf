@@ -1,0 +1,74 @@
+<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><element><id>UMLPackage</id><coordinates><x>80</x><y>60</y><w>1100</w><h>840</h></coordinates><panel_attributes>Domain Interface - Stateless
+--
+bg=transparent</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>120</x><y>170</y><w>460</w><h>140</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
+ElectionProposalService
+--
+
+--
++ getAvailableElections() : List&lt;ElectionTO&gt;
++ getQuestionSubjects(electionId : UUID) : List&lt;SubjectTO&gt;
++ getQuestionCatalogue(selection : SubjectSelectionTO) : QuestionCatalogueTO
++ calculateElectionProposal(selection : QuestionCatalogueTO) : UUID</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>630</x><y>110</y><w>160</w><h>100</h></coordinates><panel_attributes>&lt;&lt;TransferObject&gt;&gt;
+ElectionTO
+--
+
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>820</x><y>110</y><w>160</w><h>100</h></coordinates><panel_attributes>&lt;&lt;TransferObject&gt;&gt;
+SubjectTO
+--
+
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>630</x><y>230</y><w>160</w><h>100</h></coordinates><panel_attributes>&lt;&lt;TransferObject&gt;&gt;
+SubjectSelectionTO
+--
+
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>820</x><y>230</y><w>160</w><h>100</h></coordinates><panel_attributes>&lt;&lt;TransferObject&gt;&gt;
+QuestionCatalogueTO
+--
+
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>120</x><y>410</y><w>510</w><h>150</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
+PoliticianService
+--
+
+--
++ getPoliticians(offset : int) : List&lt;PoliticianEntryTO&gt;
++ getPoliticians(offset : int, resultId : UUID) : List&lt;PoliticianEntryTO&gt;
++ filterPoliticians(offset : int, filter : PoliticianFilterTO) : List&lt;PoliticianEntry&gt;
++ filterPoliticians(offset : int, filter : PoliticianFilterTO, resultId : UUID) : List&lt;PoliticianEntry&gt;
++ getPoliticianData(politicianId : UUID) : Optional&lt;PoliticianTO&gt;</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLNote</id><coordinates><x>470</x><y>130</y><w>140</w><h>70</h></coordinates><panel_attributes>Service for everything
+related to actually
+calculate the election
+proposal
+bg=blue</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLNote</id><coordinates><x>460</x><y>360</y><w>140</w><h>70</h></coordinates><panel_attributes>Service to interact with
+politicians, list politicians
+results, all politican,
+filter selection etc.
+bg=blue</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>120</x><y>620</y><w>400</w><h>120</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
+PoliticianQuestionService
+--
+
+--
++ addQuestion(politicianId : UUID, question : QuestionTO) : boolean
++ upvoteQuestion(questionId : UUID, ipAddress : String) : boolean</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>750</x><y>370</y><w>160</w><h>100</h></coordinates><panel_attributes>&lt;&lt;TransferObject&gt;&gt;
+PoliticianEntryTO
+--
+
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>950</x><y>470</y><w>160</w><h>100</h></coordinates><panel_attributes>&lt;&lt;TransferObject&gt;&gt;
+PoliticianTO
+--
+
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>950</x><y>620</y><w>160</w><h>100</h></coordinates><panel_attributes>&lt;&lt;TransferObject&gt;&gt;
+QuestionTO
+--
+
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>950</x><y>770</y><w>160</w><h>100</h></coordinates><panel_attributes>&lt;&lt;TransferObject&gt;&gt;
+AnswerTO
+--
+
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1020</x><y>710</y><w>30</w><h>80</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;60;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1020</x><y>560</y><w>30</w><h>80</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;60;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>510</x><y>670</y><w>460</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>440;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>620</x><y>520</y><w>350</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>330;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>620</x><y>420</y><w>150</w><h>90</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>130;10;10;70</additional_attributes></element></diagram>
