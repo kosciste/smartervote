@@ -1,4 +1,4 @@
--- please see 'create-database.sql' to see instructions how to setup the database
+-- please check 'create-database.sql' to see instructions how to setup the database
 
 -- tables
 DROP TABLE IF EXISTS PersonalQuestionUpvote;
@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS Party;
 DROP TABLE IF EXISTS Question;
 DROP TABLE IF EXISTS QuestionSubject;
 DROP TABLE IF EXISTS Election;
+DROP TYPE IF EXISTS Gender;
 
 CREATE TYPE Gender AS ENUM (
 	'Male',
@@ -33,17 +34,17 @@ CREATE TABLE QuestionSubject (
     change_time TIMESTAMP NOT NULL,
 
     CONSTRAINT pk_question_subject PRIMARY KEY (id),
-    CONSTRAINT qs_fk_election_id FOREIGN KEY (election_id) REFERENCES election (id)
+    CONSTRAINT fk_qs_election_id FOREIGN KEY (election_id) REFERENCES Election (id)
 );
 CREATE TABLE Question (
 	id UUID NOT NULL,
 	question_subject_id UUID NOT NULL,
-	title VARCHAR(256) NOT NULL,
+	text VARCHAR(256) NOT NULL,
 	creation_time TIMESTAMP NOT NULL,
     change_time TIMESTAMP NOT NULL,
 	
 	CONSTRAINT pk_question PRIMARY KEY (id),
-	CONSTRAINT q_fk_question_subject_id FOREIGN KEY (question_subject_id) REFERENCES QuestionSubject (id)
+	CONSTRAINT fk_q_question_subject_id FOREIGN KEY (question_subject_id) REFERENCES QuestionSubject (id)
 );
 CREATE TABLE Party (
 	id UUID NOT NULL,
@@ -65,15 +66,18 @@ CREATE TABLE Politician (
     change_time TIMESTAMP NOT NULL,
 	
 	CONSTRAINT pk_politician PRIMARY KEY (id),
-	CONSTRAINT p_fk_party_id FOREIGN KEY (party_id) REFERENCES Party (id)
+	CONSTRAINT fk_p_party_id FOREIGN KEY (party_id) REFERENCES Party (id)
 );
 CREATE TABLE QuestionAnswer (
 	question_id UUID NOT NULL,
 	politician_id UUID NOT NULL,
 	answer int NOT NULL,
+    creation_time TIMESTAMP NOT NULL,
+    change_time TIMESTAMP NOT NULL,
 	
-	CONSTRAINT qa_fk_question_id FOREIGN KEY (question_id) REFERENCES Question (id),
-	CONSTRAINT qa_fk_politician_id FOREIGN KEY (politician_id) REFERENCES Politician (id)
+	CONSTRAINT fk_qa_question_id FOREIGN KEY (question_id) REFERENCES Question (id),
+	CONSTRAINT fk_qa_politician_id FOREIGN KEY (politician_id) REFERENCES Politician (id),
+	CONSTRAINT u_question_answer UNIQUE (question_id, politician_id)
 );
 CREATE TABLE MediaCoverage (
 	id UUID NOT NULL,
@@ -86,29 +90,29 @@ CREATE TABLE MediaCoverage (
     change_time TIMESTAMP NOT NULL,
 	
 	CONSTRAINT pk_media_coverage PRIMARY KEY (id),
-	CONSTRAINT fk_politician_id FOREIGN KEY (politician_id) REFERENCES Politician (id)
+	CONSTRAINT fk_mc_politician_id FOREIGN KEY (politician_id) REFERENCES Politician (id)
 );
 CREATE TABLE PersonalQuestion (
 	id UUID NOT NULL,
 	politician_id UUID NOT NULL,
-	title VARCHAR(256) NOT NULL,
-	description VARCHAR(512),
+	text VARCHAR(256) NOT NULL,
 	upvotes BIGINT,
 	creation_time TIMESTAMP NOT NULL,
     change_time TIMESTAMP NOT NULL,
 	
 	CONSTRAINT pk_personal_question PRIMARY KEY (id),
-	CONSTRAINT pq_politician_id FOREIGN KEY (politician_id) REFERENCES Politician (id)
+	CONSTRAINT fk_pq_politician_id FOREIGN KEY (politician_id) REFERENCES Politician (id)
 );
 CREATE TABLE PersonalQuestionAnswer (
 	id UUID NOT NULL,
 	personal_question_id UUID NOT NULL,
-	answer varchar(1024) NOT NULL,
+	text VARCHAR(1024) NOT NULL,
 	creation_time TIMESTAMP NOT NULL,
     change_time TIMESTAMP NOT NULL,
 	
 	CONSTRAINT pk_personal_question_answer PRIMARY KEY (id),
-	CONSTRAINT pqa_fk_personal_question_id FOREIGN KEY (personal_question_id) REFERENCES PersonalQuestion (id)
+	CONSTRAINT fk_pqa_personal_question_id FOREIGN KEY (personal_question_id) REFERENCES PersonalQuestion (id),
+	CONSTRAINT u_personal_question_answer UNIQUE (personal_question_id)
 );
 CREATE TABLE PersonalQuestionUpvote (
 	id UUID NOT NULL,
@@ -118,8 +122,12 @@ CREATE TABLE PersonalQuestionUpvote (
     change_time TIMESTAMP NOT NULL,
 	
 	CONSTRAINT pk_personal_question_upvote PRIMARY KEY (id),
-	CONSTRAINT pqu_fk_personal_question_id FOREIGN KEY (personal_question_id) REFERENCES PersonalQuestionUpvote (id)
+	CONSTRAINT fk_pqu_personal_question_id FOREIGN KEY (personal_question_id) REFERENCES PersonalQuestionUpvote (id)
 );
+
+-- indexes
+create index idx_qa_question_id on QuestionAnswer (question_id);
+create index idx_qa_politician_id on QuestionAnswer (politician_id);
 
 -- grand permissions to table
 -- https://www.postgresql.org/docs/current/sql-grant.html
