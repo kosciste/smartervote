@@ -1,14 +1,32 @@
 package ch.zhaw.smartervote.persistency.entities;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import antlr.PythonCodeGenerator;
+
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
-import java.util.UUID;
 
 @Entity
 public class Politician extends BaseEntity {
 
-    @Column(name="party_id")
-    private UUID partyId;
+    @ManyToOne
+    @JoinColumn(name="party_id", nullable=false)
+    private Party party;
+
+    @OneToMany(mappedBy="politician_id")
+    private Set<QuestionAnswer> questionAnswers;
+
+    @OneToMany(mappedBy="politician_id")
+    private Set<PersonalQuestion> personalQuestions;
+
+    @OneToMany(mappedBy="politician_id")
+    private Set<MediaCoverage> mediaCoverage;
 
     @Column(name="name")
     private String name;
@@ -25,8 +43,23 @@ public class Politician extends BaseEntity {
     @Column(name="picture")
     private String picture;
 
-    public UUID getPartyId() {
-        return partyId;
+    public Party getParty() {
+        return party;
+    }
+
+    public Set<QuestionAnswer> getQuestionAnswers() {
+        if (questionAnswers == null) return new HashSet<>();
+        return questionAnswers;
+    }
+
+    public Set<PersonalQuestion> getPersonalQuestions() {
+        if (personalQuestions == null) return new HashSet<>();
+        return personalQuestions;
+    }
+
+    public Set<MediaCoverage> getMediaCoverage() {
+        if (mediaCoverage == null) return new HashSet<>();
+        return mediaCoverage;
     }
 
     public String getName() {
@@ -49,12 +82,32 @@ public class Politician extends BaseEntity {
         return picture;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setParty(Party party) {
+        this.party = party;
     }
 
-    public void setPartyId(UUID partyId) {
-        this.partyId = partyId;
+    public void setQuestionAnswers (Set<QuestionAnswer> questionAnswers) {
+        this.questionAnswers = questionAnswers;
+    }
+
+    public void setPersonalQuestions (Set<PersonalQuestion> personalQuestions) {
+        this.personalQuestions = personalQuestions;
+    }
+
+    public void setMediaCoverage (Set<MediaCoverage> mediaCoverage) {
+        this.mediaCoverage = mediaCoverage;
+    }
+
+    public Set<PersonalQuestion> setPersonalQuestions() {
+        return personalQuestions;
+    }
+
+    public Set<MediaCoverage> setMediaCoverage() {
+        return mediaCoverage;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setBirthyear(int birthyear) {

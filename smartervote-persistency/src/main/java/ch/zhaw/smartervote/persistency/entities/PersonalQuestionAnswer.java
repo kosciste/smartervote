@@ -1,32 +1,34 @@
 package ch.zhaw.smartervote.persistency.entities;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Column;
-import java.util.UUID;
 
 @Entity
 public class PersonalQuestionAnswer extends BaseEntity {
 
-    @Column(name="personal_question_id")
-    private UUID personalQuestionId;
+    @OneToOne
+    @JoinColumn(name="personal_question_id")
+    private PersonalQuestion personalQuestion;
 
-    @Column(name="text")
-    private String text;
+    @Column(name="answer")
+    private String answer;
 
-    public UUID getPersonalQuestionId() {
-        return personalQuestionId;
+    public PersonalQuestion getPersonalQuestion() {
+        return personalQuestion;
     }
 
-    public String gettext() {
-        return text;
+    public String getAnswer() {
+        return answer;
     }
 
-    public void setPersonalQuestionId(UUID personalQuestionId) {
-        this.personalQuestionId = personalQuestionId;
+    public void setPersonalQuestion(PersonalQuestion personalQuestion) {
+        this.personalQuestion = personalQuestion;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 
 }

@@ -1,14 +1,27 @@
 package ch.zhaw.smartervote.persistency.entities;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
-import java.util.UUID;
 
 @Entity
 public class PersonalQuestion extends BaseEntity {
 
-    @Column(name="politician_id")
-    private UUID politicianId;
+    @ManyToOne
+    @JoinColumn(name="politician_id")
+    private Politician politician;
+
+    @OneToOne(mappedBy ="personal_question_id")
+    private PersonalQuestionAnswer personalQuestionAnswer;
+
+    @OneToOne(mappedBy ="personal_question_id")
+    private Set<PersonalQuestionUpvote> personalQuestionUpvotes;
 
     @Column(name="title")
     private String title;
@@ -19,8 +32,17 @@ public class PersonalQuestion extends BaseEntity {
     @Column(name="upvotes")
     private long upvotes;
 
-    public UUID getPoliticianId() {
-        return politicianId;
+    public Politician getPolitician() {
+        return politician;
+    }
+
+    public PersonalQuestionAnswer getPersonalQuestionAnswer() {
+        return personalQuestionAnswer;
+    }
+
+    public Set<PersonalQuestionUpvote> getPersonalQuestionUpvotes() {
+        if(personalQuestionUpvotes == null) return new HashSet<>();
+        return personalQuestionUpvotes;
     }
 
     public String getTitle() {
@@ -35,8 +57,16 @@ public class PersonalQuestion extends BaseEntity {
         return upvotes;
     }
 
-    public void setPoliticianId(UUID politicianId) {
-        this.politicianId = politicianId;
+    public void setPolitician(Politician politician) {
+        this.politician = politician;
+    }
+
+    public void setPersonalQuestionAnswer(PersonalQuestionAnswer personalQuestionAnswer) {
+        this.personalQuestionAnswer = personalQuestionAnswer;
+    }
+
+    public void setPersonalQuestionUpvotes(Set<PersonalQuestionUpvote> personalQuestionUpvotes) {
+        this.personalQuestionUpvotes = personalQuestionUpvotes;
     }
 
     public void setTitle(String title) {
