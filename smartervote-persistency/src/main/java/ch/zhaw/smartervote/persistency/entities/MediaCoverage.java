@@ -1,15 +1,17 @@
 package ch.zhaw.smartervote.persistency.entities;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Column;
 import java.util.Date;
-import java.util.UUID;
 
 @Entity
 public class MediaCoverage extends BaseEntity {
 
-    @Column(name="politician_id")
-    private UUID politicianId;
+    @ManyToOne
+    @JoinColumn(name = "politician_id", nullable=false)
+    private Politician politician;
 
     @Column(name="headline")
     private String headline;
@@ -23,8 +25,8 @@ public class MediaCoverage extends BaseEntity {
     @Column(name="event_date")
     private Date eventDate;
 
-    public UUID getPoliticianId() {
-        return politicianId;
+    public Politician getPolitician() {
+        return politician;
     }
 
     public String getHeadline() {
@@ -43,8 +45,8 @@ public class MediaCoverage extends BaseEntity {
         return eventDate;
     }
 
-    public void setPoliticianId(UUID politicianId) {
-        this.politicianId = politicianId;
+    public void setPolitician(Politician politician) {
+        this.politician = politician;
     }
 
     public void setHeadline(String headline) {
