@@ -5,8 +5,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import antlr.PythonCodeGenerator;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -98,13 +96,6 @@ public class Politician extends BaseEntity {
         this.mediaCoverage = mediaCoverage;
     }
 
-    public Set<PersonalQuestion> setPersonalQuestions() {
-        return personalQuestions;
-    }
-
-    public Set<MediaCoverage> setMediaCoverage() {
-        return mediaCoverage;
-    }
 
     public void setName(String name) {
         this.name = name;
