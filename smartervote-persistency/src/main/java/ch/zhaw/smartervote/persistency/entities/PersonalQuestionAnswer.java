@@ -9,26 +9,26 @@ import javax.persistence.Column;
 public class PersonalQuestionAnswer extends BaseEntity {
 
     @OneToOne
-    @JoinColumn(name="personal_question_id")
+    @JoinColumn(name="personal_question_id", nullable = false)
     private PersonalQuestion personalQuestion;
 
-    @Column(name="answer")
-    private String answer;
+    @Column(name="text", nullable = false)
+    private String text;
 
     public PersonalQuestion getPersonalQuestion() {
         return personalQuestion;
     }
 
-    public String getAnswer() {
-        return answer;
+    public String getText() {
+        return text;
     }
 
     public void setPersonalQuestion(PersonalQuestion personalQuestion) {
         this.personalQuestion = personalQuestion;
     }
 
-    public void setAnswer(String answer) {
-        this.answer = answer;
+    public void setText(String text) {
+        this.text = text;
     }
 
 }

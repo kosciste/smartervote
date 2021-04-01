@@ -3,6 +3,7 @@ package ch.zhaw.smartervote.persistency.entities;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import java.util.HashSet;
@@ -14,20 +15,17 @@ import javax.persistence.Column;
 public class PersonalQuestion extends BaseEntity {
 
     @ManyToOne
-    @JoinColumn(name="politician_id")
+    @JoinColumn(name="politician_id", nullable = false)
     private Politician politician;
 
     @OneToOne(mappedBy ="personal_question_id")
     private PersonalQuestionAnswer personalQuestionAnswer;
 
-    @OneToOne(mappedBy ="personal_question_id")
+    @OneToMany(mappedBy ="personal_question_id")
     private Set<PersonalQuestionUpvote> personalQuestionUpvotes;
 
-    @Column(name="title")
-    private String title;
-
-    @Column(name="description")
-    private String description;
+    @Column(name="text", nullable = false)
+    private String text;
 
     @Column(name="upvotes")
     private long upvotes;
@@ -45,12 +43,8 @@ public class PersonalQuestion extends BaseEntity {
         return personalQuestionUpvotes;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public String getDescription() {
-        return description;
+    public String getText() {
+        return text;
     }
 
     public long getUpvotes() {
@@ -69,12 +63,8 @@ public class PersonalQuestion extends BaseEntity {
         this.personalQuestionUpvotes = personalQuestionUpvotes;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setText(String text) {
+        this.text = text;
     }
 
     public void setUpvotes(long upvotes) {

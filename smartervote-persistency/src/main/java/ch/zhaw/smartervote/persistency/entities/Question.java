@@ -24,8 +24,8 @@ public class Question extends BaseEntity {
     @OneToMany(mappedBy = "question_id")
     private Set<QuestionAnswer> questionAnswers;
 
-    @Column(name="title")
-    private String title;
+    @Column(name="text", nullable = false)
+    private String text;
 
     public QuestionSubject getQuestionSubject() {
         return this.questionSubject;
@@ -35,8 +35,8 @@ public class Question extends BaseEntity {
         return this.questionAnswers;
     }
 
-    public String getTitle() {
-        return title;
+    public String getText() {
+        return text;
     }
 
     public void setQuestionSubject(QuestionSubject questionSubject) {
@@ -47,8 +47,8 @@ public class Question extends BaseEntity {
         this.questionAnswers = questionAnswers;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setT(String text) {
+        this.text = text;
     }
 
 }
