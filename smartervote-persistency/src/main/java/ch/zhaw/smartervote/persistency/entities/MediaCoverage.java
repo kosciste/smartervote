@@ -10,10 +10,10 @@ import java.util.Date;
 public class MediaCoverage extends BaseEntity {
 
     @ManyToOne
-    @JoinColumn(name = "politician_id", nullable=false)
+    @JoinColumn(name = "politician_id", nullable = false)
     private Politician politician;
 
-    @Column(name="headline")
+    @Column(name="headline", nullable = false)
     private String headline;
 
     @Column(name="description")
@@ -22,7 +22,7 @@ public class MediaCoverage extends BaseEntity {
     @Column(name="link")
     private String link;
 
-    @Column(name="event_date")
+    @Column(name="event_date", nullable = false)
     private Date eventDate;
 
     public Politician getPolitician() {

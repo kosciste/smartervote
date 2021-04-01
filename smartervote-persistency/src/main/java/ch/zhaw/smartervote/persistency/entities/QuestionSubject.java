@@ -14,13 +14,13 @@ import javax.persistence.Column;
 public class QuestionSubject extends BaseEntity {
 
     @ManyToOne
-    @JoinColumn(name="election_id", nullable=false)
+    @JoinColumn(name="election_id", nullable = false)
     private Election election;
 
     @OneToMany(mappedBy="question_subject_id")
     private Set<Question> questions;
 
-    @Column(name="name")
+    @Column(name="name", nullable = false)
     private String name;
 
     public Election getElection() {

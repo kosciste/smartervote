@@ -18,7 +18,7 @@ import javax.persistence.OneToMany;
 public class Question extends BaseEntity {
 
     @ManyToOne
-    @JoinColumn(name = "question_subject_id", nullable=false)
+    @JoinColumn(name = "question_subject_id", nullable = false)
     private QuestionSubject questionSubject;
 
     @OneToMany(mappedBy = "question_id")

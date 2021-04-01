@@ -14,7 +14,7 @@ public class Election extends BaseEntity {
     @OneToMany(mappedBy="election")
     private Set<QuestionSubject> questionSubjects;
 
-    @Column(name="name")
+    @Column(name="name", nullable = false)
     private String name;
 
     public Set<QuestionSubject> getQuestionSubjects() {

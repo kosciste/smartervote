@@ -8,13 +8,13 @@ import java.util.UUID;
 public class BaseEntity {
 
     @Id
-    @Column(name="id")
+    @Column(name="id", nullable = false)
     private UUID id;
 
-    @Column(name="creation_time")
+    @Column(name="creation_time", nullable = false)
     private Date creationTime;
 
-    @Column(name="change_time")
+    @Column(name="change_time", nullable = false)
     private Date changeTime;
 
     @PrePersist

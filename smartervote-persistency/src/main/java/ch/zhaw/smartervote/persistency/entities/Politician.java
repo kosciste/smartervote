@@ -16,7 +16,7 @@ import javax.persistence.Column;
 public class Politician extends BaseEntity {
 
     @ManyToOne
-    @JoinColumn(name="party_id", nullable=false)
+    @JoinColumn(name="party_id", nullable = false)
     private Party party;
 
     @OneToMany(mappedBy="politician_id")
@@ -28,16 +28,16 @@ public class Politician extends BaseEntity {
     @OneToMany(mappedBy="politician_id")
     private Set<MediaCoverage> mediaCoverage;
 
-    @Column(name="name")
+    @Column(name="name", nullable = false)
     private String name;
 
-    @Column(name="birthyear")
+    @Column(name="birthyear", nullable = false)
     private int birthyear;
 
-    @Column(name="gender")
+    @Column(name="gender", nullable = false)
     private Gender gender;
 
-    @Column(name="profession")
+    @Column(name="profession", nullable = false)
     private String profession;
 
     @Column(name="picture")

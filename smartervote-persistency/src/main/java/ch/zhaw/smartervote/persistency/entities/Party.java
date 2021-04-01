@@ -14,7 +14,7 @@ public class Party extends BaseEntity {
     @OneToMany(mappedBy="party")
     private Set<Politician> politicians;
 
-    @Column(name="name")
+    @Column(name="name", nullable = false)
     private String name;
 
     public Set<Politician> getPoliticians() {

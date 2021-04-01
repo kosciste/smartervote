@@ -9,10 +9,10 @@ import javax.persistence.Column;
 public class PersonalQuestionUpvote extends BaseEntity {
 
     @ManyToOne
-    @JoinColumn(name="personal_question_id")
+    @JoinColumn(name="personal_question_id", nullable = false)
     private PersonalQuestion personalQuestion;
 
-    @Column(name="ip_address")
+    @Column(name="ip_address", nullable = false)
     private String ipAddress;
 
     public PersonalQuestion getPersonalQuestion() {

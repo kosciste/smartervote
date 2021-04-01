@@ -9,14 +9,14 @@ import javax.persistence.Column;
 public class QuestionAnswer extends BaseEntity {
 
     @ManyToOne
-    @JoinColumn(name="question_id", nullable=false)
+    @JoinColumn(name="question_id", nullable = false)
     private Question question;
 
     @ManyToOne
-    @JoinColumn(name="politician_id", nullable=false)
+    @JoinColumn(name="politician_id", nullable = false)
     private Politician politician;
 
-    @Column(name="answer")
+    @Column(name="answer", nullable = false)
     private int answer;
 
     public Question getQuestion() {
