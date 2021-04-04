@@ -19,29 +19,29 @@ CREATE TYPE Gender AS ENUM (
 	'Other'
 );
 CREATE TABLE Election (
-    id UUID NOT NULL,
-    name VARCHAR(256) NOT NULL,
-    creation_time TIMESTAMP NOT NULL,
-    change_time TIMESTAMP NOT NULL,
+	id UUID NOT NULL,
+	name VARCHAR(256) NOT NULL,
+	creation_time TIMESTAMP NOT NULL,
+	change_time TIMESTAMP NOT NULL,
 
-    CONSTRAINT pk_election PRIMARY KEY (id)
+	CONSTRAINT pk_election PRIMARY KEY (id)
 );
 CREATE TABLE QuestionSubject (
-    id UUID NOT NULL,
-    election_id UUID NOT NULL,
-    name VARCHAR(256) NOT NULL,
-    creation_time TIMESTAMP NOT NULL,
-    change_time TIMESTAMP NOT NULL,
+	id UUID NOT NULL,
+	election_id UUID NOT NULL,
+	name VARCHAR(256) NOT NULL,
+	creation_time TIMESTAMP NOT NULL,
+	change_time TIMESTAMP NOT NULL,
 
-    CONSTRAINT pk_question_subject PRIMARY KEY (id),
-    CONSTRAINT fk_qs_election_id FOREIGN KEY (election_id) REFERENCES Election (id)
+	CONSTRAINT pk_question_subject PRIMARY KEY (id),
+	CONSTRAINT fk_qs_election_id FOREIGN KEY (election_id) REFERENCES Election (id)
 );
 CREATE TABLE Question (
 	id UUID NOT NULL,
 	question_subject_id UUID NOT NULL,
 	text VARCHAR(256) NOT NULL,
 	creation_time TIMESTAMP NOT NULL,
-    change_time TIMESTAMP NOT NULL,
+	change_time TIMESTAMP NOT NULL,
 	
 	CONSTRAINT pk_question PRIMARY KEY (id),
 	CONSTRAINT fk_q_question_subject_id FOREIGN KEY (question_subject_id) REFERENCES QuestionSubject (id)
@@ -50,7 +50,7 @@ CREATE TABLE Party (
 	id UUID NOT NULL,
 	name VARCHAR(256) NOT NULL,
 	creation_time TIMESTAMP NOT NULL,
-    change_time TIMESTAMP NOT NULL,
+	change_time TIMESTAMP NOT NULL,
 	
 	CONSTRAINT pk_party PRIMARY KEY (id)
 );
@@ -63,7 +63,7 @@ CREATE TABLE Politician (
 	profession VARCHAR(256) NOT NULL,
 	picture VARCHAR(128),
 	creation_time TIMESTAMP NOT NULL,
-    change_time TIMESTAMP NOT NULL,
+	change_time TIMESTAMP NOT NULL,
 	
 	CONSTRAINT pk_politician PRIMARY KEY (id),
 	CONSTRAINT fk_p_party_id FOREIGN KEY (party_id) REFERENCES Party (id)
@@ -72,8 +72,8 @@ CREATE TABLE QuestionAnswer (
 	question_id UUID NOT NULL,
 	politician_id UUID NOT NULL,
 	answer int NOT NULL,
-    creation_time TIMESTAMP NOT NULL,
-    change_time TIMESTAMP NOT NULL,
+	creation_time TIMESTAMP NOT NULL,
+	change_time TIMESTAMP NOT NULL,
 	
 	CONSTRAINT fk_qa_question_id FOREIGN KEY (question_id) REFERENCES Question (id),
 	CONSTRAINT fk_qa_politician_id FOREIGN KEY (politician_id) REFERENCES Politician (id),
@@ -87,7 +87,7 @@ CREATE TABLE MediaCoverage (
 	link VARCHAR(2048),
 	event_date DATE NOT NULL,
 	creation_time TIMESTAMP NOT NULL,
-    change_time TIMESTAMP NOT NULL,
+	change_time TIMESTAMP NOT NULL,
 	
 	CONSTRAINT pk_media_coverage PRIMARY KEY (id),
 	CONSTRAINT fk_mc_politician_id FOREIGN KEY (politician_id) REFERENCES Politician (id)
@@ -98,7 +98,7 @@ CREATE TABLE PersonalQuestion (
 	text VARCHAR(256) NOT NULL,
 	upvotes BIGINT,
 	creation_time TIMESTAMP NOT NULL,
-    change_time TIMESTAMP NOT NULL,
+	change_time TIMESTAMP NOT NULL,
 	
 	CONSTRAINT pk_personal_question PRIMARY KEY (id),
 	CONSTRAINT fk_pq_politician_id FOREIGN KEY (politician_id) REFERENCES Politician (id)
@@ -108,7 +108,7 @@ CREATE TABLE PersonalQuestionAnswer (
 	personal_question_id UUID NOT NULL,
 	text VARCHAR(1024) NOT NULL,
 	creation_time TIMESTAMP NOT NULL,
-    change_time TIMESTAMP NOT NULL,
+	change_time TIMESTAMP NOT NULL,
 	
 	CONSTRAINT pk_personal_question_answer PRIMARY KEY (id),
 	CONSTRAINT fk_pqa_personal_question_id FOREIGN KEY (personal_question_id) REFERENCES PersonalQuestion (id),
@@ -119,7 +119,7 @@ CREATE TABLE PersonalQuestionUpvote (
 	personal_question_id UUID NOT NULL,
 	ip_address VARCHAR(16) NOT NULL,
 	creation_time TIMESTAMP NOT NULL,
-    change_time TIMESTAMP NOT NULL,
+	change_time TIMESTAMP NOT NULL,
 	
 	CONSTRAINT pk_personal_question_upvote PRIMARY KEY (id),
 	CONSTRAINT fk_pqu_personal_question_id FOREIGN KEY (personal_question_id) REFERENCES PersonalQuestionUpvote (id)
