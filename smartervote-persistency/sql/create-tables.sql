@@ -69,7 +69,7 @@ CREATE TABLE Politician (
 	CONSTRAINT fk_p_party_id FOREIGN KEY (party_id) REFERENCES Party (id)
 );
 CREATE TABLE QuestionAnswer (
-    id UUID NOT NULL,
+	id UUID NOT NULL,
 	question_id UUID NOT NULL,
 	politician_id UUID NOT NULL,
 	answer int NOT NULL,
