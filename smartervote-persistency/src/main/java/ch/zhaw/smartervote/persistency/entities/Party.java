@@ -8,13 +8,18 @@ import java.util.Set;
 
 import javax.persistence.Column;
 
+/**
+ * Represents the Party table.
+ *
+ * @author Stefan Teodoropol
+ */
 @Entity
 public class Party extends BaseEntity {
 
-    @OneToMany(mappedBy="party")
+    @OneToMany(mappedBy = "party")
     private Set<Politician> politicians;
 
-    @Column(name="name", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
     public Set<Politician> getPoliticians() {

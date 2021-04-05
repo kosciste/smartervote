@@ -10,17 +10,22 @@ import java.util.Set;
 
 import javax.persistence.Column;
 
+/**
+ * Represents the QuestionSubject table.
+ *
+ * @author Stefan Teodoropol
+ */
 @Entity
 public class QuestionSubject extends BaseEntity {
 
     @ManyToOne
-    @JoinColumn(name="election_id", nullable = false)
+    @JoinColumn(name = "election_id", nullable = false)
     private Election election;
 
-    @OneToMany(mappedBy="question_subject_id")
+    @OneToMany(mappedBy = "questionSubject")
     private Set<Question> questions;
 
-    @Column(name="name", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
     public Election getElection() {

@@ -1,11 +1,13 @@
 package ch.zhaw.smartervote.persistency.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Column;
+import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * Represents the MediaCoverage table.
+ *
+ * @author Stefan Teodoropol
+ */
 @Entity
 public class MediaCoverage extends BaseEntity {
 
@@ -13,16 +15,17 @@ public class MediaCoverage extends BaseEntity {
     @JoinColumn(name = "politician_id", nullable = false)
     private Politician politician;
 
-    @Column(name="headline", nullable = false)
+    @Column(name = "headline", nullable = false)
     private String headline;
 
-    @Column(name="description")
+    @Column(name = "description")
     private String description;
 
-    @Column(name="link")
+    @Column(name = "link")
     private String link;
 
-    @Column(name="event_date", nullable = false)
+    @Column(name = "event_date", nullable = false)
+    @Temporal(TemporalType.DATE)
     private Date eventDate;
 
     public Politician getPolitician() {

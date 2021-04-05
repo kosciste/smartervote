@@ -1,5 +1,10 @@
 package ch.zhaw.smartervote.persistency.entities;
 
+/**
+ * Enum that represents the possible values for the genders on the Politician table.
+ *
+ * @author Stefan Teodoropol
+ */
 public enum Gender {
-    MALE, FEMALE, OTHER
+    Male, Female, Other
 }

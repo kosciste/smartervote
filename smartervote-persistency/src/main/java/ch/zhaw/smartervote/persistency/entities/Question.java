@@ -10,6 +10,11 @@ import javax.persistence.Column;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
+/**
+ * Represents the Question table.
+ *
+ * @author Stefan Teodoropol
+ */
 @Entity
 @NamedQuery(
         name="Question.findByText",
@@ -21,10 +26,10 @@ public class Question extends BaseEntity {
     @JoinColumn(name = "question_subject_id", nullable = false)
     private QuestionSubject questionSubject;
 
-    @OneToMany(mappedBy = "question_id")
+    @OneToMany(mappedBy = "question")
     private Set<QuestionAnswer> questionAnswers;
 
-    @Column(name="text", nullable = false)
+    @Column(name = "text", nullable = false)
     private String text;
 
     public QuestionSubject getQuestionSubject() {

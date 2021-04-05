@@ -4,17 +4,24 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
-@Entity
+/**
+ * Super class that contains attributes that are added on all tables.
+ *
+ * @author Stefan Teodoropol
+ */
+@MappedSuperclass
 public class BaseEntity {
 
     @Id
-    @Column(name="id", nullable = false)
+    @Column(name = "id", nullable = false)
     private UUID id;
 
-    @Column(name="creation_time", nullable = false)
+    @Column(name = "creation_time", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date creationTime;
 
-    @Column(name="change_time", nullable = false)
+    @Column(name = "change_time", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date changeTime;
 
     @PrePersist
@@ -36,15 +43,4 @@ public class BaseEntity {
         return changeTime;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public void setCreationTime(Date creationTime) {
-        this.creationTime = creationTime;
-    }
-
-    public void setChangeTime(Date changeTime) {
-        this.changeTime = changeTime;
-    }
 }

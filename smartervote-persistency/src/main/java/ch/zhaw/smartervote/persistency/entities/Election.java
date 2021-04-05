@@ -8,13 +8,18 @@ import java.util.Set;
 
 import javax.persistence.Column;
 
+/**
+ * Represents the Election table.
+ *
+ * @author Stefan Teodoropol
+ */
 @Entity
 public class Election extends BaseEntity {
 
-    @OneToMany(mappedBy="election")
+    @OneToMany(mappedBy = "election")
     private Set<QuestionSubject> questionSubjects;
 
-    @Column(name="name", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
     public Set<QuestionSubject> getQuestionSubjects() {

@@ -1,44 +1,45 @@
 package ch.zhaw.smartervote.persistency.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Column;
-
+/**
+ * Represents the Politician table.
+ *
+ * @author Stefan Teodoropol
+ */
 @Entity
 public class Politician extends BaseEntity {
 
     @ManyToOne
-    @JoinColumn(name="party_id", nullable = false)
+    @JoinColumn(name = "party_id", nullable = false)
     private Party party;
 
-    @OneToMany(mappedBy="politician_id")
+    @OneToMany(mappedBy = "politician")
     private Set<QuestionAnswer> questionAnswers;
 
-    @OneToMany(mappedBy="politician_id")
+    @OneToMany(mappedBy = "politician")
     private Set<PersonalQuestion> personalQuestions;
 
-    @OneToMany(mappedBy="politician_id")
+    @OneToMany(mappedBy = "politician")
     private Set<MediaCoverage> mediaCoverage;
 
-    @Column(name="name", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name="birthyear", nullable = false)
+    @Column(name = "birthyear", nullable = false)
     private int birthyear;
 
-    @Column(name="gender", nullable = false)
+    @Column(name = "gender", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @Column(name="profession", nullable = false)
+    @Column(name = "profession", nullable = false)
     private String profession;
 
-    @Column(name="picture")
+    @Column(name = "picture")
     private String picture;
 
     public Party getParty() {

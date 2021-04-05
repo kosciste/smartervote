@@ -5,14 +5,19 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Column;
 
+/**
+ * Represents the PersonalQuestionAnswer table.
+ *
+ * @author Stefan Teodoropol
+ */
 @Entity
 public class PersonalQuestionAnswer extends BaseEntity {
 
     @OneToOne
-    @JoinColumn(name="personal_question_id", nullable = false)
+    @JoinColumn(name = "personal_question_id", nullable = false, unique = true)
     private PersonalQuestion personalQuestion;
 
-    @Column(name="text", nullable = false)
+    @Column(name = "text", nullable = false)
     private String text;
 
     public PersonalQuestion getPersonalQuestion() {

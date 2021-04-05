@@ -5,14 +5,19 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Column;
 
+/**
+ * Represents the PersonalQuestionUpvote table.
+ *
+ * @author Stefan Teodoropol
+ */
 @Entity
 public class PersonalQuestionUpvote extends BaseEntity {
 
     @ManyToOne
-    @JoinColumn(name="personal_question_id", nullable = false)
+    @JoinColumn(name = "personal_question_id", nullable = false)
     private PersonalQuestion personalQuestion;
 
-    @Column(name="ip_address", nullable = false)
+    @Column(name = "ip_address", nullable = false)
     private String ipAddress;
 
     public PersonalQuestion getPersonalQuestion() {

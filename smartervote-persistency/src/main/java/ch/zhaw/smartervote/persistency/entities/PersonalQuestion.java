@@ -11,23 +11,28 @@ import java.util.Set;
 
 import javax.persistence.Column;
 
+/**
+ * Represents the PersonalQuestion table.
+ *
+ * @author Stefan Teodoropol
+ */
 @Entity
 public class PersonalQuestion extends BaseEntity {
 
     @ManyToOne
-    @JoinColumn(name="politician_id", nullable = false)
+    @JoinColumn(name = "politician_id", nullable = false)
     private Politician politician;
 
-    @OneToOne(mappedBy ="personal_question_id")
+    @OneToOne(mappedBy = "personalQuestion")
     private PersonalQuestionAnswer personalQuestionAnswer;
 
-    @OneToMany(mappedBy ="personal_question_id")
+    @OneToMany(mappedBy = "personalQuestion")
     private Set<PersonalQuestionUpvote> personalQuestionUpvotes;
 
-    @Column(name="text", nullable = false)
+    @Column(name = "text", nullable = false)
     private String text;
 
-    @Column(name="upvotes")
+    @Column(name = "upvotes")
     private long upvotes;
 
     public Politician getPolitician() {

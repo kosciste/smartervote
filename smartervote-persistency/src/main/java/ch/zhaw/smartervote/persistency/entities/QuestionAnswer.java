@@ -1,22 +1,25 @@
 package ch.zhaw.smartervote.persistency.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Column;
+import javax.persistence.*;
+import java.util.Date;
 
+/**
+ * Represents the QuestionAnswer table.
+ *
+ * @author Stefan Teodoropol
+ */
 @Entity
 public class QuestionAnswer extends BaseEntity {
 
     @ManyToOne
-    @JoinColumn(name="question_id", nullable = false)
+    @JoinColumn(name = "question_id", nullable = false)
     private Question question;
 
     @ManyToOne
-    @JoinColumn(name="politician_id", nullable = false)
+    @JoinColumn(name = "politician_id", nullable = false)
     private Politician politician;
 
-    @Column(name="answer", nullable = false)
+    @Column(name = "answer", nullable = false)
     private int answer;
 
     public Question getQuestion() {
@@ -42,4 +45,5 @@ public class QuestionAnswer extends BaseEntity {
     public void setAnswer(int answer) {
         this.answer = answer;
     }
+
 }
