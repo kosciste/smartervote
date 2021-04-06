@@ -24,7 +24,16 @@
         <property name="format_sql">true</property> <!-- Show SQL formatted -->
 
         <!-- entities -->
+        <mapping class="ch.zhaw.smartervote.persistency.entities.Election"/>
+        <mapping class="ch.zhaw.smartervote.persistency.entities.MediaCoverage"/>
+        <mapping class="ch.zhaw.smartervote.persistency.entities.Party"/>
+        <mapping class="ch.zhaw.smartervote.persistency.entities.PersonalQuestion"/>
+        <mapping class="ch.zhaw.smartervote.persistency.entities.PersonalQuestionAnswer"/>
+        <mapping class="ch.zhaw.smartervote.persistency.entities.PersonalQuestionUpvote"/>
+        <mapping class="ch.zhaw.smartervote.persistency.entities.Politician"/>
         <mapping class="ch.zhaw.smartervote.persistency.entities.Question"/>
+        <mapping class="ch.zhaw.smartervote.persistency.entities.QuestionAnswer"/>
+        <mapping class="ch.zhaw.smartervote.persistency.entities.QuestionSubject"/>
 
     </session-factory>
 </hibernate-configuration>
