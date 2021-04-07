@@ -126,6 +126,25 @@ CREATE TABLE PersonalQuestionUpvote (
 	CONSTRAINT pk_personal_question_upvote PRIMARY KEY (id),
 	CONSTRAINT fk_pqu_personal_question_id FOREIGN KEY (personal_question_id) REFERENCES PersonalQuestionUpvote (id)
 );
+CREATE TABLE ProposalResult (
+    id UUID NOT NULL,
+    creation_time TIMESTAMP NOT NULL,
+    change_time TIMESTAMP NOT NULL,
+
+    CONSTRAINT pk_personal_result PRIMARY KEY (id)
+);
+CREATE TABLE ProposalResultScore (
+    id UUID NOT NULL,
+    proposal_result_id UUID NOT NULL,
+    politician_id UUID NOT NULL,
+    matching_score INT NOT NULL,
+    creation_time TIMESTAMP NOT NULL,
+    change_time TIMESTAMP NOT NULL,
+
+    CONSTRAINT pk_personal_result_score PRIMARY KEY (id),
+    CONSTRAINT fk_prs_proposal_result_id FOREIGN KEY (proposal_result_id) REFERENCES ProposalResult (id),
+    CONSTRAINT fk_prs_politician_id FOREIGN KEY (politician_id) REFERENCES Politician (id)
+);
 
 -- indexes
 create index idx_qa_question_id on QuestionAnswer (question_id);
