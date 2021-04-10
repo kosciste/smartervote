@@ -4,6 +4,7 @@ import ch.zhaw.smartervote.persistency.DatabaseConnection;
 import ch.zhaw.smartervote.persistency.repositories.iface.Repository;
 import org.hibernate.Session;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.List;
 import java.util.Optional;
@@ -18,11 +19,20 @@ import java.util.UUID;
 public abstract class BaseRepositoryImpl<T> implements Repository<T> {
 
     /**
+     * Instance of the database connection.
+     */
+    protected final DatabaseConnection databaseConnection;
+
+    public BaseRepositoryImpl(DatabaseConnection databaseConnection) {
+        this.databaseConnection = databaseConnection;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public List<T> findAll() {
-        Session session = DatabaseConnection.getInstance().createSession();
+        Session session = databaseConnection.createSession();
         Query query = session.createQuery("SELECT e FROM " + getClassType().getSimpleName() + " e");
         return query.getResultList();
     }
@@ -32,10 +42,17 @@ public abstract class BaseRepositoryImpl<T> implements Repository<T> {
      */
     @Override
     public Optional<T> findById(UUID id) {
-        Session session = DatabaseConnection.getInstance().createSession();
+        Session session = databaseConnection.createSession();
+
         Query query = session.createQuery("SELECT e FROM " + getClassType().getSimpleName() + " e WHERE e.id = :id");
         query.setParameter("id", id);
-        return Optional.of((T) query.getSingleResult());
+
+        try {
+            return Optional.of((T) query.getSingleResult());
+        } catch (NoResultException ex) {
+            return Optional.empty();
+        }
+
     }
 
     /**
@@ -43,7 +60,7 @@ public abstract class BaseRepositoryImpl<T> implements Repository<T> {
      */
     @Override
     public Long count() {
-        Session session = DatabaseConnection.getInstance().createSession();
+        Session session = databaseConnection.createSession();
         Query query = session.createQuery("SELECT COUNT(e) FROM " + getClassType().getSimpleName() + " e");
         return (Long) query.getSingleResult();
     }
@@ -52,8 +69,38 @@ public abstract class BaseRepositoryImpl<T> implements Repository<T> {
      * {@inheritDoc}
      */
     @Override
-    public void save(T obj) {
-        DatabaseConnection.getInstance().createSession().save(obj);
+    public void insert(T entity) {
+        Session session = databaseConnection.createSession();
+        session.beginTransaction();
+        session.persist(entity);
+        session.flush();
+        session.getTransaction().commit();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void insert(List<T> entities) {
+        Session session = databaseConnection.createSession();
+        session.beginTransaction();
+        for (T entity : entities) {
+            session.persist(entity);
+        }
+        session.flush();
+        session.getTransaction().commit();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void update(T entity) {
+        Session session = databaseConnection.createSession();
+        session.beginTransaction();
+        session.merge(entity);
+        session.flush();
+        session.getTransaction().commit();
     }
 
     /**
