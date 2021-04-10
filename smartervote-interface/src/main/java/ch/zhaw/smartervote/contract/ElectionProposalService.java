@@ -1,26 +1,49 @@
 package ch.zhaw.smartervote.contract;
 
 import ch.zhaw.smartervote.contract.transferobject.ElectionTO;
+import ch.zhaw.smartervote.contract.transferobject.PoliticianFilterTO;
 import ch.zhaw.smartervote.contract.transferobject.QuestionTO;
 import ch.zhaw.smartervote.contract.transferobject.SubjectTO;
 
 import java.util.*;
 
-public class ElectionProposalService {
+/**
+ * This interface defines all functions used for the election proposal.
+ * This includes available elections, question subjects and corresponding
+ * questions as well as the calculation of the election proposal.
+ */
+public interface ElectionProposalService {
 
-    public List<ElectionTO> getAvailableElections() {
-        return new ArrayList<>();
-    }
+    /**
+     * Returns all available elections, for which questions exist.
+     * @return all available elections.
+     */
+    List<ElectionTO> getAvailableElections();
 
-    public List<SubjectTO> getQuestionSubjects(UUID electionsId) {
-        return new ArrayList<>();
-    }
+    /**
+     * Returns all question subjects for a given election.
+     * @param electionsId the UUID of the election.
+     * @return All question subjects for the given election.
+     */
+    List<SubjectTO> getQuestionSubjects(UUID electionsId);
 
-    public Map<SubjectTO, List<QuestionTO>> getQuestionCatalogue(UUID electionId, Map<UUID, Integer> selection) {
-        return new HashMap<>();
-    }
+    /**
+     * Returns the question catalogue for a given election, where the topic of the selection does not equal 0.
+     * @param electionId the UUID of the election.
+     * @param selection A map containing the UUID of the topics, and the weight of these topics.
+     *                  Topics with weight zero will be ignored.
+     * @return A map with all subject that where not wighted with 0, and their corresponding questions.
+     */
+    Map<SubjectTO, List<QuestionTO>> getQuestionCatalogue(UUID electionId, Map<UUID, Integer> selection);
 
-    public UUID calculateElectionProposal(UUID electionId, List<QuestionTO> questions) {
-        return UUID.randomUUID();
-    }
+    /**
+     * Returns the UUID of the calculated election proposal for the answers of the user.
+     * The UUID can be used to get the politician match by passing it to
+     * {@link PoliticianService#getPoliticians(int, int, UUID)} or
+     * {@link PoliticianService#filterPoliticians(int, int, PoliticianFilterTO, UUID)}
+     * @param electionId the UUID of the election.
+     * @param questions A map with the weighted subjects, and the answered questions.
+     * @return the UUID of the election proposal.
+     */
+    UUID calculateElectionProposal(UUID electionId, Map<SubjectTO, List<QuestionTO>> questions);
 }
