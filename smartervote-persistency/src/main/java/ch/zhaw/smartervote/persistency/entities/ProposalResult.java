@@ -13,16 +13,12 @@ import java.util.Set;
 @Entity
 public class ProposalResult extends BaseEntity {
 
-    @OneToMany(mappedBy = "personalQuestion")
-    private Set<PersonalProposalScore> personalResultScores;
+    @OneToMany(mappedBy = "proposalResult")
+    private Set<ProposalResultScore> proposalResultScores;
 
-    public Set<PersonalProposalScore> getPersonalResultScores() {
-        if (personalResultScores == null) return new HashSet<>();
-        return personalResultScores;
-    }
-
-    public void setPersonalResultScores(Set<PersonalProposalScore> personalResultScores) {
-        this.personalResultScores = personalResultScores;
+    public Set<ProposalResultScore> getProposalResultScores () {
+        if (proposalResultScores == null) return new HashSet<>();
+        return proposalResultScores;
     }
 
 }
