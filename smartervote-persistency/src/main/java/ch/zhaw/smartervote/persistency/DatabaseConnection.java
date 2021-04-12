@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.springframework.stereotype.Component;
 
 /**
  * Singleton that holds the session factory object to open new sessions to interact with the database. Factory
@@ -12,35 +13,13 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
  *
  * @author Leo Rudin
  */
+@Component("databaseConnection")
 public class DatabaseConnection {
-
-    /**
-     * Instance of the database connection.
-     */
-    private static DatabaseConnection INSTANCE;
 
     /**
      * Session factory.
      */
     private static SessionFactory FACTORY;
-
-    /**
-     * Private constructor to prevent direct initialization.
-     */
-    private DatabaseConnection() {}
-
-    /**
-     * Returns the objects instance.
-     *
-     * @return instance
-     */
-    public static DatabaseConnection getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new DatabaseConnection();
-        }
-
-        return INSTANCE;
-    }
 
     /**
      * Creates a new session. First checks if session factory exists and creates one, otherwise works

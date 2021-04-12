@@ -24,11 +24,22 @@ public class BaseEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date changeTime;
 
+    /**
+     * Executed before the entity is first inserted into the database.
+     */
     @PrePersist
     public void prePersist() {
         id = UUID.randomUUID();
         creationTime = new Date();
         changeTime = (Date)creationTime.clone();
+    }
+
+    /**
+     * Executed before the entity is updated in the database.
+     */
+    @PreUpdate
+    public void preUpdate() {
+        changeTime = new Date();
     }
 
     public UUID getId() {

@@ -35,10 +35,24 @@ public interface Repository<T> {
     Long count();
 
     /**
-     * Persists a new entity to the database.
+     * Insert the given entity into the database.
      *
-     * @param obj entity to save
+     * @param entity entity to save
      */
-    void save(T obj);
+    void insert(T entity);
+
+    /**
+     * Inserts the given list of entities into the database.
+     *
+     * @param entities entities to save
+     */
+    void insert(List<T> entities);
+
+    /**
+     * Updates the given entity with the database.
+     *
+     * @param entity entity to update
+     */
+    void update(T entity);
 
 }

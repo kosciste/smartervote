@@ -11,11 +11,11 @@ import javax.persistence.ManyToOne;
  * @author Leo Rudin
  */
 @Entity
-public class PersonalProposalScore extends BaseEntity {
+public class ProposalResultScore extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "proposal_result_id", nullable = false)
-    private PersonalQuestion personalQuestion;
+    private ProposalResult proposalResult;
 
     @ManyToOne
     @JoinColumn(name = "politician_id", nullable = false)
@@ -24,8 +24,8 @@ public class PersonalProposalScore extends BaseEntity {
     @Column(name = "matching_score", nullable = false)
     private int matchingScore;
 
-    public PersonalQuestion getPersonalQuestion() {
-        return personalQuestion;
+    public ProposalResult getProposalResult () {
+        return proposalResult;
     }
 
     public Politician getPolitician() {
@@ -36,8 +36,8 @@ public class PersonalProposalScore extends BaseEntity {
         return matchingScore;
     }
 
-    public void setPersonalQuestion(PersonalQuestion personalQuestion) {
-        this.personalQuestion = personalQuestion;
+    public void setProposalResult (ProposalResult proposalResult) {
+        this.proposalResult = proposalResult;
     }
 
     public void setPolitician(Politician politician) {

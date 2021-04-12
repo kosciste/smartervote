@@ -14,8 +14,8 @@
         <!-- connection info -->
         <property name="connection.url">jdbc:postgresql://localhost:5432/smartervote</property> <!-- BD Connection -->
         <property name="connection.driver_class">org.postgresql.Driver</property> <!-- DB Driver -->
-        <property name="connection.username">postgres</property> <!-- DB User -->
-        <property name="connection.password">rootroot</property> <!-- DB Password -->
+        <property name="connection.username">smartervote_user</property> <!-- DB User -->
+        <property name="connection.password">123456</property> <!-- DB Password -->
 
         <property name="hbm2ddl.auto">validate</property> <!-- see: https://stackoverflow.com/a/1689769 -->
 
@@ -34,6 +34,8 @@
         <mapping class="ch.zhaw.smartervote.persistency.entities.Question"/>
         <mapping class="ch.zhaw.smartervote.persistency.entities.QuestionAnswer"/>
         <mapping class="ch.zhaw.smartervote.persistency.entities.QuestionSubject"/>
+        <mapping class="ch.zhaw.smartervote.persistency.entities.ProposalResult"/>
+        <mapping class="ch.zhaw.smartervote.persistency.entities.ProposalResultScore"/>
 
     </session-factory>
 </hibernate-configuration>

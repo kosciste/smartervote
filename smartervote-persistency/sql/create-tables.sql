@@ -162,3 +162,5 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE MediaCoverage TO smartervote_user;
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE PersonalQuestion TO smartervote_user;
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE PersonalQuestionAnswer TO smartervote_user;
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE PersonalQuestionUpvote TO smartervote_user;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ProposalResult TO smartervote_user;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ProposalResultScore TO smartervote_user;
