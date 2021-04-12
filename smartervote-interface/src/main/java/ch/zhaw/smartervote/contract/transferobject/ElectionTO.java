@@ -9,14 +9,16 @@ import java.util.UUID;
  * @author Raphael Krebs
  */
 public class ElectionTO {
+
     /**
      * The UUID of the election.
      */
-    private UUID id;
+    private final UUID id;
+
     /**
      * The name of the election.
      */
-    private String name;
+    private final String name;
 
     public ElectionTO(UUID id, String name) {
         this.id = id;
@@ -27,16 +29,8 @@ public class ElectionTO {
         return id;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     /**
@@ -57,5 +51,6 @@ public class ElectionTO {
     public int hashCode() {
         return Objects.hash(id);
     }
+
 }
 

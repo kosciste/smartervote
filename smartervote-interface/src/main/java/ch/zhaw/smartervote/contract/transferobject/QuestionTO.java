@@ -9,14 +9,17 @@ import java.util.UUID;
  * @author Raphael Krebs
  */
 public class QuestionTO {
+
     /**
      * The UUID of this question.
      */
     private final UUID id;
+
     /**
      * The question in text form.
      */
     private final String text;
+
     /**
      * The answer of the user to the question.
      */
@@ -62,4 +65,5 @@ public class QuestionTO {
     public int hashCode() {
         return Objects.hash(id);
     }
+
 }

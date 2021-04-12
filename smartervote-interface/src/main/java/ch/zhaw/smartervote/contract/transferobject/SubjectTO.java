@@ -9,14 +9,17 @@ import java.util.UUID;
  * @author Raphael Krebs
  */
 public class SubjectTO {
+
     /**
      * The UUID of the subject.
      */
     private final UUID id;
+
     /**
      * The name of the subject.
      */
     private final String name;
+
     /**
      * The weight of the subject.
      */
@@ -62,4 +65,5 @@ public class SubjectTO {
     public int hashCode() {
         return Objects.hash(id);
     }
+
 }

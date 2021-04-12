@@ -9,22 +9,27 @@ import java.util.UUID;
  * @author Raphael Krebs
  */
 public class PoliticianProfileTO extends PoliticianTO {
+
     /**
      * The politicians profession.
      */
     private final String profession;
+
     /**
      * The politicians gender.
      */
     private final String gender;
+
     /**
      * The media entries that mention the politician.
      */
     private final List<MediaEntryTO> mediaEntries;
+
     /**
      * The Questions posed to this politician.
      */
     private final List<PoliticianQuestionTO> questions;
+
     /**
      * The politician represented in this profile.
      */
@@ -68,4 +73,5 @@ public class PoliticianProfileTO extends PoliticianTO {
     public PoliticianTO getPolitician() {
         return politician;
     }
+
 }

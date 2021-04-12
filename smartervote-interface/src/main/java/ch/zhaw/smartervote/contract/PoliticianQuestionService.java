@@ -6,6 +6,7 @@ import java.util.UUID;
 
 /**
  * This interface defines the methods to ask questions to politicians and upvoting these questions.
+ *
  * @author Raphael Krebs
  */
 public interface PoliticianQuestionService {
@@ -27,4 +28,5 @@ public interface PoliticianQuestionService {
      * @return true if the question was upvoted, false otherwise.
      */
     boolean upvoteQuestion(UUID questionId, String ipAddress);
+
 }

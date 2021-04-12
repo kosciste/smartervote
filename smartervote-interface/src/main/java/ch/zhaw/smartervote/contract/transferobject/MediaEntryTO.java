@@ -8,18 +8,22 @@ import java.util.Date;
  * @author Raphael Krebs
  */
 public class MediaEntryTO {
+
     /**
-     * The hedline of the media entry.
+     * The headline of the media entry.
      */
     private final String headline;
+
     /**
      * The description of the media entry.
      */
     private final String description;
+
     /**
      * The link pointing to the media entry.
      */
     private final String link;
+
     /**
      * The publish date of the media entry.
      */

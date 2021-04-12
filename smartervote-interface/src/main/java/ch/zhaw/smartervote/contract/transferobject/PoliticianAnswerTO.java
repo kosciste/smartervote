@@ -6,6 +6,7 @@ package ch.zhaw.smartervote.contract.transferobject;
  * @author Raphael Krebs
  */
 public class PoliticianAnswerTO {
+
     /**
      * The answer of the politician.
      */
