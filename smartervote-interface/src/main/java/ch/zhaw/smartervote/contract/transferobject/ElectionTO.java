@@ -5,7 +5,8 @@ import java.util.UUID;
 
 /**
  * This class represents an election, for which a questionnaire can be answered by the user.
- * @author krebsrap
+ *
+ * @author Raphael Krebs
  */
 public class ElectionTO {
     /**
@@ -39,24 +40,22 @@ public class ElectionTO {
     }
 
     /**
-     * Compares the given ElectionTO object to this object.
-     * Returns true if UUID and name of both ElectionTO objects are equal to each other.
-     * Returns false otherwise.
-     * @param o The ElectionTO to be compared with this object.
-     * @return True if UUID and name match, false otherwise.
+     * {@inheritDoc}
      */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ElectionTO that = (ElectionTO) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(name, that.name);
+        return Objects.equals(id, that.id);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(id);
     }
 }
 

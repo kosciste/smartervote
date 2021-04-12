@@ -1,13 +1,14 @@
 package ch.zhaw.smartervote.contract.transferobject;
 
 import java.util.List;
-import java.util.Objects;
+import java.util.UUID;
 
 /**
  * This class represents the profile of a politician.
- * @author krebsrap
+ *
+ * @author Raphael Krebs
  */
-public class PoliticianProfileTO {
+public class PoliticianProfileTO extends PoliticianTO {
     /**
      * The politicians profession.
      */
@@ -29,11 +30,18 @@ public class PoliticianProfileTO {
      */
     private final PoliticianTO politician;
 
-    public PoliticianProfileTO(String profession,
+    public PoliticianProfileTO(UUID id,
+                               String imageUrl,
+                               String name,
+                               String party,
+                               int birthYear,
+                               int match,
+                               String profession,
                                String gender,
                                List<MediaEntryTO> mediaEntries,
                                List<PoliticianQuestionTO> questions,
                                PoliticianTO politician) {
+        super(id, imageUrl, name, party, birthYear, match);
         this.profession = profession;
         this.gender = gender;
         this.mediaEntries = mediaEntries;
@@ -59,29 +67,5 @@ public class PoliticianProfileTO {
 
     public PoliticianTO getPolitician() {
         return politician;
-    }
-
-    /**
-     * Compares the given PoliticianProfileTO object to this object.
-     * Returns true if all the data fields of the PoliticianProfileTO objects are equal to each other.
-     * Returns false otherwise.
-     * @param o The PoliticianProfileTO to be compared with this object.
-     * @return True all data fields of both PoliticianProfileTO objects match, false otherwise.
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        PoliticianProfileTO that = (PoliticianProfileTO) o;
-        return Objects.equals(profession, that.profession) &&
-                Objects.equals(gender, that.gender) &&
-                Objects.equals(mediaEntries, that.mediaEntries) &&
-                Objects.equals(questions, that.questions) &&
-                Objects.equals(politician, that.politician);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(profession, gender, mediaEntries, questions, politician);
     }
 }

@@ -5,13 +5,14 @@ import java.util.UUID;
 
 /**
  * This class represents a question of the questionnaire. It also contains the answer of the user.
- * @author krebsrap
+ *
+ * @author Raphael Krebs
  */
 public class QuestionTO {
     /**
      * The UUID of this question.
      */
-    private final UUID uuid;
+    private final UUID id;
     /**
      * The question in text form.
      */
@@ -22,13 +23,13 @@ public class QuestionTO {
     private int answer;
 
     public QuestionTO(UUID uuid, String text) {
-        this.uuid = uuid;
+        this.id = uuid;
         this.text = text;
         this.answer = -1;
     }
 
-    public UUID getUuid() {
-        return uuid;
+    public UUID getId() {
+        return id;
     }
 
     public String getText() {
@@ -44,24 +45,21 @@ public class QuestionTO {
     }
 
     /**
-     * Compares the given QuestionTO object to this object.
-     * Returns true if all the data fields of the QuestionTO objects are equal to each other.
-     * Returns false otherwise.
-     * @param o The QuestionTO to be compared with this object.
-     * @return True all data fields of both QuestionTO objects match, false otherwise.
+     * {@inheritDoc}
      */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         QuestionTO that = (QuestionTO) o;
-        return Objects.equals(uuid, that.uuid) &&
-                Objects.equals(answer, that.answer) &&
-                Objects.equals(text, that.text);
+        return Objects.equals(id, that.id);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
-        return Objects.hash(uuid, text);
+        return Objects.hash(id);
     }
 }

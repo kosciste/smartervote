@@ -5,7 +5,8 @@ import java.util.UUID;
 
 /**
  * This class represents a politician.
- * @author krebsrap
+ *
+ * @author Raphael Krebs
  */
 public class PoliticianTO {
     /**
@@ -72,27 +73,21 @@ public class PoliticianTO {
     }
 
     /**
-     * Compares the given PoliticianTO object to this object.
-     * Returns true if all the data fields of the PoliticianTO objects are equal to each other.
-     * Returns false otherwise.
-     * @param o The PoliticianTO to be compared with this object.
-     * @return True all data fields of both PoliticianTO objects match, false otherwise.
+     * {@inheritDoc}
      */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PoliticianTO that = (PoliticianTO) o;
-        return birthYear == that.birthYear &&
-                Objects.equals(id, that.id) &&
-                Objects.equals(imageUrl, that.imageUrl) &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(match, that.match) &&
-                Objects.equals(party, that.party);
+        return Objects.equals(id, that.id);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
-        return Objects.hash(id, imageUrl, name, party, birthYear, match);
+        return Objects.hash(id);
     }
 }
