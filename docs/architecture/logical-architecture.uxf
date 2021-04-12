@@ -2,7 +2,7 @@
 --
 bg=transparent</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>70</x><y>80</y><w>170</w><h>80</h></coordinates><panel_attributes>
 --
-bg=transparent</panel_attributes><additional_attributes></additional_attributes></element><element><id>Text</id><coordinates><x>80</x><y>110</y><w>110</w><h>30</h></coordinates><panel_attributes>Web Application
+bg=transparent</panel_attributes><additional_attributes></additional_attributes></element><element><id>Text</id><coordinates><x>80</x><y>110</y><w>110</w><h>30</h></coordinates><panel_attributes>Web
 style=wordwrap</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>280</x><y>80</y><w>170</w><h>80</h></coordinates><panel_attributes>
 --
 bg=transparent</panel_attributes><additional_attributes></additional_attributes></element><element><id>Text</id><coordinates><x>290</x><y>110</y><w>110</w><h>30</h></coordinates><panel_attributes>Spring Boot
