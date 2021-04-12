@@ -21,4 +21,7 @@ public class ProposalResult extends BaseEntity {
         return proposalResultScores;
     }
 
+    public void setProposalResultScores (Set<ProposalResultScore> proposalResultScores) {
+        this.proposalResultScores = proposalResultScores;
+    }
 }
