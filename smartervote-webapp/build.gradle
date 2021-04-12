@@ -9,7 +9,7 @@ plugins {
 dependencies {
 	// own dependencies
 	implementation project(':smartervote-interface')
-	runtime project(':smartervote-core')
+	runtime project(':smartervote-domain')
 	runtime project(':smartervote-persistency')
 
 	// external dependencies

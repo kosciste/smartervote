@@ -1,64 +1,59 @@
 package ch.zhaw.smartervote.persistency.entities;
 
-import javax.persistence.*;
-import java.util.Date;
-import java.util.UUID;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+
+/**
+ * Represents the Question table.
+ *
+ * @author Stefan Teodoropol
+ */
 @Entity
 @NamedQuery(
         name="Question.findByText",
         query="SELECT q FROM Question q where q.text like :text"
 )
-public class Question {
+public class Question extends BaseEntity {
 
-    @Id
-    @Column(name="id")
-    private UUID id;
+    @ManyToOne
+    @JoinColumn(name = "question_subject_id", nullable = false)
+    private QuestionSubject questionSubject;
 
-    @Column(name="text")
+    @OneToMany(mappedBy = "question")
+    private Set<QuestionAnswer> questionAnswers;
+
+    @Column(name = "text", nullable = false)
     private String text;
 
-    @Column(name="creation_time")
-    private Date creationTime;
-
-    @Column(name="change_time")
-    private Date changeTime;
-
-    @PrePersist
-    public void prePersist() {
-        id = UUID.randomUUID();
+    public QuestionSubject getQuestionSubject() {
+        return this.questionSubject;
     }
 
-    public UUID getId() {
-        return id;
+    public Set<QuestionAnswer> getQuestionAnswers() {
+        return this.questionAnswers;
     }
 
     public String getText() {
         return text;
     }
 
-    public Date getCreationTime() {
-        return creationTime;
+    public void setQuestionSubject(QuestionSubject questionSubject) {
+        this.questionSubject = questionSubject;
     }
 
-    public Date getChangeTime() {
-        return changeTime;
+    public void setQuestionAnswers(Set<QuestionAnswer> questionAnswers) {
+        this.questionAnswers = questionAnswers;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public void setText(String text) {
+    public void setT(String text) {
         this.text = text;
-    }
-
-    public void setCreationTime(Date creationTime) {
-        this.creationTime = creationTime;
-    }
-
-    public void setChangeTime(Date changeTime) {
-        this.changeTime = changeTime;
     }
 
 }

@@ -22,7 +22,7 @@ public class TestInterfaceImpl implements TestInterface {
 
     @Override
     public String doSomething() {
-        Optional<Question> question = questionRepository.findById(UUID.fromString("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"));
+        Optional<Question> question = questionRepository.findById(UUID.fromString("a335650d-06b4-4e92-ba77-d5f8964ceb82"));
         return question.isPresent() ? question.get().getText() : "Not found.";
     }
 

@@ -2,5 +2,5 @@ rootProject.name = 'smartervote'
 
 include 'smartervote-interface'
 include 'smartervote-persistency'
-include 'smartervote-core'
+include 'smartervote-domain'
 include 'smartervote-webapp'
