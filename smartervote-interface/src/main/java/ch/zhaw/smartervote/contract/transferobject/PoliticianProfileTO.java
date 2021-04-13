@@ -30,11 +30,6 @@ public class PoliticianProfileTO extends PoliticianTO {
      */
     private final List<PoliticianQuestionTO> questions;
 
-    /**
-     * The politician represented in this profile.
-     */
-    private final PoliticianTO politician;
-
     public PoliticianProfileTO(UUID id,
                                String imageUrl,
                                String name,
@@ -44,14 +39,12 @@ public class PoliticianProfileTO extends PoliticianTO {
                                String profession,
                                String gender,
                                List<MediaEntryTO> mediaEntries,
-                               List<PoliticianQuestionTO> questions,
-                               PoliticianTO politician) {
+                               List<PoliticianQuestionTO> questions) {
         super(id, imageUrl, name, party, birthYear, match);
         this.profession = profession;
         this.gender = gender;
         this.mediaEntries = mediaEntries;
         this.questions = questions;
-        this.politician = politician;
     }
 
     public String getProfession() {
@@ -68,10 +61,6 @@ public class PoliticianProfileTO extends PoliticianTO {
 
     public List<PoliticianQuestionTO> getQuestions() {
         return questions;
-    }
-
-    public PoliticianTO getPolitician() {
-        return politician;
     }
 
 }
