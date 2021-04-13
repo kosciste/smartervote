@@ -28,7 +28,7 @@ public class MapElection {
      * Maps a list of election entities to a set of transfer objects.
      *
      * @param entities the list of entities.
-     * @return the
+     * @return the set of election transfer objects.
      */
     public static Set<ElectionTO> toTransferObjects(List<Election> entities) {
         return entities.stream().map(MapElection::toTransferObject).collect(Collectors.toSet());

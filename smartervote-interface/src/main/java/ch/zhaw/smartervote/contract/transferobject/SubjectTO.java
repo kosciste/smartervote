@@ -1,5 +1,7 @@
 package ch.zhaw.smartervote.contract.transferobject;
 
+import ch.zhaw.smartervote.contract.SubjectWeight;
+
 import java.util.Objects;
 import java.util.UUID;
 
@@ -23,9 +25,9 @@ public class SubjectTO {
     /**
      * The weight of the subject.
      */
-    private int weight;
+    private SubjectWeight weight;
 
-    public SubjectTO(UUID id, String name, int weight) {
+    public SubjectTO(UUID id, String name, SubjectWeight weight) {
         this.id = id;
         this.name = name;
         this.weight = weight;
@@ -39,11 +41,11 @@ public class SubjectTO {
         return name;
     }
 
-    public int getWeight() {
+    public SubjectWeight getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(SubjectWeight weight) {
         this.weight = weight;
     }
 
