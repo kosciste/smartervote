@@ -1,0 +1,324 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\title{Use Cases}
+\author{stefankoscica }
+\date{April 2021}
+
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{float} % here for H placement parameter
+
+\begin{document}
+
+\maketitle
+
+\section{Use-Case-Diagramm}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.72]{diagram.png}
+\caption{Use-Case Diagramm}
+\label{fig:diagram}
+\end{figure}
+
+
+\section{Use-Cases}
+\subsection{Themengewichtung erstellen}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Umfang:}                                                                                   & SmarterVote~Applikation~                                                                                                                                          \\
+\hline
+\textbf{Ebene:}                                                                                    & Anwenderziel~                                                                                                                                                     \\
+\hline
+\textbf{Primärakteur:}                                                                             & Wähler                                                                                                                                                            \\
+\hline
+\begin{tabular}[c]{@{}l@{}}\textbf{Stakeholders }\\\textbf{und Interessen:}\end{tabular}           & \begin{tabular}[c]{@{}l@{}}Wähler: Möchte politischen Themen nach seinem\\~Empfinden priorisieren\end{tabular}                                                    \\
+\hline
+\textbf{Vorbedingungen:}                                                                           & Der Benutzer hat die Applikation gestartet                                                                                                                        \\
+\hline
+\begin{tabular}[c]{@{}l@{}}\textbf{Erfolgsgarantie/}\\\textbf{Nachbedingungen:}\end{tabular}       & \begin{tabular}[c]{@{}l@{}}Die Themengewichtungen werden im weiteren \\Verlauf der Applikation berücksichtigt.\end{tabular}                                       \\
+\hline
+\multirow{5}{*}{\textbf{Standardablauf:}}                                                          & 1.~~ Der Wähler startet die Applikation                                                                                                                           \\
+\cline{2-2}
+                                                                                                   & \begin{tabular}[c]{@{}l@{}}2.~~ Hier selektiert der Wähler eine Wahl,\\ die aktuell stattfindet und wird dann \\auf die nächste Seite weitergeleitet.\end{tabular}  \\
+\cline{2-2}
+                                                                                                   & \begin{tabular}[c]{@{}l@{}}3.~~ Der Wähler selektiert Themenblöcke, \\die in der Evaluation berücksichtigt werden sollen.\end{tabular}                            \\
+\cline{2-2}
+                                                                                                   & \begin{tabular}[c]{@{}l@{}}4.~~ Der Wähler gewichtet die angewählten \\Themenblöcke (unwichtig, normal, wichtig, sehr wichtig)\end{tabular}                       \\
+\cline{2-2}
+                                                                                                   & \begin{tabular}[c]{@{}l@{}}5.~~ Der Wähler bestätigt seine Eingabe und wird \\vom System auf die nächste Seite gleitet.\end{tabular}                              \\
+\hline
+\textbf{Erweiterung}                                                                               & keine                                                                                                                                                             \\
+\hline
+\textbf{Spezielle Anforderungen:}                                                                  & keine                                                                                                                                                             \\
+\hline
+\begin{tabular}[c]{@{}l@{}}\textbf{Liste der Technik und }\\\textbf{Datavariationen:}\end{tabular} & keine                                                                                                                                                             \\
+\hline
+\textbf{Häufigkeit des Auftretens:}                                                                & Bei jeder Auslösung des Evaluationsprozesses                                                                                                                      \\
+\hline
+\end{tabular}
+\end{table}
+\subsection{Wahlempfehlung erhalten}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Umfang:}                                                                                          & SmarterVote~Applikation~                                                                                                                                                                                                                                         \\
+\hline
+\textbf{Ebene:}                                                                                           & Anwenderziel~                                                                                                                                                                                                                                                    \\
+\hline
+\textbf{Primärakteur:}                                                                                    & Wähler                                                                                                                                                                                                                                                           \\
+\hline
+\multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}\textbf{Stakeholders }\\\textbf{und Interessen:}\end{tabular}} & \begin{tabular}[c]{@{}l@{}}Wähler: Möchte den richtigen Politiker \\für die anstehende Wahl finden.\end{tabular}                                                                                                                                                 \\
+\cline{2-2}
+                                                                                                          & \begin{tabular}[c]{@{}l@{}}Politiker: Erhofft sich neue Wählerdurch \\den einfacheren Prozess der Informationsbeschaffung \\über Politiker\end{tabular}                                                                                                          \\
+\cline{2-2}
+                                                                                                          & \begin{tabular}[c]{@{}l@{}}Schweizer Regierung: Stellt das Tool zur Verfügung, \\um eine möglichst hohe Wählerschaft zu gewinnen \\und die Politiklandschaft Schweiz zu vereinfachen.~\end{tabular}                                                              \\
+\hline
+\textbf{Vorbedingungen:}                                                                                  & Der Benutzer hat die Themengewichtung gesetzt.                                                                                                                                                                                                                   \\
+\hline
+\begin{tabular}[c]{@{}l@{}}\textbf{Erfolgsgarantie}\\\textbf{/Nachbedingungen:}\end{tabular}              & \begin{tabular}[c]{@{}l@{}}Das System hat dem Wähler mindestens \\einen Wahlvorschlag geliefert.\end{tabular}                                                                                                                                                    \\
+\hline
+\multirow{4}{*}{\textbf{Standardablauf:}}                                                                 & 1.~~ Der Wähler startet die Applikation.                                                                                                                                                                                                                         \\
+\cline{2-2}
+                                                                                                          & \begin{tabular}[c]{@{}l@{}}2.~~ Das System präsentiert dem Wähler die Fragen\\~mit Antwortmöglichkeiten \\(nein, eher nein, enthalten, eher ja, ja)\end{tabular}                                                                                                 \\
+\cline{2-2}
+                                                                                                          & 3.~~ Der Wähler teilt dem System seine Antworten mit.                                                                                                                                                                                                            \\
+\cline{2-2}
+                                                                                                          & \begin{tabular}[c]{@{}l@{}}4.~~ Das System liefert dem Wähler eine Liste \\mit Politkern, welche auf Basis der ausgefüllten \\Fragen evaluiert werden.\end{tabular}                                                                                              \\
+\hline
+\multirow{9}{*}{\textbf{Erweiterung}}                                                                     & \begin{tabular}[c]{@{}l@{}}1~~~~ Der Wähler schliesst in der Themenblock-Einstellung \\~ ~ ~ ~einen Themenblock komplett aus~\end{tabular}                                                                                                                       \\
+\cline{2-2}
+                                                                                                          & \begin{tabular}[c]{@{}l@{}}~ ~ ~ ~a.~~~ Auf der nächsten Seite~taucht der \\~ ~ ~ ~ ~ ~ ~ Themenblock nicht auf und dieser wird~\\~ ~ ~ ~ ~ ~ ~ im Hintergrund auch nicht mit \\~ ~ ~ ~ ~ ~ ~ in die Bewertung aufgenommen~\end{tabular}                         \\
+\cline{2-2}
+                                                                                                          & \begin{tabular}[c]{@{}l@{}}2~ ~ ~Der Wähler priorisiert einen Themenblock \\~ ~ ~ ~in der vorherigen Themenblock-Einstellung\\~ ~ ~ ~an erster Stelle.~\end{tabular}                                                                                             \\
+\cline{2-2}
+                                                                                                          & \begin{tabular}[c]{@{}l@{}}~ ~ ~ ~ ~a.~~ Dieser Umstand wird im GUI beim \\~ ~ ~ ~ ~ ~ ~ ~Ausfüllen der Fragen~noch einmal\\~ ~ ~ ~ ~ ~ ~ ~ersichtlich gemacht und im Hintergrund \\~ ~ ~ ~ ~ ~ ~ ~bei der Empfehlungsgenerierung berücksichtigt.~\end{tabular}  \\
+\cline{2-2}
+                                                                                                          & \begin{tabular}[c]{@{}l@{}}3~~~~~~~ Am Schluss hat der Nutzer die Möglichkeit, \\~ ~ ~ ~ ~ seine Resultate weiter zu verfeinern:~\end{tabular}                                                                                                                   \\
+\cline{2-2}
+                                                                                                          & a.~~ Alter~                                                                                                                                                                                                                                                      \\
+\cline{2-2}
+                                                                                                          & b.~~ Geschlecht~                                                                                                                                                                                                                                                 \\
+\cline{2-2}
+                                                                                                          & c.~ ~Politische Erfahrung~                                                                                                                                                                                                                                       \\
+\cline{2-2}
+                                                                                                          & d.~~ Parteien~~                                                                                                                                                                                                                                                  \\
+\hline
+\textbf{Spezielle Anforderungen:}                                                                         & keine                                                                                                                                                                                                                                                            \\
+\hline
+\begin{tabular}[c]{@{}l@{}}\textbf{Liste der Technik }\\\textbf{und Datavariationen:}\end{tabular}        & keine                                                                                                                                                                                                                                                            \\
+\hline
+\textbf{Häufigkeit des Auftretens:}                                                                       & Bei jeder Auslösung des Evaluationsprozesses                                                                                                                                                                                                                     \\
+\hline
+\end{tabular}
+\end{table}
+\subsection{Wahlempfehlung filtern}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Umfang:}                                                                                          & SmarterVote~Applikation~                                                                                                                                 \\
+\hline
+\textbf{Ebene:}                                                                                           & Anwenderziel~                                                                                                                                            \\
+\hline
+\textbf{Primärakteur:}                                                                                    & Wähler                                                                                                                                                   \\
+\hline
+\multirow{2}{*}{\begin{tabular}[c]{@{}l@{}}\textbf{Stakeholders }\\\textbf{und Interessen:}\end{tabular}} & \begin{tabular}[c]{@{}l@{}}Wähler: Möchte mit dem Filter die \\Wahlempfehlung einschränken\end{tabular}                                                  \\
+\cline{2-2}
+                                                                                                          & \begin{tabular}[c]{@{}l@{}}Politiker: Möchte, dass seine Daten \\korrekt~erfasst sind\end{tabular}                                                       \\
+\hline
+\textbf{Vorbedingungen:}                                                                                  & \begin{tabular}[c]{@{}l@{}}Der Wähler hat mindestens eine \\Wahlempfehlung vom System erhalten\end{tabular}                                              \\
+\hline
+\begin{tabular}[c]{@{}l@{}}\textbf{Erfolgsgarantie}\\\textbf{/Nachbedingungen:}\end{tabular}              & \begin{tabular}[c]{@{}l@{}}Das System hat die eingegebenen \\Filtereinstellungen auf die Wahlempfehlungen \\angewendet.\end{tabular}                     \\
+\hline
+\multirow{6}{*}{\textbf{Standardablauf:}}                                                                 & \begin{tabular}[c]{@{}l@{}}1.~~ Der Wähler sieht die Wahlempfehlung \\und drückt den Knopf "Filter hinzufügen".\end{tabular}                             \\
+\cline{2-2}
+                                                                                                          & \begin{tabular}[c]{@{}l@{}}2.~~ Der Wähler selektiert das zu filternde \\Merkmal (zBsp. "Alter").\end{tabular}                                           \\
+\cline{2-2}
+                                                                                                          & \begin{tabular}[c]{@{}l@{}}3.~~ Der Wähler selektiert die Filteroption \\aus einer nach dem Merkmal angepasste \\Liste aus wie zB "unter".\end{tabular}  \\
+\cline{2-2}
+                                                                                                          & 4.~~ Der Wähler gibt einen Filterwert an.                                                                                                                \\
+\cline{2-2}
+                                                                                                          & 5.~~ Der Wähler bestätigt die Eingabe                                                                                                                    \\
+\cline{2-2}
+                                                                                                          & 6.~~ Das System gibt die gefilterte Ansicht zurück                                                                                                       \\
+\hline
+\multirow{2}{*}{\textbf{Erweiterung}}                                                                     & 1~~~~~~~ Der Wähler gibt einen ungültigen Wert ein                                                                                                       \\
+\cline{2-2}
+                                                                                                          & ~ ~ ~ ~ ~ a.~~~ Das System informiert den Wähler                                                                                                         \\
+\hline
+\textbf{Spezielle Anforderungen:}                                                                         & keine                                                                                                                                                    \\
+\hline
+\begin{tabular}[c]{@{}l@{}}\textbf{Liste der Technik }\\\textbf{und Datavariationen:}\end{tabular}        & keine                                                                                                                                                    \\
+\hline
+\textbf{Häufigkeit des Auftretens:}                                                                       & Selektiv                                                                                                                                                 \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Frage stellen}
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Umfang:}                                                                                   & SmarterVote~Applikation~                                                                                         \\
+\hline
+\textbf{Ebene:}                                                                                    & Anwenderziel~                                                                                                    \\
+\hline
+\textbf{Primärakteur:}                                                                             & Wähler                                                                                                           \\
+\hline
+\multirow{2}{*}{\textbf{Stakeholders und Interessen:}}                                             & \begin{tabular}[c]{@{}l@{}}Wähler: möchte ein Statement zu einem\\~ihm wichtigen Thema\end{tabular}              \\
+\cline{2-2}
+                                                                                                   & \begin{tabular}[c]{@{}l@{}}Politiker: Möchte Stellung beziehen \\zum~Thema,~das die~Wähler bewegt~\end{tabular}  \\
+\hline
+\textbf{Vorbedingungen:}                                                                           & keine                                                                                                            \\
+\hline
+\begin{tabular}[c]{@{}l@{}}\textbf{Erfolgsgarantie}\\\textbf{/Nachbedingungen:}\end{tabular}       & Die Frage ist sichtbar                                                                                           \\
+\hline
+\multirow{6}{*}{\textbf{Standardablauf:}}                                                          & 1.~~ Der Wähler startet die Applikation.                                                                         \\
+\cline{2-2}
+                                                                                                   & 2.~~ Der Wähler geht auf das Profil des Politikers.                                                              \\
+\cline{2-2}
+                                                                                                   & 3.~~ Der Wähler stellt eine Frage an den Politiker.                                                              \\
+\cline{2-2}
+                                                                                                   & 4.~~ Das System benachrichtigt den Politiker.                                                                    \\
+\cline{2-2}
+                                                                                                   & 5.~~ Der Politiker beantwortet die Frage.                                                                        \\
+\cline{2-2}
+                                                                                                   & 6.~~ Das System benachrichtigt den Wähler.                                                                       \\
+\hline
+\textbf{Erweiterung}                                                                               & keine                                                                                                            \\
+\hline
+\textbf{Spezielle Anforderungen:}                                                                  & keine                                                                                                            \\
+\hline
+\begin{tabular}[c]{@{}l@{}}\textbf{Liste der Technik }\\\textbf{und Datavariationen:}\end{tabular} & keine                                                                                                            \\
+\hline
+\textbf{Häufigkeit des Auftretens:}                                                                & Bei jeder Auslösung des Evaluationsprozesses                                                                     \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Politikerprofile anschauen}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Umfang:}                                                                                          & SmarterVote~Applikation~                                                                                                              \\
+\hline
+\textbf{Ebene:}                                                                                           & Anwenderziel~                                                                                                                         \\
+\hline
+\textbf{Primärakteur:}                                                                                    & Wähler                                                                                                                                \\
+\hline
+\multirow{2}{*}{\begin{tabular}[c]{@{}l@{}}\textbf{Stakeholders }\\\textbf{und Interessen:}\end{tabular}} & \begin{tabular}[c]{@{}l@{}}Wähler: Möchte übersichtliche, umfangreiche \\und korrekte Informationen über den Politiker.\end{tabular}  \\
+\cline{2-2}
+                                                                                                          & Politiker: Möchte ein ansprechendes Profil.                                                                                           \\
+\hline
+\textbf{Vorbedingungen:}                                                                                  & Der Politiker besitzt ein Profil auf der Applikation                                                                                  \\
+\hline
+\begin{tabular}[c]{@{}l@{}}\textbf{Erfolgsgarantie}\\\textbf{/Nachbedingungen:}\end{tabular}              & Das System zeigt dem Wähler das Politikerprofil                                                                                       \\
+\hline
+\multirow{2}{*}{\textbf{Standardablauf:}}                                                                 & 1.~~ Der Wähler sucht nach dem Politiker.                                                                                             \\
+\cline{2-2}
+                                                                                                          & 2.~~ Der Wähler klickt das Profil des Politikers an.                                                                                  \\
+\hline
+\textbf{Erweiterung}                                                                                      & keine                                                                                                                                 \\
+\hline
+\textbf{Spezielle Anforderungen:}                                                                         & keine                                                                                                                                 \\
+\hline
+\begin{tabular}[c]{@{}l@{}}\textbf{Liste der Technik }\\\textbf{und Datavariationen:}\end{tabular}        & keine                                                                                                                                 \\
+\hline
+\textbf{Häufigkeit des Auftretens:}                                                                       & Selektiv                                                                                                                              \\
+\hline
+\end{tabular}
+\end{table}
+\subsection{Medienaussagen anschauen}
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Umfang:}                                                                                          & SmarterVote~Applikation~                                                                                     \\
+\hline
+\textbf{Ebene:}                                                                                           & Anwenderziel~                                                                                                \\
+\hline
+\textbf{Primärakteur:}                                                                                    & Wähler                                                                                                       \\
+\hline
+\multirow{2}{*}{\begin{tabular}[c]{@{}l@{}}\textbf{Stakeholders }\\\textbf{und Interessen:}\end{tabular}} & \begin{tabular}[c]{@{}l@{}}Wähler: Möchte die neusten Medienaussagen \\eines Politikers sehen.\end{tabular}  \\
+\cline{2-2}
+                                                                                                          & \begin{tabular}[c]{@{}l@{}}Politiker: Möchte eine Zusammenfassung \\seiner Statements.\end{tabular}          \\
+\hline
+\textbf{Vorbedingungen:}                                                                                  & Der Politiker besitzt ein Profil auf der Applikation.                                                        \\
+\hline
+\begin{tabular}[c]{@{}l@{}}\textbf{Erfolgsgarantie}\\\textbf{/Nachbedingungen:}\end{tabular}              & Das System zeigt die neusten Medienaussagen.                                                                 \\
+\hline
+\multirow{3}{*}{\textbf{Standardablauf:}}                                                                 & 1.~~ Der Wähler sucht nach dem Politiker.                                                                    \\
+\cline{2-2}
+                                                                                                          & 2.~~ Der Wähler klickt das Profil des Politikers an.                                                         \\
+\cline{2-2}
+                                                                                                          & \begin{tabular}[c]{@{}l@{}}3.~~ Der Wähler schaut sich die neusten\\~Medienaussagen an.\end{tabular}         \\
+\hline
+\textbf{Erweiterung}                                                                                      & keine                                                                                                        \\
+\hline
+\textbf{Spezielle Anforderungen:}                                                                         & keine                                                                                                        \\
+\hline
+\begin{tabular}[c]{@{}l@{}}\textbf{Liste der Technik }\\\textbf{und Datavariationen:}\end{tabular}        & keine                                                                                                        \\
+\hline
+\textbf{Häufigkeit des Auftretens:}                                                                       & Selektiv                                                                                                     \\
+\hline
+\end{tabular}
+\end{table}
+\subsection{Fragebogen beantworten}
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Umfang:}                                                                                          & SmarterVote~Applikation~                                                                                                                               \\
+\hline
+\textbf{Ebene:}                                                                                           & Anwenderziel~                                                                                                                                          \\
+\hline
+\textbf{Primärakteur:}                                                                                    & Politiker                                                                                                                                              \\
+\hline
+\multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}\textbf{Stakeholders }\\\textbf{und Interessen:}\end{tabular}} & \begin{tabular}[c]{@{}l@{}}Wähler: Möchte eine möglich grosse \\Auswahl an Politikern\end{tabular}                                                     \\
+\cline{2-2}
+                                                                                                          & \begin{tabular}[c]{@{}l@{}}Politiker: Möchte auf der Applikation \\repräsentiert werden\end{tabular}                                                   \\
+\cline{2-2}
+                                                                                                          & \begin{tabular}[c]{@{}l@{}}Unser Unternehmen: Möchte eine möglichst \\qualitative Datenbasis\end{tabular}                                              \\
+\hline
+\textbf{Vorbedingungen:}                                                                                  & Der Politiker besitzt ein Profil auf der Applikation.                                                                                                  \\
+\hline
+\begin{tabular}[c]{@{}l@{}}\textbf{Erfolgsgarantie}\\\textbf{/Nachbedingungen:}\end{tabular}              & \begin{tabular}[c]{@{}l@{}}Die Daten wurden erfolgreich \\ins System aufgenommen\end{tabular}                                                          \\
+\hline
+\multirow{4}{*}{\textbf{Standardablauf:}}                                                                 & 1.~~ Der Politiker startet die Applikation.                                                                                                            \\
+\cline{2-2}
+                                                                                                          & \begin{tabular}[c]{@{}l@{}}2.~~ Das System präsentiert dem Wähler \\die Fragen mit Antwortmöglichkeiten \\(nein, eher nein, eher ja, ja)\end{tabular}  \\
+\cline{2-2}
+                                                                                                          & \begin{tabular}[c]{@{}l@{}}3.~~ Der Politiker teilt dem System \\seine Antworten mit.\end{tabular}                                                     \\
+\cline{2-2}
+                                                                                                          & \begin{tabular}[c]{@{}l@{}}4.~~ Das System speichert die Daten\\~in die Datenbank\end{tabular}                                                         \\
+\hline
+\textbf{Erweiterung}                                                                                      & keine                                                                                                                                                  \\
+\hline
+\textbf{Spezielle Anforderungen:}                                                                         & keine                                                                                                                                                  \\
+\hline
+\begin{tabular}[c]{@{}l@{}}\textbf{Liste der Technik }\\\textbf{und Datavariationen:}\end{tabular}        & keine                                                                                                                                                  \\
+\hline
+\textbf{Häufigkeit des Auftretens:}                                                                       & Selektiv                                                                                                                                               \\
+\hline
+\end{tabular}
+\end{table}
+\section{Systemsequenzdiagramm}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.72]{ssd.png}
+\caption{Systemsequenzdiagramm}
+\label{fig:diagram}
+\end{figure}
+\end{document}
