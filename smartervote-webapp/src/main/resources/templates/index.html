@@ -1,20 +1,74 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>Smartervote</title>
-
-        <!-- stylesheets -->
-        <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">-->
-        <link rel="stylesheet" th:href="@{/styles/bulma.min.css}">
-        <link rel="stylesheet" th:href="@{/styles/style.css}">
-
-    </head>
-    <body>
-        <div class="container content">
-            <h1>Smartervote</h1>
-            <div class="notification is-primary">
-                Text der ersten Frage: <span th:text="${text}"></span>
+<html xmlns:th="http://www.thymeleaf.org" lang="de">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/styles/custom.css}">
+    <!-- js -->
+    <script type="text/javascript" src="js/main.js" defer></script>
+    <title>Smartervote</title>
+</head>
+<body>
+<nav th:replace="fragments/navigation :: navigation"></nav>
+<header th:replace="fragments/header :: name('Vorauswahl', 'Wählen Sie die Wahlen aus' +
+  ' und gewichten Sie die einzelnen Themenblöcke ')"></header>
+<main>
+    <form action="#" method="post">
+        <div class="container-fluid container-topic">
+            <div class="row">
+                <div class="col-12">
+                    <div class="container-fluid container-topic-inner">
+                        <div class="row questions-row">
+                            <div class="col-md-8">
+                                <label for="election">Wahl</label>
+                                    <select name="election" id="cars">
+                                        <option value="0">Berner Kantonswahlen</option>
+                                        <option value="1">Schaffhauser Kantonswahlen</option>
+                                    </select>
+                                <!--<select th:each="election: ${elections}" name="election" id="election">
+                                    <option th:text="${election.name}" value="volvo"></option>
+                                </select>-->
+                            </div>
+                            <div class="col-md-4">
+                                <!--<h3>Gewichtung: Stark</h3>-->
+                            </div>
+                        </div>
+                        <div class="row questions-row">
+                            <div class="col-md-4">
+                                <p class="topic">Gesundheitswesen</p>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="switch-field">
+                                    <input type="radio" id="radio-one" name="switch-two" value="0"/>
+                                    <label for="radio-one">kein Interesse</label>
+                                    <input type="radio" id="radio-two" name="switch-two" value="1"/>
+                                    <label for="radio-two">Unwichtig</label>
+                                    <input type="radio" id="radio-three" name="switch-two" value="2" checked/>
+                                    <label for="radio-three">Normal</label>
+                                    <input type="radio" id="radio-four" name="switch-two" value="3"/>
+                                    <label for="radio-four">Wichtig</label>
+                                    <input type="radio" id="radio-five" name="switch-two" value="4"/>
+                                    <label for="radio-five">Sehr Wichtig</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </body>
+        <div class="container-fluid container-send">
+            <div class="row">
+                <div class="col-12">
+                    <button type="submit" class="btn btn-send">Zum Fragenbogen</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</main>
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
 </html>
