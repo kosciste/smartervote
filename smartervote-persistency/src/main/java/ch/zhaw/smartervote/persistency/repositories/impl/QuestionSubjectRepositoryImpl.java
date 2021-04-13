@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  *
  * @author Raphael Krebs
  */
-@Component("questionRepository")
+@Component("questionSubjectRepository")
 public class QuestionSubjectRepositoryImpl extends BaseRepositoryImpl<QuestionSubject>
         implements QuestionSubjectRepository {
 

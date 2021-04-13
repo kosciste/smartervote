@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  *
  * @author Raphael Krebs
  */
-@Component("questionRepository")
+@Component("electionRepository")
 public class ElectionRepositoryImpl extends BaseRepositoryImpl<Election> implements ElectionRepository {
 
     @Autowired

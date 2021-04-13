@@ -17,6 +17,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 
+/**
+ * {@inheritDoc}
+ */
 @Component("electionProposalService")
 public class ElectionProposalServiceImpl implements ElectionProposalService {
 
@@ -31,11 +34,17 @@ public class ElectionProposalServiceImpl implements ElectionProposalService {
         this.questionSubjectRepository = questionSubjectRepository;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Set<ElectionTO> getAvailableElections() {
         return MapElection.toTransferObjects(electionRepository.findAll());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Set<SubjectTO> getQuestionSubjects(UUID electionId) {
         Optional<Election> electionOptional = electionRepository.findById(electionId);
@@ -43,9 +52,12 @@ public class ElectionProposalServiceImpl implements ElectionProposalService {
         return MapQuestionSubject.toTransferObjects(electionOptional.get().getQuestionSubjects());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Map<SubjectTO, List<QuestionTO>> getQuestionCatalogue(UUID electionId, Set<SubjectTO> selection) {
-        Map<SubjectTO, List<QuestionTO>> questions = new HashMap<>();
+    public Map<SubjectTO, Set<QuestionTO>> getQuestionCatalogue(UUID electionId, Set<SubjectTO> selection) {
+        Map<SubjectTO, Set<QuestionTO>> questions = new HashMap<>();
         for (SubjectTO subject : selection) {
             Optional<QuestionSubject> subjectOptional = questionSubjectRepository.findById(subject.getId());
             if (subjectOptional.isEmpty()) throw new IllegalArgumentException("Election does not exist.");
@@ -54,6 +66,9 @@ public class ElectionProposalServiceImpl implements ElectionProposalService {
         return questions;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public UUID calculateElectionProposal(UUID electionId, Map<SubjectTO, Set<QuestionTO>> questions) {
         return ElectionProposalAlgorithm.calculate(electionId, questions);
