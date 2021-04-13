@@ -55,6 +55,18 @@ public abstract class BaseRepositoryImpl<T> implements Repository<T> {
 
     }
 
+    @Override
+    public List<T> findByText(String field, String text) {
+        Session session = databaseConnection.createSession();
+
+        Query query = session.createQuery(
+                "SELECT e FROM " + getClassType().getSimpleName() + " e WHERE (:field).id = :text");
+        query.setParameter("field", field);
+        query.setParameter("text", text);
+
+        return null;
+    }
+
     /**
      * {@inheritDoc}
      */
