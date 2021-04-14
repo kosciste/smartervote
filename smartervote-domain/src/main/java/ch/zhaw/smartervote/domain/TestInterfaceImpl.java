@@ -1,9 +1,8 @@
-package ch.zhaw.smartervote.core;
+package ch.zhaw.smartervote.domain;
 
 import ch.zhaw.smartervote.contract.TestInterface;
 import ch.zhaw.smartervote.persistency.entities.Question;
 import ch.zhaw.smartervote.persistency.repositories.iface.QuestionRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
