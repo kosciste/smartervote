@@ -1,6 +1,7 @@
 package ch.zhaw.smartervote.domain;
 
 import ch.zhaw.smartervote.contract.ElectionProposalService;
+import ch.zhaw.smartervote.contract.SubjectWeight;
 import ch.zhaw.smartervote.contract.transferobject.ElectionTO;
 import ch.zhaw.smartervote.contract.transferobject.QuestionTO;
 import ch.zhaw.smartervote.contract.transferobject.SubjectTO;
@@ -23,15 +24,28 @@ import java.util.*;
 @Component("electionProposalService")
 public class ElectionProposalServiceImpl implements ElectionProposalService {
 
+    /**
+     * The repository for elections.
+     */
     private final ElectionRepository electionRepository;
 
+    /**
+     * The repository for question subjects.
+     */
     private final QuestionSubjectRepository questionSubjectRepository;
+
+    /**
+     * The algorithm for the election proposal.
+     */
+    private final ElectionProposalAlgorithm electionProposalAlgorithm;
 
     @Autowired
     public ElectionProposalServiceImpl(ElectionRepository electionRepository,
-                                       QuestionSubjectRepository questionSubjectRepository) {
+                                       QuestionSubjectRepository questionSubjectRepository,
+                                       ElectionProposalAlgorithm electionProposalAlgorithm) {
         this.electionRepository = electionRepository;
         this.questionSubjectRepository = questionSubjectRepository;
+        this.electionProposalAlgorithm = electionProposalAlgorithm;
     }
 
     /**
@@ -59,9 +73,11 @@ public class ElectionProposalServiceImpl implements ElectionProposalService {
     public Map<SubjectTO, Set<QuestionTO>> getQuestionCatalogue(UUID electionId, Set<SubjectTO> selection) {
         Map<SubjectTO, Set<QuestionTO>> questions = new HashMap<>();
         for (SubjectTO subject : selection) {
-            Optional<QuestionSubject> subjectOptional = questionSubjectRepository.findById(subject.getId());
-            if (subjectOptional.isEmpty()) throw new IllegalArgumentException("Election does not exist.");
-            questions.put(subject, MapQuestion.toTransferObjects(subjectOptional.get().getQuestions()));
+            if (subject.getWeight() != SubjectWeight.NOT_INTERESTED) {
+                Optional<QuestionSubject> subjectOptional = questionSubjectRepository.findById(subject.getId());
+                if (subjectOptional.isEmpty()) throw new IllegalArgumentException("Election does not exist.");
+                questions.put(subject, MapQuestion.toTransferObjects(subjectOptional.get().getQuestions()));
+            }
         }
         return questions;
     }
@@ -71,7 +87,7 @@ public class ElectionProposalServiceImpl implements ElectionProposalService {
      */
     @Override
     public UUID calculateElectionProposal(UUID electionId, Map<SubjectTO, Set<QuestionTO>> questions) {
-        return ElectionProposalAlgorithm.calculate(electionId, questions);
+        return electionProposalAlgorithm.calculate(electionId, questions);
     }
 
 }

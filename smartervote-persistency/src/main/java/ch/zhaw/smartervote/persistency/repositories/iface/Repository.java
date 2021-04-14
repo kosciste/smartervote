@@ -28,16 +28,6 @@ public interface Repository<T> {
     Optional<T> findById(UUID id);
 
     /**
-     * Finds elements in a field by text.
-     * <p>
-     * * @param field the field name
-     *
-     * @param text the string to be found
-     * @return found elements
-     */
-    List<T> findByText(String field, String text);
-
-    /**
      * Counts the amount of records.
      *
      * @return amount of elements
