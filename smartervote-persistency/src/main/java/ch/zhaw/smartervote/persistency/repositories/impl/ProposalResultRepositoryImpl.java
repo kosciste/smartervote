@@ -6,6 +6,11 @@ import ch.zhaw.smartervote.persistency.repositories.iface.ProposalResultReposito
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * Repository for proposal results.
+ *
+ * @author Raphael Krebs
+ */
 @Component("proposalResultRepository")
 public class ProposalResultRepositoryImpl extends BaseRepositoryImpl<ProposalResult> implements ProposalResultRepository {
 
