@@ -14,56 +14,19 @@
 </head>
 <body>
 <nav th:replace="fragments/navigation :: navigation"></nav>
-<header th:replace="fragments/header :: name('Vorauswahl', 'Wählen Sie die Wahlen aus' +
-  ' und gewichten Sie die einzelnen Themenblöcke ')"></header>
+<header th:replace="fragments/header :: name('Vorauswahl', 'Wählen Sie die Wahlen aus, die Sie interessieren')"></header>
 <main>
-    <form action="#" method="post">
+    <form th:object="${elections}" action="#" method="post">
         <div class="container-fluid container-topic">
             <div class="row">
                 <div class="col-12">
                     <div class="container-fluid container-topic-inner">
-                        <div class="row questions-row">
-                            <div class="col-md-8">
-                                <label for="election">Wahl</label>
-                                    <select name="election" id="cars">
-                                        <option value="0">Berner Kantonswahlen</option>
-                                        <option value="1">Schaffhauser Kantonswahlen</option>
-                                    </select>
-                                <!--<select th:each="election: ${elections}" name="election" id="election">
-                                    <option th:text="${election.name}" value="volvo"></option>
-                                </select>-->
-                            </div>
-                            <div class="col-md-4">
-                                <!--<h3>Gewichtung: Stark</h3>-->
-                            </div>
-                        </div>
-                        <div class="row questions-row">
-                            <div class="col-md-4">
-                                <p class="topic">Gesundheitswesen</p>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="switch-field">
-                                    <input type="radio" id="radio-one" name="switch-two" value="0"/>
-                                    <label for="radio-one">kein Interesse</label>
-                                    <input type="radio" id="radio-two" name="switch-two" value="1"/>
-                                    <label for="radio-two">Unwichtig</label>
-                                    <input type="radio" id="radio-three" name="switch-two" value="2" checked/>
-                                    <label for="radio-three">Normal</label>
-                                    <input type="radio" id="radio-four" name="switch-two" value="3"/>
-                                    <label for="radio-four">Wichtig</label>
-                                    <input type="radio" id="radio-five" name="switch-two" value="4"/>
-                                    <label for="radio-five">Sehr Wichtig</label>
-                                </div>
+                        <div th:each="election: ${elections}" class="row election-row grey-bg">
+                            <div class="col-12">
+                                <a th:href="@{wahlen/{id}(id=${election.id})}" th:text="${election.name}"  class="election"></a>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="container-fluid container-send">
-            <div class="row">
-                <div class="col-12">
-                    <button type="submit" class="btn btn-send">Zum Fragenbogen</button>
                 </div>
             </div>
         </div>

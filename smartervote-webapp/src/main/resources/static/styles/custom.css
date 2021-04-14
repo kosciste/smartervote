@@ -376,6 +376,34 @@ header{
 
 /*end footer specific*/
 
+/* start elections specific */
+.election-row{
+    padding: 10px 0px;
+    margin-bottom: 50px;
+}
+
+
+.election-row:hover{
+    background-color: #5aa8f3;
+    color: white !important;
+}
+
+a.election{
+    font-size: 1.6rem;
+    color: black;
+    font-weight: 500;
+}
+
+/* end elections specific */
+
+/* start topic specific */
+
+.topic-row{
+    padding: 10px 0px;
+    margin-bottom: 20px !important;
+}
+
+/* end topic specific */
 
 /* start questions specific */
 .switch-field {
@@ -441,7 +469,7 @@ header{
 
 }
 
-.container-topic-inner{
+.grey-bg{
   background-color: #f3f3f3;
 }
 
@@ -482,11 +510,4 @@ header{
 
 /* end questions specific */
 
-/* start topic specific */
-p.topic{
-  font-size: 1.6rem;
-  color: black;
-  font-weight: 500;
-}
 
-/* end topic specific */
