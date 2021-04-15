@@ -12,7 +12,8 @@
     <session-factory>
 
         <!-- connection info -->
-        <property name="connection.url">jdbc:postgresql://localhost:5432/smartervote</property> <!-- BD Connection -->
+        <property name="connection.url">jdbc:postgresql://localhost:${db.port}/smartervote
+        </property> <!-- BD Connection -->
         <property name="connection.driver_class">org.postgresql.Driver</property> <!-- DB Driver -->
         <property name="connection.username">smartervote_user</property> <!-- DB User -->
         <property name="connection.password">123456</property> <!-- DB Password -->

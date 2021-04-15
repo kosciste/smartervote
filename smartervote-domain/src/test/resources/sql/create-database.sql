@@ -20,15 +20,18 @@
 SELECT pg_terminate_backend(pg_stat_activity.pid)
 FROM pg_stat_activity
 WHERE pg_stat_activity.datname = 'smartervote'
-AND pid <> pg_backend_pid();
+  AND pid <> pg_backend_pid();
 
 -- drop databases that might already exist
-DROP DATABASE IF EXISTS smartervote;
-DROP USER IF EXISTS smartervote_user;
+DROP
+DATABASE IF EXISTS smartervote;
+DROP
+USER IF EXISTS smartervote_user;
 
 -- user used by the application
 -- https://www.postgresql.org/docs/current/sql-createrole.html
-CREATE USER smartervote_user WITH
+CREATE
+USER smartervote_user WITH
     NOSUPERUSER
     NOCREATEDB
     NOCREATEROLE
@@ -39,7 +42,8 @@ CREATE USER smartervote_user WITH
 
 -- database
 -- https://www.postgresql.org/docs/current/sql-createdatabase.html
-CREATE DATABASE smartervote WITH
+CREATE
+DATABASE smartervote WITH
     OWNER postgres
     ENCODING 'UTF8'
 	TABLESPACE pg_default
