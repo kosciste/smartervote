@@ -17,35 +17,32 @@
 <header th:replace="fragments/header :: name('Fragebogen', 'Sie können nun den Fragebogen ausfüllen. '
     + 'Anhand ihrer Antwortenberechnen wir den optimalen Kandidaten für Sie')"></header>
 <main>
-    <form action="#" method="post">
+    <form th:action="@{/save}" action="#" th:object="${form}" method="post">
         <div class="container-fluid container-topic">
             <div class="row">
                 <div class="col-12">
-                    <div class="container-fluid grey-bg">
-                        <div class="row questions-row">
-                            <div class="col-md-8">
-                                <h3>Thema A</h3>
-                            </div>
-                            <div class="col-md-4">
-                                <!--<h3>Gewichtung: Stark</h3>-->
-                            </div>
-                        </div>
-                        <div class="row questions-row">
+                    <div class="container-fluid ">
+                        <div th:each="question, itemStat : *{questionVOS}" class="row topic-row grey-bg">
                             <div class="col-md-6">
-                                <label class="question" th:text="${text}" for="test"></label>
+                                <label class="question" th:text="${question.text}"></label>
                             </div>
                             <div class="col-md-6">
                                 <div class="switch-field">
-                                    <input type="radio" id="radio-one" name="switch-two" value="Ja"/>
-                                    <label for="radio-one">Ja</label>
-                                    <input type="radio" id="radio-two" name="switch-two" value="Eher Ja"/>
-                                    <label for="radio-two">Eher Ja</label>
-                                    <input type="radio" id="radio-three" name="switch-two" value="Enthalten" checked/>
-                                    <label for="radio-three">Enthalten</label>
-                                    <input type="radio" id="radio-four" name="switch-two" value="Eher nein"/>
-                                    <label for="radio-four">Eher Nein</label>
-                                    <input type="radio" id="radio-five" name="switch-two" value="Nein"/>
-                                    <label for="radio-five">Nein</label>
+                                    <input type="radio" th:field="*{questionVOS[__${itemStat.index}__].answer}"
+                                           th:id="'radio-one-'+${question.id}" th:name="'radio-one-'+${question.id}" value="0"/>
+                                    <label th:for="'radio-one-'+${question.id}">Nein</label>
+                                    <input type="radio" th:field="*{questionVOS[__${itemStat.index}__].answer}"
+                                           th:id="'radio-two-'+${question.id}" th:name="'radio-two-'+${question.id}"  value="1"/>
+                                    <label th:for="'radio-two-'+${question.id}">Eher Nein</label>
+                                    <input type="radio" th:field="*{questionVOS[__${itemStat.index}__].answer}"
+                                           th:id="'radio-three-'+${question.id}" th:name="'radio-three-'+${question.id}"  value="2" checked/>
+                                    <label th:for="'radio-three-'+${question.id}">Enthalten</label>
+                                    <input type="radio" th:field="*{questionVOS[__${itemStat.index}__].answer}"
+                                           th:id="'radio-four-'+${question.id}" th:name="'radio-four-'+${question.id}"  value="3"/>
+                                    <label th:for="'radio-four-'+${question.id}">Eher ja</label>
+                                    <input type="radio" th:field="*{questionVOS[__${itemStat.index}__].answer}"
+                                           th:id="'radio-five-'+${question.id}" th:name="'radio-five-'+${question.id}"  value="4"/>
+                                    <label th:for="'radio-five-'+${question.id}">Ja</label>
                                 </div>
                             </div>
                         </div>
@@ -56,7 +53,7 @@
         <div class="container-fluid container-send">
             <div class="row">
                 <div class="col-12">
-                    <button type="submit" class="btn btn-send">Senden</button>
+                    <button type="submit" id="submitButton" th:value="Save" class="btn btn-send">Senden</button>
                 </div>
             </div>
         </div>
