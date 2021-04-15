@@ -3,15 +3,18 @@ package ch.zhaw.smartervote.domain;
 import ch.zhaw.smartervote.contract.ElectionProposalService;
 import ch.zhaw.smartervote.contract.SubjectWeight;
 import ch.zhaw.smartervote.contract.transferobject.ElectionTO;
+import ch.zhaw.smartervote.contract.transferobject.PoliticianTO;
 import ch.zhaw.smartervote.contract.transferobject.QuestionTO;
 import ch.zhaw.smartervote.contract.transferobject.SubjectTO;
 import ch.zhaw.smartervote.domain.algorithm.ElectionProposalAlgorithm;
 import ch.zhaw.smartervote.domain.mapping.MapElection;
+import ch.zhaw.smartervote.domain.mapping.MapPolitician;
 import ch.zhaw.smartervote.domain.mapping.MapQuestion;
 import ch.zhaw.smartervote.domain.mapping.MapQuestionSubject;
 import ch.zhaw.smartervote.persistency.entities.Election;
 import ch.zhaw.smartervote.persistency.entities.QuestionSubject;
 import ch.zhaw.smartervote.persistency.repositories.iface.ElectionRepository;
+import ch.zhaw.smartervote.persistency.repositories.iface.PoliticianRepository;
 import ch.zhaw.smartervote.persistency.repositories.iface.QuestionSubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -35,17 +38,25 @@ public class ElectionProposalServiceImpl implements ElectionProposalService {
     private final QuestionSubjectRepository questionSubjectRepository;
 
     /**
+     * The repository for politicians.
+     */
+    private final PoliticianRepository politicianRepository;
+
+    /**
      * The algorithm for the election proposal.
      */
     private final ElectionProposalAlgorithm electionProposalAlgorithm;
 
+
     @Autowired
     public ElectionProposalServiceImpl(ElectionRepository electionRepository,
                                        QuestionSubjectRepository questionSubjectRepository,
-                                       ElectionProposalAlgorithm electionProposalAlgorithm) {
+                                       ElectionProposalAlgorithm electionProposalAlgorithm,
+                                       PoliticianRepository politicianRepository) {
         this.electionRepository = electionRepository;
         this.questionSubjectRepository = questionSubjectRepository;
         this.electionProposalAlgorithm = electionProposalAlgorithm;
+        this.politicianRepository = politicianRepository;
     }
 
     /**
@@ -87,7 +98,8 @@ public class ElectionProposalServiceImpl implements ElectionProposalService {
      */
     @Override
     public UUID calculateElectionProposal(UUID electionId, Map<SubjectTO, Set<QuestionTO>> questions) {
-        return electionProposalAlgorithm.calculate(electionId, questions);
+        List<PoliticianTO> politicians = MapPolitician.toTransferObjects(politicianRepository.findAll());
+        return electionProposalAlgorithm.calculate(politicians, questions);
     }
 
 }

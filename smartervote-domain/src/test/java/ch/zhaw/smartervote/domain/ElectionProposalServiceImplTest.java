@@ -5,13 +5,11 @@ import ch.zhaw.smartervote.contract.transferobject.ElectionTO;
 import ch.zhaw.smartervote.contract.transferobject.QuestionTO;
 import ch.zhaw.smartervote.contract.transferobject.SubjectTO;
 import ch.zhaw.smartervote.domain.algorithm.ElectionProposalAlgorithm;
+import ch.zhaw.smartervote.domain.algorithm.ProposalResultBuilder;
+import ch.zhaw.smartervote.domain.algorithm.QuestionAnswerMatcher;
 import ch.zhaw.smartervote.persistency.DatabaseConnection;
-import ch.zhaw.smartervote.persistency.repositories.iface.ElectionRepository;
-import ch.zhaw.smartervote.persistency.repositories.iface.ProposalResultRepository;
-import ch.zhaw.smartervote.persistency.repositories.iface.QuestionSubjectRepository;
-import ch.zhaw.smartervote.persistency.repositories.impl.ElectionRepositoryImpl;
-import ch.zhaw.smartervote.persistency.repositories.impl.ProposalResultRepositoryImpl;
-import ch.zhaw.smartervote.persistency.repositories.impl.QuestionSubjectRepositoryImpl;
+import ch.zhaw.smartervote.persistency.repositories.iface.*;
+import ch.zhaw.smartervote.persistency.repositories.impl.*;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +24,6 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-
 class ElectionProposalServiceImplTest {
 
     private static final int PORT = 5432;
@@ -36,6 +33,8 @@ class ElectionProposalServiceImplTest {
     private static final UUID TEST_ELECTION_ID = UUID.fromString("bc4c25b6-f1ae-45bc-b7ae-4b3fd10e9c29");
 
     private static final File SQL_FILES = new File("../smartervote-persistency/sql");
+
+    private ProposalResultScoreRepository proposalResultScoreRepository;
 
     @Container
     private static final GenericContainer<?> POSTGRES =
@@ -64,16 +63,19 @@ class ElectionProposalServiceImplTest {
         DatabaseConnection databaseConnection = new DatabaseConnection();
         ElectionRepository electionRepository = new ElectionRepositoryImpl(databaseConnection);
         ProposalResultRepository proposalResultRepository = new ProposalResultRepositoryImpl(databaseConnection);
-        ElectionProposalAlgorithm electionProposalAlgorithm = new ElectionProposalAlgorithm(proposalResultRepository);
-        QuestionSubjectRepository questionSubjectRepository =
-                new QuestionSubjectRepositoryImpl(databaseConnection);
-        electionProposalService =
-                new ElectionProposalServiceImpl(electionRepository, questionSubjectRepository, electionProposalAlgorithm);
+        PoliticianRepository politicianRepository = new PoliticianRepositoryImpl(databaseConnection);
+        QuestionAnswerRepository questionAnswerRepository = new QuestionAnswerRepositoryImpl(databaseConnection);
+        QuestionAnswerMatcher questionAnswerMatcher = new QuestionAnswerMatcher(questionAnswerRepository);
+        proposalResultScoreRepository = new ProposalResultScoreRepositoryImpl(databaseConnection);
+        ProposalResultBuilder proposalResultBuilder = new ProposalResultBuilder(proposalResultRepository,
+                politicianRepository, proposalResultScoreRepository);
+        ElectionProposalAlgorithm electionProposalAlgorithm = new ElectionProposalAlgorithm(proposalResultBuilder,
+                questionAnswerMatcher);
+        QuestionSubjectRepository questionSubjectRepository = new QuestionSubjectRepositoryImpl(databaseConnection);
+        electionProposalService = new ElectionProposalServiceImpl(electionRepository,
+                questionSubjectRepository, electionProposalAlgorithm, politicianRepository);
     }
 
-    /**
-     * Dummy test to verify the setup is working.
-     */
     @Test
     void getAvailableElectionsExpectedSize() {
         int expectedSize = 1;
@@ -139,6 +141,23 @@ class ElectionProposalServiceImplTest {
 
     @Test
     void calculateElectionProposal() {
+        int expectedCount = 50;
+        UUID electionId = UUID.fromString("bc4c25b6-f1ae-45bc-b7ae-4b3fd10e9c29");
+        Map<SubjectTO, Set<QuestionTO>> questions = new HashMap<>();
+        SubjectTO subject1 = new SubjectTO(
+                UUID.fromString("d3f718e8-29db-4274-8885-23a6c64e5da5"),
+                "Sozialstaat & Familie",
+                SubjectWeight.NORMAL);
+        QuestionTO question1 = new QuestionTO(UUID.fromString("a335650d-06b4-4e92-ba77-d5f8964ceb82"),
+                "Befürworten Sie eine Erhöhung des Rentenalters (z.B. auf 67 Jahre)?");
+        question1.setAnswer(2);
+        QuestionTO question2 = new QuestionTO(UUID.fromString("46df8b49-923c-4f91-8362-5196efbb71e2"),
+                "Soll der Staat die Schaffung von familienergänzenden Betreuungsstrukturen finanziell stärker unterstützen?");
+        question1.setAnswer(1);
+        questions.put(subject1, Set.of(question1, question2));
+        electionProposalService.calculateElectionProposal(electionId, questions);
+        proposalResultScoreRepository.findAll().forEach(s -> System.out.println(s.getPolitician().getName() + " : " + s.getMatchingScore()));
+        assertEquals(expectedCount, proposalResultScoreRepository.count());
     }
 
 }
