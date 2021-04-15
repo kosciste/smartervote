@@ -7,7 +7,14 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
+/**
+ *
+ * This class represents a static Converter-Class used for convenient converting
+ * between View-Objects and Transfer-Objects
+ *
+ * @author stefankoscica
+ *
+ */
 public final class Converter {
 
     public static List<SubjectVO> convertToSubjectVO(Set<SubjectTO> subjectTOs) {

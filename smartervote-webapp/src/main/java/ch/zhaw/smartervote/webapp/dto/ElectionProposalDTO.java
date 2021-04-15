@@ -5,6 +5,15 @@ import ch.zhaw.smartervote.webapp.vo.SubjectVO;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ *
+ * This class represents a DataTransferObject for the election.
+ * It is used to bind the forms to the specified objects in order
+ * to retrieve the data.
+ *
+ * @author stefankoscica
+ *
+ */
 public class ElectionProposalDTO {
 
     private UUID electionId;

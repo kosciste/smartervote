@@ -2,6 +2,13 @@ package ch.zhaw.smartervote.webapp.vo;
 
 import java.util.UUID;
 
+/**
+ *
+ * This class represents a separate Question-Object for the view.
+ *
+ * @author stefankoscica
+ */
+
 public class QuestionVO {
 
     /**

@@ -1,9 +1,7 @@
+/* @author: stefankoscica
 /* start custom media queries */
 /* Small devices (landscape phones, 576px and up) */
-@media (min-width: 576px) { 
-  #container-contact{
-    margin-top: 20px;
-  }
+@media (min-width: 576px) {
 }
 
 /* Medium devices (tablets, 768px and up) */
@@ -16,13 +14,6 @@
     height: 300px !important;
   }
 
-  .col-contact {
-    padding-left: 10%;
-  }
-
-  #contact-info-col{
-    margin-top: 0%;
-  }
   #link{
     font-size: 35px;
   }
@@ -30,9 +21,6 @@
     font-size: 11px !important;
   }
 
-  #container-contact{
-    margin-top: 80px;
-  }
  }
 
 
@@ -121,13 +109,13 @@ a.text-link::after{
   display: block !important;
   content: '' !important;
   transform: scale(1);
-  border-bottom: 3px solid #c5b2a2 !important;
+  border-bottom: 3px solid #5aa8f3 !important;
 }
 
 a.text-link::after{
   display:block;
   content: '';
-  border-bottom: 3px solid #c5b2a2;
+  border-bottom: 3px solid #5aa8f3;
   transform: scaleX(0);
   transition: transform 250ms ease-in-out;
 }
@@ -267,15 +255,6 @@ a.navbar-brand:hover{
 
 header{
   padding-top: 70px;
-}
-
-.masthead{
-  height: 80vh;
-  width: auto;
-  min-height: 500px;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
 }
 
 .header-container-inner{
@@ -506,7 +485,6 @@ a.election{
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 3px 10px 0 rgba(0,0,0,0.19);
   margin-top: 0px;
 }
-
 
 /* end questions specific */
 

@@ -15,6 +15,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
+/**
+ * This class represents the Controller
+ * for managing the interaction with the ElectionProposalService.
+ *
+ * @author stefankoscica
+ */
 @Controller
 @SessionAttributes("electionProposalDTO")
 public class ElectionProposalController {
@@ -87,11 +93,10 @@ public class ElectionProposalController {
     public String saveQuestions(@ModelAttribute ElectionProposalDTO electionProposalDTO) {
         Map<SubjectTO, Set<QuestionTO>> results = new HashMap<>();
         for (SubjectVO subjectVO : electionProposalDTO.getSubjectVOS()) {
-            System.out.println(subjectVO.getQuestionVOS());
             results.put(Converter.convertToSubjectTO(subjectVO), Converter.convertToQuestionTO(subjectVO.getQuestionVOS()));
         }
 
-        UUID result = UUID.fromString("bb1d763b-ca76-4ac5-81ef-a98d4f34e669");
+        UUID result = electionProposalService.calculateElectionProposal(electionProposalDTO.getElectionId(), results);
         return "redirect:/results/" + result;
     }
 

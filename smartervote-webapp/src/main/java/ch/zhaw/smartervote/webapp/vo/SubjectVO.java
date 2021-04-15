@@ -6,6 +6,12 @@ import ch.zhaw.smartervote.contract.transferobject.QuestionTO;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ *
+ * This class represents a separate Subject-Object for the view.
+ *
+ * @author stefankoscica
+ */
 public class SubjectVO {
 
     /**
