@@ -28,6 +28,13 @@ public class MapPolitician {
                 0);
     }
 
+    /**
+     * Maps a single election entity to transfer object, and adds the matching score.
+     *
+     * @param entity the election entity to be mapped.
+     * @param match the matching score.
+     * @return the mapped transfer object.
+     */
     public static PoliticianTO toTransferObject(Politician entity, int match) {
         return new PoliticianTO(entity.getId(),
                 entity.getPicture(),
