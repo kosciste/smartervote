@@ -1,15 +1,17 @@
 package ch.zhaw.smartervote.webapp.vo;
 
 import ch.zhaw.smartervote.contract.SubjectWeight;
+import ch.zhaw.smartervote.contract.transferobject.QuestionTO;
 
 import java.util.List;
 import java.util.UUID;
 
 public class SubjectVO {
+
     /**
      * The UUID of the subject.
      */
-    private String id;
+    private UUID id;
 
     /**
      * The name of the subject.
@@ -21,20 +23,13 @@ public class SubjectVO {
      */
     private String weight;
 
+    private List<QuestionVO> questionVOS;
 
-    public SubjectVO(){}
-
-    public SubjectVO(String id, String name, String weight) {
-        this.id = id;
-        this.name = name;
-        this.weight = weight;
-    }
-
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -54,6 +49,27 @@ public class SubjectVO {
         this.weight = weight;
     }
 
+    public SubjectWeight getWeightAsEnum() {
+        int weightInt = Integer.parseInt(weight);
+        return SubjectWeight.values()[weightInt];
+    }
 
+    public void setQuestionVOS(List<QuestionVO> questionVOS) {
+        this.questionVOS = questionVOS;
+    }
+
+    public List<QuestionVO> getQuestionVOS() {
+        return questionVOS;
+    }
+
+    @Override
+    public String toString() {
+        return "SubjectVO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", weight='" + weight + '\'' +
+                ", questionVOS=" + questionVOS +
+                '}';
+    }
 
 }

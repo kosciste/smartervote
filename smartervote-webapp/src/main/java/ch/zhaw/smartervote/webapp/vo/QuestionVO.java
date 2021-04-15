@@ -3,11 +3,11 @@ package ch.zhaw.smartervote.webapp.vo;
 import java.util.UUID;
 
 public class QuestionVO {
-    private String subjectID;
+
     /**
      * The UUID of this question.
      */
-    private String id;
+    private UUID id;
 
     /**
      * The question in text form.
@@ -19,21 +19,12 @@ public class QuestionVO {
      */
     private String answer;
 
-    public QuestionVO(){ }
-
-    public QuestionVO(String subjectID, String uuid, String text, String answer) {
-        this.id = uuid;
-        this.text = text;
-        this.answer = answer;
-        this.subjectID = subjectID;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
+    }
+
+    public UUID getId() {
+        return id;
     }
 
     public String getText() {
@@ -52,13 +43,12 @@ public class QuestionVO {
         this.answer = answer;
     }
 
-
-    public String getSubjectID() {
-        return subjectID;
-    }
-
-    public void setSubjectID(String subjectID) {
-        this.subjectID = subjectID;
+    @Override
+    public String toString() {
+        return "QuestionVO{" +
+                "id=" + id +
+                ", answer='" + answer + '\'' +
+                '}';
     }
 
 }
