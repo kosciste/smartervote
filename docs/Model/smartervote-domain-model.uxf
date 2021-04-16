@@ -84,7 +84,6 @@ m2=1
 beeinflusst &gt;</panel_attributes><additional_attributes>10;10;10;70;100;70</additional_attributes></element><element><id>UMLClass</id><coordinates><x>440</x><y>670</y><w>210</w><h>70</h></coordinates><panel_attributes>Politiker
 --
 Name
-Geschlecht
 
 </panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>730</x><y>910</y><w>150</w><h>50</h></coordinates><panel_attributes>lt=-
 m1=0..1
