@@ -3,11 +3,8 @@ package ch.zhaw.smartervote.persistency.repositories.impl;
 import ch.zhaw.smartervote.persistency.entities.Question;
 import ch.zhaw.smartervote.persistency.DatabaseConnection;
 import ch.zhaw.smartervote.persistency.repositories.iface.QuestionRepository;
-import org.hibernate.Session;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import javax.persistence.Query;
-import java.util.List;
 
 /**
  * Repository for questions.
@@ -17,23 +14,17 @@ import java.util.List;
 @Component("questionRepository")
 public class QuestionRepositoryImpl extends BaseRepositoryImpl<Question> implements QuestionRepository {
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected Class<?> getClassType() {
-        return Question.class;
+    @Autowired
+    public QuestionRepositoryImpl(DatabaseConnection databaseConnection) {
+        super(databaseConnection);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public List<Question> findByText(String text) {
-        Session connection = DatabaseConnection.getInstance().createSession();
-        Query query = connection.createNamedQuery("Question.findByText");
-        query.setParameter("text", text);
-        return query.getResultList();
+    protected Class<?> getClassType() {
+        return Question.class;
     }
 
 }
