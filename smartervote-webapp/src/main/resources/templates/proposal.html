@@ -22,7 +22,7 @@
                     <div class="container-fluid container-topic-inner">
                         <div th:each="politician: ${politicians}" class="row election-row grey-bg">
                             <div class="col-12">
-                                <p th:text="${politician.name}"  class="election"></p>
+                                <p th:text="${politician.name} + '-' +  ${politician.match}"  class="election"></p>
                             </div>
                         </div>
                     </div>

@@ -4,27 +4,32 @@ import ch.zhaw.smartervote.contract.ElectionProposalService;
 import ch.zhaw.smartervote.contract.transferobject.ElectionTO;
 import ch.zhaw.smartervote.contract.transferobject.QuestionTO;
 import ch.zhaw.smartervote.contract.transferobject.SubjectTO;
-import ch.zhaw.smartervote.webapp.vo.Converter;
 import ch.zhaw.smartervote.webapp.dto.ElectionProposalDTO;
+import ch.zhaw.smartervote.webapp.vo.Converter;
 import ch.zhaw.smartervote.webapp.vo.SubjectVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
-import javax.servlet.http.HttpServletResponse;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
 /**
- * This class represents the Controller
- * for managing the interaction with the ElectionProposalService.
+ * This class represents the controller for managing the interaction with the ElectionProposalService.
  *
- * @author stefankoscica
+ * @author Stefan Koscica
  */
 @Controller
 @SessionAttributes("electionProposalDTO")
 public class ElectionProposalController {
 
+    /**
+     * Election proposal service to interact with the backend.
+     */
     private final ElectionProposalService electionProposalService;
 
     @Autowired
@@ -32,21 +37,39 @@ public class ElectionProposalController {
         this.electionProposalService = electionProposalService;
     }
 
+    /**
+     * Model attribute that is used in all controller methods.
+     *
+     * @return election proposal data transfer object
+     */
     @ModelAttribute
     public ElectionProposalDTO electionProposalDTO() {
         return new ElectionProposalDTO();
     }
 
+    /**
+     * Displays the index page.
+     *
+     * @param model model to display data on the view
+     * @return index page
+     */
     @GetMapping("/")
-    public String index(HttpServletResponse response,
-                        Model model) {
+    public String index(Model model) {
         Set<ElectionTO> elections = electionProposalService.getAvailableElections();
         model.addAttribute("elections", elections);
         return "index";
     }
 
+    /**
+     * Displays the subject weight selection page for a given election.
+     *
+     * @param electionProposalDTO election proposal data transfer object
+     * @param id id of the election
+     * @param model model to display data on the view
+     * @return subject selection page
+     */
     @GetMapping("/wahlen/{id}")
-    public String showTopics(@ModelAttribute ElectionProposalDTO electionProposalDTO,
+    public String showSubjects(@ModelAttribute ElectionProposalDTO electionProposalDTO,
                              @PathVariable("id") String id, Model model) {
         Set<SubjectTO> subjectTOS = null;
         try {
@@ -62,6 +85,13 @@ public class ElectionProposalController {
         return "election";
     }
 
+    /**
+     * Displays the page to answer the actual questions based on the weight selection before.
+     *
+     * @param electionProposalDTO election proposal data transfer object
+     * @param model model to display data on the view
+     * @return page to answer the questions
+     */
     @GetMapping("/fragebogen")
     public String showQuestions(@ModelAttribute ElectionProposalDTO electionProposalDTO, Model model) {
         Set<SubjectTO> subjectTOS = Converter.convertToSubjectTO(electionProposalDTO.getSubjectVOS());
@@ -76,6 +106,7 @@ public class ElectionProposalController {
             }
         }
 
+        // remove subject that were not returned by the backend based on the passed weight
         electionProposalDTO.getSubjectVOS().removeIf(subjectVO -> subjectVO.getQuestionVOS() == null);
 
         model.addAttribute("form", electionProposalDTO);
@@ -83,22 +114,35 @@ public class ElectionProposalController {
         return "evaluate";
     }
 
+    /**
+     * Method to receive the post request to save the subjects. This does not much because the values are already
+     * saved based on the thymeleaf bindings.
+     *
+     * @param electionProposalDTO election proposal data transfer object
+     * @return redirect to question page
+     */
     @PostMapping("/save-subjects")
-    public String saveSubjects(@ModelAttribute ElectionProposalDTO electionProposalDTO, Model model) {
+    public String saveSubjects(@ModelAttribute ElectionProposalDTO electionProposalDTO) {
         return "redirect:/fragebogen";
     }
 
-
+    /**
+     * Method to receive the post request to save the question answers and calculate the proposal.
+     *
+     * @param electionProposalDTO election proposal data transfer object
+     * @return redirect to result page
+     */
     @PostMapping("/save-questions")
-    public String saveQuestions(@ModelAttribute ElectionProposalDTO electionProposalDTO) {
+    public String saveQuestions(@ModelAttribute ElectionProposalDTO electionProposalDTO, SessionStatus status) {
         Map<SubjectTO, Set<QuestionTO>> results = new HashMap<>();
         for (SubjectVO subjectVO : electionProposalDTO.getSubjectVOS()) {
             results.put(Converter.convertToSubjectTO(subjectVO), Converter.convertToQuestionTO(subjectVO.getQuestionVOS()));
         }
 
         UUID result = electionProposalService.calculateElectionProposal(electionProposalDTO.getElectionId(), results);
+
+        status.setComplete();
         return "redirect:/results/" + result;
     }
-
 
 }

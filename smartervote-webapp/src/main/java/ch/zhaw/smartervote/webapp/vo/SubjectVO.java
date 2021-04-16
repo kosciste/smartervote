@@ -7,10 +7,9 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- *
  * This class represents a separate Subject-Object for the view.
  *
- * @author stefankoscica
+ * @author Stefan Koscica
  */
 public class SubjectVO {
 
@@ -66,16 +65,6 @@ public class SubjectVO {
 
     public List<QuestionVO> getQuestionVOS() {
         return questionVOS;
-    }
-
-    @Override
-    public String toString() {
-        return "SubjectVO{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", weight='" + weight + '\'' +
-                ", questionVOS=" + questionVOS +
-                '}';
     }
 
 }
