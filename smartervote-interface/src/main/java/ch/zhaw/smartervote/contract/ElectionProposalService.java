@@ -5,7 +5,9 @@ import ch.zhaw.smartervote.contract.transferobject.PoliticianFilterTO;
 import ch.zhaw.smartervote.contract.transferobject.QuestionTO;
 import ch.zhaw.smartervote.contract.transferobject.SubjectTO;
 
-import java.util.*;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * This interface defines all functions used for the election proposal. This includes available elections, question
@@ -38,7 +40,7 @@ public interface ElectionProposalService {
      * will be ignored.
      * @return A map with all subject that where not wighted with 0, and their corresponding questions.
      */
-    Map<SubjectTO, List<QuestionTO>> getQuestionCatalogue(UUID electionId, Set<SubjectTO> selection);
+    Map<SubjectTO, Set<QuestionTO>> getQuestionCatalogue(UUID electionId, Set<SubjectTO> selection);
 
     /**
      * Returns the UUID of the calculated election proposal for the answers of the user. The UUID can be used to get the

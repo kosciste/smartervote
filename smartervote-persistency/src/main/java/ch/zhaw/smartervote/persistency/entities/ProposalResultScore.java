@@ -24,7 +24,7 @@ public class ProposalResultScore extends BaseEntity {
     @Column(name = "matching_score", nullable = false)
     private int matchingScore;
 
-    public ProposalResult getProposalResult () {
+    public ProposalResult getProposalResult() {
         return proposalResult;
     }
 
@@ -36,7 +36,7 @@ public class ProposalResultScore extends BaseEntity {
         return matchingScore;
     }
 
-    public void setProposalResult (ProposalResult proposalResult) {
+    public void setProposalResult(ProposalResult proposalResult) {
         this.proposalResult = proposalResult;
     }
 

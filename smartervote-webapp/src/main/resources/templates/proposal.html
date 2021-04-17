@@ -14,23 +14,21 @@
 </head>
 <body>
 <nav th:replace="fragments/navigation :: navigation"></nav>
-<header th:replace="fragments/header :: name('Vorauswahl', 'Wählen Sie die Wahlen aus, die Sie interessieren')"></header>
+<header th:replace="fragments/header :: name('Wahlempfehlung', 'Folgend finden Sie Ihre Wahlempfehlungen')"></header>
 <main>
-    <form th:object="${elections}" action="#" method="post">
         <div class="container-fluid container-topic">
             <div class="row">
                 <div class="col-12">
                     <div class="container-fluid container-topic-inner">
-                        <div th:each="election: ${elections}" class="row election-row grey-bg">
+                        <div th:each="politician: ${politicians}" class="row election-row grey-bg">
                             <div class="col-12">
-                                <a th:href="@{wahlen/{id}(id=${election.id})}" th:text="${election.name}"  class="election"></a>
+                                <p th:text="${politician.name} + '-' +  ${politician.match}"  class="election"></p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
 </main>
 <footer th:replace="fragments/footer :: footer"></footer>
 </body>
