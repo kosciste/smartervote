@@ -3,12 +3,10 @@ package ch.zhaw.smartervote.webapp.vo;
 import java.util.UUID;
 
 /**
- *
  * This class represents a separate Question-Object for the view.
  *
- * @author stefankoscica
+ * @author Stefan Koscica
  */
-
 public class QuestionVO {
 
     /**
@@ -48,14 +46,6 @@ public class QuestionVO {
 
     public void setAnswer(String answer) {
         this.answer = answer;
-    }
-
-    @Override
-    public String toString() {
-        return "QuestionVO{" +
-                "id=" + id +
-                ", answer='" + answer + '\'' +
-                '}';
     }
 
 }

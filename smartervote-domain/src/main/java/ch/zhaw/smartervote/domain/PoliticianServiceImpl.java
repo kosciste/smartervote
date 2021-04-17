@@ -67,7 +67,7 @@ public class PoliticianServiceImpl implements PoliticianService {
         List<PoliticianTO> politicians = proposalResultScores.stream()
                 .map(proposalResultScore -> MapPolitician.toTransferObject(
                         proposalResultScore.getPolitician(), proposalResultScore.getMatchingScore()))
-                .sorted(Comparator.comparing(PoliticianTO::getMatch))
+                .sorted(Comparator.comparing(PoliticianTO::getMatch).reversed())
                 .collect(Collectors.toList());
         return getPoliticianSubset(offset, size, politicians);
     }
