@@ -1,4 +1,4 @@
-<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLPackage</id><coordinates><x>70</x><y>0</y><w>1120</w><h>1140</h></coordinates><panel_attributes>Domain Interface
+<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLPackage</id><coordinates><x>70</x><y>0</y><w>1120</w><h>1140</h></coordinates><panel_attributes>Contract
 --
 bg=transparent</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>110</x><y>190</y><w>640</w><h>140</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
 ElectionProposalService
