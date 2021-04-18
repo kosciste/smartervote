@@ -13,7 +13,8 @@ import java.util.Set;
 import java.util.UUID;
 
 /**
- * This class calculates the election match of each politician based on the answered questions of the user.
+ * This class calculates the election match of each politician based on the answered questions of the user. This is a
+ * prototype implementation of the algorithm. The full algorithm will be implemented in the beta release.
  *
  * @author Raphael Krebs
  */
@@ -38,7 +39,8 @@ public class ElectionProposalAlgorithm {
     }
 
     /**
-     * Calculates the election match based on the answered questions of the user.
+     * Calculates the election match based on the answered questions of the user. This is a prototype implementation of
+     * the algorithm. The full algorithm will be implemented in the beta release.
      *
      * @param politicians the politician for which the matching should be determined.
      * @param questions the answered questions.
