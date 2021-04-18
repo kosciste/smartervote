@@ -1,7 +1,6 @@
 package ch.zhaw.smartervote.webapp.vo;
 
 import ch.zhaw.smartervote.contract.SubjectWeight;
-import ch.zhaw.smartervote.contract.transferobject.QuestionTO;
 
 import java.util.List;
 import java.util.UUID;
