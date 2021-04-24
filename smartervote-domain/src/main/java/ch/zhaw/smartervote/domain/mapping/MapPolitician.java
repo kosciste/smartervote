@@ -23,7 +23,7 @@ public class MapPolitician {
         return new PoliticianTO(entity.getId(),
                 entity.getPicture(),
                 entity.getName(),
-                entity.getParty().toString(),
+                entity.getParty().getName(),
                 entity.getBirthyear(),
                 0);
     }
@@ -39,7 +39,7 @@ public class MapPolitician {
         return new PoliticianTO(entity.getId(),
                 entity.getPicture(),
                 entity.getName(),
-                entity.getParty().toString(),
+                entity.getParty().getName(),
                 entity.getBirthyear(),
                 match);
     }
