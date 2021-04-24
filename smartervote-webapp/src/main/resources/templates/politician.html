@@ -14,7 +14,7 @@
 </head>
 <body>
 <nav th:replace="fragments/navigation :: navigation"></nav>
-<header th:replace="fragments/header :: name('Profil von ${politician.name}', 'Hier finden Sie weitere Infos')"></header>
+<header th:replace="fragments/header :: name('Profil von ' + ${politician.name}, 'Hier finden Sie weitere Infos')"></header>
 <main>
         <div class="container-fluid container-topic">
             <div class="row">
