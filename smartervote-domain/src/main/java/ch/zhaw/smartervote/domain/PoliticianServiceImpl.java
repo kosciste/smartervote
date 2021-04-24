@@ -5,6 +5,8 @@ import ch.zhaw.smartervote.contract.transferobject.PoliticianFilterTO;
 import ch.zhaw.smartervote.contract.transferobject.PoliticianProfileTO;
 import ch.zhaw.smartervote.contract.transferobject.PoliticianTO;
 import ch.zhaw.smartervote.domain.mapping.MapPolitician;
+import ch.zhaw.smartervote.domain.mapping.MapPoliticianProfile;
+import ch.zhaw.smartervote.persistency.entities.Politician;
 import ch.zhaw.smartervote.persistency.entities.ProposalResult;
 import ch.zhaw.smartervote.persistency.entities.ProposalResultScore;
 import ch.zhaw.smartervote.persistency.repositories.iface.PoliticianRepository;
@@ -93,7 +95,9 @@ public class PoliticianServiceImpl implements PoliticianService {
      */
     @Override
     public Optional<PoliticianProfileTO> getPoliticianData(UUID politicianId) {
-        return Optional.empty();
+        Optional<Politician> politician = politicianRepository.findById(politicianId);
+        if (politician.isEmpty()) return Optional.empty();
+        else return Optional.of(MapPoliticianProfile.toTransferObject(politician.get()));
     }
 
     /**
