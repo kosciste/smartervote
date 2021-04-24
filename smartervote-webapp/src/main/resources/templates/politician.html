@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="de">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/styles/custom.css}">
+    <!-- js -->
+    <script type="text/javascript" src="js/main.js" defer></script>
+    <title>Smartervote</title>
+</head>
+<body>
+<nav th:replace="fragments/navigation :: navigation"></nav>
+<header th:replace="fragments/header :: name('Profil von ${politician.name}', 'Hier finden Sie weitere Infos')"></header>
+<main>
+        <div class="container-fluid container-topic">
+            <div class="row">
+                <div class="col-12">
+                    <div class="container-fluid container-topic-inner">
+                        <div th:each="politician: ${politician}" class="row election-row grey-bg">
+                            <div class="col-12">
+                                <p th:text="'Name: ' + ${politician.name}"></p>
+                                <p th:text="'ID: ' + ${politician.id}"></p>
+                                <p th:text="'Party: ' + ${politician.party}"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</main>
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>
