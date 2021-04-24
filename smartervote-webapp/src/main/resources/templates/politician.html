@@ -25,6 +25,10 @@
                                 <p th:text="'Name: ' + ${politician.name}"></p>
                                 <p th:text="'ID: ' + ${politician.id}"></p>
                                 <p th:text="'Party: ' + ${politician.party}"></p>
+                                <h2>Personal Questions</h2>
+                                <div th:each="question: ${politician.questions}">
+                                    <p th:text="${politician.question.id} + ': ' +  ${politician.question.text}"></p>
+                                </div>
                             </div>
                         </div>
                     </div>
