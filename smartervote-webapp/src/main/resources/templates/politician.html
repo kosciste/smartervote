@@ -20,21 +20,22 @@
             <div class="row">
                 <div class="col-12">
                     <div class="container-fluid container-topic-inner">
-                        <div th:each="politician: ${politician}" class="row election-row grey-bg">
+                        <div th:each="politician: ${politician}" class="grey-bg">
                             <div class="col-12">
-                                <img th:src="@{${politician.imageUrl}}"/>
+                                <p th:text="'Bild:'"></p>
+                                <img th:src="@{'../images/politicians/' + ${politician.imageUrl}}" class="profilePic"/>
                                 <p th:text="'ID: ' + ${politician.id}" hidden></p>
                                 <p th:text="'Name: ' + ${politician.name}"></p>
                                 <p th:text="'Party: ' + ${politician.party}"></p>
-                                <p th:text="'Jahrgang: ' + ${politician.birthyear}"></p>
+                            <p th:text="'Jahrgang: ' + ${politician.birthYear}"></p>
                                 <p th:text="'Beruf: ' + ${politician.profession}"></p>
                                 <p th:text="'Geschlecht: ' + ${politician.gender}"></p>
-                                <h3 th:text="Zuletzt in den Medien:"></h2>
+                            <p th:text="'Zuletzt in den Medien:'"></p>
                                 <div th:each="mediaEntry: ${politician.mediaEntries}">
                                     <p th:href="${mediaEntry.link}" th:text="${mediaEntry.eventDate} + ' - ' +  ${mediaEntry.headline}"></p>
                                     <p th:text="${mediaEntry.description}"></p>
                                 </div>
-                                <h3 th:text="Persönliche Fragen"></h2>
+                            <p th:text="'Persönliche Fragen:'"></p>
                                 <div th:each="question: ${politician.questions}">
                                     <p th:text="${question.text}"></p>
                                     <p th:text="'Antwort: ' + ${question.answer.text}"></p>
