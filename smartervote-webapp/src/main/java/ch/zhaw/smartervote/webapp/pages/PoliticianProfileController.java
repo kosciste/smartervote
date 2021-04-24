@@ -35,16 +35,16 @@ public class PoliticianProfileController {
      * @param model model used to display data on the view
      * @return result page
      */
-    @GetMapping("/profile/{id}")
-    public String showProfile(@PathVariable("id") String id, Model model) {
-        PoliticianProfileTO profile;
+    @GetMapping("/politician/{id}")
+    public String showPolitician(@PathVariable("id") String id, Model model) {
+        PoliticianProfileTO politician;
         try {
-            profile = politicianService.getPoliticianData(UUID.fromString(id)).get();
+            politician = politicianService.getPoliticianData(UUID.fromString(id)).get();
         } catch (IllegalArgumentException e) {
             return "redirect:/";
         }
-        model.addAttribute("profile", profile);
-        return "profile";
+        model.addAttribute("politician", politician);
+        return "politician";
     }
 
 
