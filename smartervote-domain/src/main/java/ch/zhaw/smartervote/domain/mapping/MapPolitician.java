@@ -1,5 +1,6 @@
 package ch.zhaw.smartervote.domain.mapping;
 
+import ch.zhaw.smartervote.contract.PoliticianList;
 import ch.zhaw.smartervote.contract.transferobject.PoliticianTO;
 import ch.zhaw.smartervote.persistency.entities.Politician;
 
@@ -50,8 +51,11 @@ public class MapPolitician {
      * @param entities the list of entities.
      * @return the set of election transfer objects.
      */
-    public static List<PoliticianTO> toTransferObjects(List<Politician> entities) {
-        return entities.stream().map(MapPolitician::toTransferObject).collect(Collectors.toList());
+    public static PoliticianList toTransferObjects(List<Politician> entities) {
+        return new PoliticianList(entities.stream()
+                .map(MapPolitician::toTransferObject)
+                .collect(Collectors.toList())
+                , entities.size());
     }
 
 }

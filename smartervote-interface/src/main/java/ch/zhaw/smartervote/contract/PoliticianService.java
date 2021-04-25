@@ -2,9 +2,10 @@ package ch.zhaw.smartervote.contract;
 
 import ch.zhaw.smartervote.contract.transferobject.PoliticianFilterTO;
 import ch.zhaw.smartervote.contract.transferobject.PoliticianProfileTO;
-import ch.zhaw.smartervote.contract.transferobject.PoliticianTO;
 
-import java.util.*;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * This interface implements methods to display the politicians and their profile, as well as filtering the list of
@@ -22,7 +23,7 @@ public interface PoliticianService {
      * @param size the number of politicians to be returned.
      * @return The list of the politicians.
      */
-    List<PoliticianTO> getPoliticians(int offset, int size);
+    PoliticianList getPoliticians(int offset, int size);
 
     /**
      * Returns a list of politicians and their match sorted from highest to lowest match, limited by the given size and
@@ -35,7 +36,7 @@ public interface PoliticianService {
      * Map)}.
      * @return The list of the politicians.
      */
-    List<PoliticianTO> getPoliticians(int offset, int size, UUID resultId);
+    PoliticianList getPoliticians(int offset, int size, UUID resultId);
 
     /**
      * Returns a filtered list of politicians, limited by the given size and offset. The offset defines the index of the
@@ -46,7 +47,7 @@ public interface PoliticianService {
      * @param filter The filter to filter the returned list of politicians.
      * @return The filtered list of politicians.
      */
-    List<PoliticianTO> filterPoliticians(int offset, int size, PoliticianFilterTO filter);
+    PoliticianList filterPoliticians(int offset, int size, PoliticianFilterTO filter);
 
     /**
      * Returns a filtered list of politicians and their match sorted from highest to lowest match, limited by the given
@@ -60,7 +61,7 @@ public interface PoliticianService {
      * Map)}.
      * @return The filtered list of politicians.
      */
-    List<PoliticianTO> filterPoliticians(int offset, int size, PoliticianFilterTO filter, UUID resultId);
+    PoliticianList filterPoliticians(int offset, int size, PoliticianFilterTO filter, UUID resultId);
 
     /**
      * Returns an optional containing a politicians profile.
