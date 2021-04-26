@@ -14,14 +14,21 @@ import ch.zhaw.smartervote.persistency.repositories.iface.PersonalQuestionReposi
 import ch.zhaw.smartervote.persistency.repositories.iface.PoliticianRepository;
 
 /**
- * {@inheritDoc}
+ * This class implements the PersonalQuestionService functions
  * 
  * @author Stefan Teodoropol
  */
 @Component("personalQuestionService")
 public class PersonalQuestionServiceImpl implements PersonalQuestionService {
 
+    /**
+     * The repository for politicians. Used to findById().
+     */
     private final PoliticianRepository politicianRepository;
+
+    /**
+     * The repository for personal questions. Used to insert().
+     */
     private final PersonalQuestionRepository personalQuestionRepository;
 
     @Autowired
@@ -31,6 +38,9 @@ public class PersonalQuestionServiceImpl implements PersonalQuestionService {
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean addQuestion(UUID politicianId, String questionText) {
         Optional<Politician> queryResult = politicianRepository.findById(politicianId);
@@ -54,6 +64,9 @@ public class PersonalQuestionServiceImpl implements PersonalQuestionService {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean upvoteQuestion(UUID questionId, String ipAddress) {
         // TODO Auto-generated method stub
