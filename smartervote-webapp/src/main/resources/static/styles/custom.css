@@ -488,4 +488,9 @@ a.election{
 
 /* end questions specific */
 
-
+/* start politician profile specific */
+.profilePic{
+  width: 200px;
+	height: 200px;
+}
+/* end politician profile specific */
