@@ -5,14 +5,14 @@ package ch.zhaw.smartervote.contract.transferobject;
  *
  * @author Raphael Krebs
  */
-public class PoliticianAnswerTO {
+public class PersonalAnswerTO {
 
     /**
      * The answer of the politician.
      */
     private final String text;
 
-    public PoliticianAnswerTO(String text) {
+    public PersonalAnswerTO(String text) {
         this.text = text;
     }
 
