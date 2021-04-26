@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ch.zhaw.smartervote.contract.PersonalQuestionService;
-import ch.zhaw.smartervote.contract.transferobject.PersonalQuestionTO;
-import ch.zhaw.smartervote.domain.mapping.MapPersonalQuestion;
 import ch.zhaw.smartervote.persistency.entities.PersonalQuestion;
 import ch.zhaw.smartervote.persistency.entities.Politician;
 import ch.zhaw.smartervote.persistency.repositories.iface.PersonalQuestionRepository;
@@ -60,14 +58,6 @@ public class PersonalQuestionServiceImpl implements PersonalQuestionService {
     public boolean upvoteQuestion(UUID questionId, String ipAddress) {
         // TODO Auto-generated method stub
         return false;
-    }
-
-
-    @Override
-    public Optional<PersonalQuestionTO> getQuestion(UUID politicianId, UUID questionId) {
-        Optional<PersonalQuestion> queryResult = personalQuestionRepository.findById(questionId);
-        if (queryResult.isEmpty()) return Optional.empty();
-        else return Optional.of(MapPersonalQuestion.toTransferObject(queryResult.get()));
     }
     
 }
