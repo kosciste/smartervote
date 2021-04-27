@@ -8,7 +8,7 @@ import java.util.UUID;
  *
  * @author Raphael Krebs
  */
-public class PoliticianQuestionTO {
+public class PersonalQuestionTO {
 
     /**
      * The UUID of this politician question.
@@ -28,9 +28,9 @@ public class PoliticianQuestionTO {
     /**
      * The politicians answer to the question.
      */
-    private final PoliticianAnswerTO answer;
-
-    public PoliticianQuestionTO(UUID id, String text, int upvotes, PoliticianAnswerTO answer) {
+    private final PersonalAnswerTO answer;
+    
+    public PersonalQuestionTO(UUID id, String text, int upvotes, PersonalAnswerTO answer) {
         this.id = id;
         this.text = text;
         this.upvotes = upvotes;
@@ -53,7 +53,7 @@ public class PoliticianQuestionTO {
         this.upvotes = upvotes;
     }
 
-    public PoliticianAnswerTO getAnswer() {
+    public PersonalAnswerTO getAnswer() {
         return answer;
     }
 

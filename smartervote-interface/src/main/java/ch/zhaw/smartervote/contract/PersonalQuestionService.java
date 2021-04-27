@@ -1,7 +1,5 @@
 package ch.zhaw.smartervote.contract;
 
-import ch.zhaw.smartervote.contract.transferobject.QuestionTO;
-
 import java.util.UUID;
 
 /**
@@ -9,21 +7,21 @@ import java.util.UUID;
  *
  * @author Raphael Krebs
  */
-public interface PoliticianQuestionService {
+public interface PersonalQuestionService {
 
     /**
      * Adds a question to the politicians profile.
      *
      * @param politicianId The id of the politician.
-     * @param question The question to be added to the politicians profile.
+     * @param questionText The question text to be added to the politicians profile.
      * @return True if the question was added, false otherwise.
      */
-    boolean addQuestion(UUID politicianId, QuestionTO question);
+    boolean addQuestion(UUID politicianId, String questionText);
 
     /**
      * Upvotes a specific question.
      *
-     * @param questionId the UUID of the question to be upvoted.
+     * @param questionId the UUID of the personal question to be upvoted.
      * @param ipAddress the ip address of the user that upvoted the question.
      * @return true if the question was upvoted, false otherwise.
      */
