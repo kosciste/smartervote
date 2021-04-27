@@ -68,10 +68,10 @@ public class ElectionProposalController {
      * @param model model to display data on the view
      * @return subject selection page
      */
-    @GetMapping("/wahlen/{id}")
-    public String showSubjects(@ModelAttribute ElectionProposalDTO electionProposalDTO,
-                             @PathVariable("id") String id, Model model) {
-        Set<SubjectTO> subjectTOS = null;
+    @GetMapping("/election/{id}")
+    public String showQuestionSubjects(@ModelAttribute ElectionProposalDTO electionProposalDTO,
+                                       @PathVariable("id") String id, Model model) {
+        Set<SubjectTO> subjectTOS;
         try {
             subjectTOS = electionProposalService.getQuestionSubjects(UUID.fromString(id));
         } catch (IllegalArgumentException e) {
@@ -86,13 +86,25 @@ public class ElectionProposalController {
     }
 
     /**
+     * Method to receive the post request to save the subjects. This does not much because the values are already saved
+     * based on the thymeleaf bindings.
+     *
+     * @param electionProposalDTO election proposal data transfer object
+     * @return redirect to question page
+     */
+    @PostMapping("/save-subjects")
+    public String saveQuestionSubjectSelection(@ModelAttribute ElectionProposalDTO electionProposalDTO) {
+        return "redirect:/question-catalogue";
+    }
+
+    /**
      * Displays the page to answer the actual questions based on the weight selection before.
      *
      * @param electionProposalDTO election proposal data transfer object
      * @param model model to display data on the view
      * @return page to answer the questions
      */
-    @GetMapping("/fragebogen")
+    @GetMapping("/question-catalogue")
     public String showQuestions(@ModelAttribute ElectionProposalDTO electionProposalDTO, Model model) {
         Set<SubjectTO> subjectTOS = Converter.convertToSubjectTO(electionProposalDTO.getSubjectVOS());
         Map<SubjectTO, Set<QuestionTO>> subjectsMap = electionProposalService
@@ -110,31 +122,18 @@ public class ElectionProposalController {
         electionProposalDTO.getSubjectVOS().removeIf(subjectVO -> subjectVO.getQuestionVOS() == null);
 
         model.addAttribute("form", electionProposalDTO);
-
         return "evaluate";
     }
 
     /**
-     * Method to receive the post request to save the subjects. This does not much because the values are already
-     * saved based on the thymeleaf bindings.
-     *
-     * @param electionProposalDTO election proposal data transfer object
-     * @return redirect to question page
-     */
-    @PostMapping("/save-subjects")
-    public String saveSubjects(@ModelAttribute ElectionProposalDTO electionProposalDTO) {
-        return "redirect:/fragebogen";
-    }
-
-    /**
-     * Method to receive the post reqeust to save the question answers and calculate the proposal.
+     * Method to receive the post request to save the question answers and calculate the proposal.
      *
      * @param electionProposalDTO election proposal data transfer object
      * @param status session status to terminate the session
      * @return redirect to result page
      */
     @PostMapping("/save-questions")
-    public String saveQuestions(@ModelAttribute ElectionProposalDTO electionProposalDTO, SessionStatus status) {
+    public String saveQuestionSelection(@ModelAttribute ElectionProposalDTO electionProposalDTO, SessionStatus status) {
         Map<SubjectTO, Set<QuestionTO>> results = new HashMap<>();
         for (SubjectVO subjectVO : electionProposalDTO.getSubjectVOS()) {
             results.put(Converter.convertToSubjectTO(subjectVO), Converter.convertToQuestionTO(subjectVO.getQuestionVOS()));
@@ -143,7 +142,7 @@ public class ElectionProposalController {
         UUID result = electionProposalService.calculateElectionProposal(electionProposalDTO.getElectionId(), results);
 
         status.setComplete();
-        return "redirect:/results/" + result;
+        return "redirect:/result/" + result;
     }
 
 }

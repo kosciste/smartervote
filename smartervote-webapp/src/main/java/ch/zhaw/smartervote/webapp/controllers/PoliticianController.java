@@ -46,7 +46,7 @@ public class PoliticianController {
      * @param model model used to display data on the view
      * @return result page
      */
-    @GetMapping("/results/{id}")
+    @GetMapping("/result/{id}")
     public String showResult(@PathVariable("id") String id, Model model) {
         List<PoliticianTO> politicians;
         try {
