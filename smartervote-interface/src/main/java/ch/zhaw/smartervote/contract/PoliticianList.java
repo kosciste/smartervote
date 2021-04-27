@@ -8,13 +8,15 @@ import java.util.Collection;
 /**
  * The politician list extends an ArrayList containing PoliticianTO objects. It also contains the total size of the
  * Politicians in the database, so the UI can handle pagination properly.
+ *
+ * @author Raphael Krebs
  */
 public class PoliticianList extends ArrayList<PoliticianTO> {
 
     /**
      * The total count of all the politicians in the database.
      */
-    int totalSize;
+    private final int totalSize;
 
     public PoliticianList(int totalSize) {
         this.totalSize = totalSize;
@@ -27,10 +29,6 @@ public class PoliticianList extends ArrayList<PoliticianTO> {
 
     public int getTotalSize() {
         return totalSize;
-    }
-
-    public void setTotalSize(int totalSize) {
-        this.totalSize = totalSize;
     }
 
 }
