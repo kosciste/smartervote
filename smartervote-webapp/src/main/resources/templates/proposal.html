@@ -9,7 +9,7 @@
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/styles/custom.css}">
     <!-- js -->
-    <script type="text/javascript" src="js/main.js" defer></script>
+    <script type="text/javascript" th:src="@{~/js/main.js}" defer></script>
     <title>Smartervote</title>
 </head>
 <body>
@@ -22,7 +22,7 @@
                     <div class="container-fluid container-topic-inner">
                         <div th:each="politician: ${politicians}" class="row election-row grey-bg">
                             <div class="col-12">
-                                <p th:text="${politician.name} + '-' +  ${politician.match}"  class="election"></p>
+                                <a th:href="@{../politician/{id}(id=${politician.id})}" th:text="${politician.name} + '-' +  ${politician.match}"  class="election"></a>
                             </div>
                         </div>
                     </div>

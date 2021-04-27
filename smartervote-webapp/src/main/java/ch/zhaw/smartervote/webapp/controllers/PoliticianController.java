@@ -1,4 +1,4 @@
-package ch.zhaw.smartervote.webapp.pages;
+package ch.zhaw.smartervote.webapp.controllers;
 
 import ch.zhaw.smartervote.contract.PoliticianList;
 import ch.zhaw.smartervote.contract.PoliticianService;

@@ -1,6 +1,6 @@
-<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLPackage</id><coordinates><x>70</x><y>0</y><w>1120</w><h>1140</h></coordinates><panel_attributes>Contract
+<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLPackage</id><coordinates><x>0</x><y>0</y><w>1120</w><h>1140</h></coordinates><panel_attributes>Contract
 --
-bg=transparent</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>110</x><y>190</y><w>640</w><h>140</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
+bg=transparent</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>40</x><y>190</y><w>640</w><h>140</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
 ElectionProposalService
 --
 
@@ -8,50 +8,50 @@ ElectionProposalService
 + getAvailableElections() : Set&lt;ElectionTO&gt;
 + getQuestionSubjects(electionId : UUID) : Set&lt;SubjectTO&gt;
 + getQuestionCatalogue(electionId : UUID, selection : Set&lt;SubjectTO&gt;) : Map&lt;SubjectTO, Set&lt;QuestionTO&gt; &gt;
-+ calculateElectionProposal(electionId : UUID, questions : Map&lt;SubjectTO, Set&lt;QuestionTO&gt; &gt;) : UUID</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>430</x><y>50</y><w>160</w><h>100</h></coordinates><panel_attributes>&lt;&lt;TransferObject&gt;&gt;
++ calculateElectionProposal(electionId : UUID, questions : Map&lt;SubjectTO, Set&lt;QuestionTO&gt; &gt;) : UUID</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>360</x><y>50</y><w>160</w><h>100</h></coordinates><panel_attributes>&lt;&lt;TransferObject&gt;&gt;
 ElectionTO
 --
 - id : UUID
 - name : String
 --
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>700</x><y>50</y><w>160</w><h>100</h></coordinates><panel_attributes>&lt;&lt;TransferObject&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>630</x><y>50</y><w>160</w><h>100</h></coordinates><panel_attributes>&lt;&lt;TransferObject&gt;&gt;
 SubjectTO
 --
 - id : UUID
 - name : String
 - weight : int
 --
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>890</x><y>50</y><w>160</w><h>110</h></coordinates><panel_attributes>&lt;&lt;TransferObject&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>790</x><y>190</y><w>160</w><h>110</h></coordinates><panel_attributes>&lt;&lt;TransferObject&gt;&gt;
 QuestionTO
 --
 id : UUID
 text : String
 answer : int
 --
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>130</x><y>500</y><w>540</w><h>150</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>60</x><y>500</y><w>540</w><h>150</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
 PoliticianService
 --
 
 --
-+ getPoliticians(offset : int, size : int) : PoliticianList
-+ getPoliticians(offset : int, size : int, resultId : UUID) : PoliticianList
-+ filterPoliticians(offset : int, size : int, filter : PoliticianFilterTO) : PoliticianList
-+ filterPoliticians(offset : int, size : int, filter : PoliticianFilterTO, resultId : UUID) : PoliticianList
-+ getPoliticianData(politicianId : UUID) : Optional&lt;PoliticianProfileTO&gt;</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLNote</id><coordinates><x>100</x><y>60</y><w>140</w><h>70</h></coordinates><panel_attributes>Service for everything
++ getPoliticians(offset : int, size : int) : List&lt;PoliticianTO&gt;
++ getPoliticians(offset : int, size : int, resultId : UUID) : List&lt;PoliticianTO&gt;
++ filterPoliticians(offset : int, size : int, filter : PoliticianFilterTO) : List&lt;PoliticianTO&gt;
++ filterPoliticians(offset : int, size : int, filter : PoliticianFilterTO, resultId : UUID) : List&lt;PoliticianTO&gt;
++ getPoliticianData(politicianId : UUID) : Optional&lt;PoliticianProfileTO&gt;</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLNote</id><coordinates><x>30</x><y>60</y><w>140</w><h>70</h></coordinates><panel_attributes>Service for everything
 related to actually
 calculate the election
 proposal
-bg=blue</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLNote</id><coordinates><x>100</x><y>380</y><w>140</w><h>70</h></coordinates><panel_attributes>Service to interact with
+bg=blue</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLNote</id><coordinates><x>30</x><y>380</y><w>140</w><h>70</h></coordinates><panel_attributes>Service to interact with
 politicians, list politicians
 results, all politican,
 filter selection etc.
-bg=blue</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>140</x><y>760</y><w>400</w><h>120</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
-PoliticianQuestionService
+bg=blue</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>70</x><y>760</y><w>400</w><h>120</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
+PersonalQuestionService
 --
 
 --
-+ addQuestion(politicianId : UUID, question : QuestionTO) : boolean
-+ upvoteQuestion(questionId : UUID, ipAddress : String) : boolean</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>890</x><y>490</y><w>160</w><h>150</h></coordinates><panel_attributes>&lt;&lt;TransferObject&gt;&gt;
++ addQuestion(politicianId : UUID, questionText : String) : boolean
++ upvoteQuestion(questionId : UUID, ipAddress : String) : boolean</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>820</x><y>490</y><w>160</w><h>150</h></coordinates><panel_attributes>&lt;&lt;TransferObject&gt;&gt;
 PoliticianTO
 --
 - id : UUID
@@ -61,7 +61,7 @@ PoliticianTO
 - birthYear : int
 - match : int
 --
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>850</x><y>670</y><w>240</w><h>120</h></coordinates><panel_attributes>&lt;&lt;TransferObject&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>780</x><y>670</y><w>240</w><h>120</h></coordinates><panel_attributes>&lt;&lt;TransferObject&gt;&gt;
 PoliticianProfileTO
 --
 - profession : String
@@ -69,25 +69,25 @@ PoliticianProfileTO
 - mediaEntries : List&lt;MediaEntryTO&gt;
 - questions : List&lt;PoliticianQuestionTO&gt;
 --
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>750</x><y>840</y><w>190</w><h>120</h></coordinates><panel_attributes>&lt;&lt;TransferObject&gt;&gt;
-PoliticianQuestionTO
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>590</x><y>840</y><w>280</w><h>120</h></coordinates><panel_attributes>&lt;&lt;TransferObject&gt;&gt;
+PersonalQuestionTO
 --
 - id : UUID
 - text : String
 - upvotes : int
-- answer : PoliticianAnswerTO
+- answer : Optional&lt;PersonalQuestionAnswerTO&gt;
 --
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>770</x><y>1020</y><w>160</w><h>100</h></coordinates><panel_attributes>&lt;&lt;TransferObject&gt;&gt;
-PoliticianAnswerTO
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>700</x><y>1020</y><w>160</w><h>100</h></coordinates><panel_attributes>&lt;&lt;TransferObject&gt;&gt;
+PersonalQuestionAnswerTO
 --
 - text : String
 --
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>870</x><y>950</y><w>30</w><h>90</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
-m2=*</panel_attributes><additional_attributes>10;10;10;70</additional_attributes></element><element><id>Relation</id><coordinates><x>860</x><y>780</y><w>90</w><h>80</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
-m2=*</panel_attributes><additional_attributes>70;10;10;60</additional_attributes></element><element><id>UMLNote</id><coordinates><x>120</x><y>670</y><w>140</w><h>60</h></coordinates><panel_attributes>Service to add
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>800</x><y>950</y><w>30</w><h>90</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m2=*</panel_attributes><additional_attributes>10;10;10;70</additional_attributes></element><element><id>Relation</id><coordinates><x>790</x><y>780</y><w>90</w><h>80</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m2=*</panel_attributes><additional_attributes>70;10;10;60</additional_attributes></element><element><id>UMLNote</id><coordinates><x>50</x><y>670</y><w>140</w><h>60</h></coordinates><panel_attributes>Service to add
 new personal questions
 and upvote them
-bg=blue</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>950</x><y>630</y><w>30</w><h>60</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;40</additional_attributes></element><element><id>UMLClass</id><coordinates><x>990</x><y>860</y><w>160</w><h>130</h></coordinates><panel_attributes>&lt;&lt;TransferObject&gt;&gt;
+bg=blue</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>880</x><y>630</y><w>30</w><h>60</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;40</additional_attributes></element><element><id>UMLClass</id><coordinates><x>920</x><y>860</y><w>160</w><h>130</h></coordinates><panel_attributes>&lt;&lt;TransferObject&gt;&gt;
 MediaEntryTO
 --
 - headline : String
@@ -95,8 +95,8 @@ MediaEntryTO
 - link : String
 - eventDate : Date
 --
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>990</x><y>780</y><w>60</w><h>100</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
-m2=*</panel_attributes><additional_attributes>10;10;40;80</additional_attributes></element><element><id>UMLClass</id><coordinates><x>890</x><y>340</y><w>160</w><h>120</h></coordinates><panel_attributes>&lt;&lt;TransferObject&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>920</x><y>780</y><w>60</w><h>100</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m2=*</panel_attributes><additional_attributes>10;10;40;80</additional_attributes></element><element><id>UMLClass</id><coordinates><x>820</x><y>340</y><w>160</w><h>120</h></coordinates><panel_attributes>&lt;&lt;TransferObject&gt;&gt;
 PoliticianFilterTO
 --
 - party : String
@@ -104,9 +104,4 @@ PoliticianFilterTO
 - ageFrom : int
 - ageTo : int
 --
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>660</x><y>400</y><w>250</w><h>170</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>230;10;10;150</additional_attributes></element><element><id>Relation</id><coordinates><x>660</x><y>520</y><w>250</w><h>90</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>230;10;10;70</additional_attributes></element><element><id>Relation</id><coordinates><x>660</x><y>620</y><w>210</w><h>100</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>190;80;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>530</x><y>842</y><w>240</w><h>40</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>220;20;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>740</x><y>140</y><w>170</w><h>120</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>150;10;10;100</additional_attributes></element><element><id>Relation</id><coordinates><x>500</x><y>140</y><w>30</w><h>70</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;10;50</additional_attributes></element><element><id>Relation</id><coordinates><x>730</x><y>140</y><w>50</w><h>70</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>30;10;10;50</additional_attributes></element><element><id>Relation</id><coordinates><x>170</x><y>120</y><w>60</w><h>90</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>10;10;40;70</additional_attributes></element><element><id>Relation</id><coordinates><x>210</x><y>720</y><w>70</w><h>60</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>10;10;50;40</additional_attributes></element><element><id>Relation</id><coordinates><x>170</x><y>440</y><w>50</w><h>80</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>10;10;30;60</additional_attributes></element><element><id>UMLClass</id><coordinates><x>890</x><y>210</y><w>160</w><h>110</h></coordinates><panel_attributes>&lt;&lt;List&gt;&gt;
-PoliticianList
---
-totalSize : int
---
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>660</x><y>280</y><w>250</w><h>250</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>230;10;10;230</additional_attributes></element></diagram>
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>590</x><y>400</y><w>250</w><h>170</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>230;10;10;150</additional_attributes></element><element><id>Relation</id><coordinates><x>590</x><y>520</y><w>250</w><h>90</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>230;10;10;70</additional_attributes></element><element><id>Relation</id><coordinates><x>590</x><y>620</y><w>210</w><h>100</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>190;80;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>460</x><y>842</y><w>150</w><h>40</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>130;20;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>670</x><y>230</y><w>140</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>120;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>430</x><y>140</y><w>30</w><h>70</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;10;50</additional_attributes></element><element><id>Relation</id><coordinates><x>660</x><y>140</y><w>50</w><h>70</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>30;10;10;50</additional_attributes></element><element><id>Relation</id><coordinates><x>100</x><y>120</y><w>60</w><h>90</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>10;10;40;70</additional_attributes></element><element><id>Relation</id><coordinates><x>140</x><y>720</y><w>70</w><h>60</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>10;10;50;40</additional_attributes></element><element><id>Relation</id><coordinates><x>100</x><y>440</y><w>50</w><h>80</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>10;10;30;60</additional_attributes></element></diagram>
