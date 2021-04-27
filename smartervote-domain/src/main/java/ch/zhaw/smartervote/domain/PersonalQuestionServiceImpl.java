@@ -48,11 +48,6 @@ public class PersonalQuestionServiceImpl implements PersonalQuestionService {
 
         Politician politician = queryResult.get();
 
-        Set<PersonalQuestion> politicianQuestions = politician.getPersonalQuestions();
-        for (PersonalQuestion q : politicianQuestions) {
-            if (q.getText().equals(questionText)) return false; // false if question text already exists
-        }
-
         PersonalQuestion entityToInsert = new PersonalQuestion();
 
         entityToInsert.setPolitician(politician);
