@@ -1,4 +1,4 @@
-package ch.zhaw.smartervote.webapp.pages;
+package ch.zhaw.smartervote.webapp.controllers;
 
 import ch.zhaw.smartervote.contract.ElectionProposalService;
 import ch.zhaw.smartervote.contract.transferobject.ElectionTO;
@@ -70,8 +70,9 @@ public class ElectionProposalController {
      */
     @GetMapping("/wahlen/{id}")
     public String showSubjects(@ModelAttribute ElectionProposalDTO electionProposalDTO,
-                             @PathVariable("id") String id, Model model) {
+                               @PathVariable("id") String id, Model model) {
         Set<SubjectTO> subjectTOS = electionProposalService.getQuestionSubjects(UUID.fromString(id));
+
         electionProposalDTO.setElectionId(UUID.fromString(id));
         electionProposalDTO.setSubjectVOS(Converter.convertToSubjectVO(subjectTOS));
 
@@ -121,9 +122,10 @@ public class ElectionProposalController {
     }
 
     /**
-     * Method to receive the post request to save the question answers and calculate the proposal.
+     * Method to receive the post reqeust to save the question answers and calculate the proposal.
      *
      * @param electionProposalDTO election proposal data transfer object
+     * @param status session status to terminate the session
      * @return redirect to result page
      */
     @PostMapping("/save-questions")

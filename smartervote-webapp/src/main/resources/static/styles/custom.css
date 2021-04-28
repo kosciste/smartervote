@@ -275,7 +275,7 @@ header{
   color: whitesmoke;
   margin-top: 100px;
   height: 350px;
-  background-color: hsl(0, 0%, 11%, 0.9);
+  background-color: hsl(0, 0%, 11%);
   /*background-color: #1c1c1c;*/
 }
 
@@ -489,9 +489,14 @@ a.election{
 /* end questions specific */
 
 /* start error specific */
-.btn-error{
+.btn-error {
     margin-top: 80px;
 }
 /* end error specific */
 
-
+/* start politician profile specific */
+.profilePic{
+  width: 200px;
+	height: 200px;
+}
+/* end politician profile specific */

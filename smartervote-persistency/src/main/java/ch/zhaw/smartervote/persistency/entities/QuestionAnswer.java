@@ -1,7 +1,6 @@
 package ch.zhaw.smartervote.persistency.entities;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
  * Represents the QuestionAnswer table.
