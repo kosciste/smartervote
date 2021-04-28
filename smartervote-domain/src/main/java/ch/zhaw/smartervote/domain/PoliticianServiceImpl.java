@@ -1,5 +1,6 @@
 package ch.zhaw.smartervote.domain;
 
+import ch.zhaw.smartervote.contract.ElementNotFoundException;
 import ch.zhaw.smartervote.contract.PoliticianService;
 import ch.zhaw.smartervote.contract.transferobject.PoliticianFilterTO;
 import ch.zhaw.smartervote.contract.transferobject.PoliticianProfileTO;
@@ -62,9 +63,9 @@ public class PoliticianServiceImpl implements PoliticianService {
      * {@inheritDoc}
      */
     @Override
-    public List<PoliticianTO> getPoliticians(int offset, int size, UUID resultId) {
+    public List<PoliticianTO> getPoliticians(int offset, int size, UUID resultId) throws ElementNotFoundException {
         Optional<ProposalResult> proposalResultOptional = proposalResultRepository.findById(resultId);
-        if (proposalResultOptional.isEmpty()) throw new IllegalArgumentException("Proposal result does not exist");
+        if (proposalResultOptional.isEmpty()) throw new ElementNotFoundException("Proposal result does not exist.");
         Set<ProposalResultScore> proposalResultScores = proposalResultOptional.get().getProposalResultScores();
         List<PoliticianTO> politicians = proposalResultScores.stream()
                 .map(proposalResultScore -> MapPolitician.toTransferObject(
@@ -78,7 +79,8 @@ public class PoliticianServiceImpl implements PoliticianService {
      * {@inheritDoc}
      */
     @Override
-    public List<PoliticianTO> filterPoliticians(int offset, int size, PoliticianFilterTO filter) {
+    public List<PoliticianTO> filterPoliticians(int offset, int size, PoliticianFilterTO filter)
+            throws ElementNotFoundException {
         return null;
     }
 
@@ -86,7 +88,8 @@ public class PoliticianServiceImpl implements PoliticianService {
      * {@inheritDoc}
      */
     @Override
-    public List<PoliticianTO> filterPoliticians(int offset, int size, PoliticianFilterTO filter, UUID resultId) {
+    public List<PoliticianTO> filterPoliticians(int offset, int size, PoliticianFilterTO filter, UUID resultId)
+            throws ElementNotFoundException {
         return null;
     }
 

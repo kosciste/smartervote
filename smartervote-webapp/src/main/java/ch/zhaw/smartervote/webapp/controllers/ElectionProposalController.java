@@ -1,6 +1,7 @@
 package ch.zhaw.smartervote.webapp.controllers;
 
 import ch.zhaw.smartervote.contract.ElectionProposalService;
+import ch.zhaw.smartervote.contract.ElementNotFoundException;
 import ch.zhaw.smartervote.contract.transferobject.ElectionTO;
 import ch.zhaw.smartervote.contract.transferobject.QuestionTO;
 import ch.zhaw.smartervote.contract.transferobject.SubjectTO;
@@ -71,10 +72,10 @@ public class ElectionProposalController {
     @GetMapping("/wahlen/{id}")
     public String showSubjects(@ModelAttribute ElectionProposalDTO electionProposalDTO,
                              @PathVariable("id") String id, Model model) {
-        Set<SubjectTO> subjectTOS = null;
+        Set<SubjectTO> subjectTOS;
         try {
             subjectTOS = electionProposalService.getQuestionSubjects(UUID.fromString(id));
-        } catch (IllegalArgumentException e) {
+        } catch (ElementNotFoundException e) {
             return "redirect:/";
         }
 
@@ -95,8 +96,13 @@ public class ElectionProposalController {
     @GetMapping("/fragebogen")
     public String showQuestions(@ModelAttribute ElectionProposalDTO electionProposalDTO, Model model) {
         Set<SubjectTO> subjectTOS = Converter.convertToSubjectTO(electionProposalDTO.getSubjectVOS());
-        Map<SubjectTO, Set<QuestionTO>> subjectsMap = electionProposalService
-                .getQuestionCatalogue(electionProposalDTO.getElectionId(), subjectTOS);
+        Map<SubjectTO, Set<QuestionTO>> subjectsMap;
+        try {
+            subjectsMap = electionProposalService
+                    .getQuestionCatalogue(electionProposalDTO.getElectionId(), subjectTOS);
+        } catch (ElementNotFoundException e) {
+            return "redirect:/";
+        }
 
         for (Map.Entry<SubjectTO, Set<QuestionTO>> entry : subjectsMap.entrySet()) {
             for (SubjectVO subjectVO : electionProposalDTO.getSubjectVOS()) {
@@ -140,7 +146,12 @@ public class ElectionProposalController {
             results.put(Converter.convertToSubjectTO(subjectVO), Converter.convertToQuestionTO(subjectVO.getQuestionVOS()));
         }
 
-        UUID result = electionProposalService.calculateElectionProposal(electionProposalDTO.getElectionId(), results);
+        UUID result;
+        try {
+            result = electionProposalService.calculateElectionProposal(electionProposalDTO.getElectionId(), results);
+        } catch (ElementNotFoundException e) {
+            return "redirect:/";
+        }
 
         status.setComplete();
         return "redirect:/results/" + result;

@@ -1,5 +1,6 @@
 package ch.zhaw.smartervote.webapp.controllers;
 
+import ch.zhaw.smartervote.contract.ElementNotFoundException;
 import ch.zhaw.smartervote.contract.PoliticianService;
 import ch.zhaw.smartervote.contract.transferobject.PoliticianTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +52,7 @@ public class PoliticianController {
         List<PoliticianTO> politicians;
         try {
             politicians = politicianService.getPoliticians(OFFSET, SIZE, UUID.fromString(id));
-        } catch (IllegalArgumentException e) {
+        } catch (ElementNotFoundException e) {
             return "redirect:/";
         }
         model.addAttribute("politicians", politicians);
