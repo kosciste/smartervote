@@ -488,4 +488,10 @@ a.election{
 
 /* end questions specific */
 
+/* start error specific */
+.btn-error{
+    margin-top: 80px;
+}
+/* end error specific */
+
 

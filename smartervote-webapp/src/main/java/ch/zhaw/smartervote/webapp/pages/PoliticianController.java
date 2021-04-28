@@ -48,12 +48,7 @@ public class PoliticianController {
      */
     @GetMapping("/results/{id}")
     public String showResult(@PathVariable("id") String id, Model model) {
-        List<PoliticianTO> politicians;
-        try {
-            politicians = politicianService.getPoliticians(OFFSET, SIZE, UUID.fromString(id));
-        } catch (IllegalArgumentException e) {
-            return "redirect:/";
-        }
+        List<PoliticianTO> politicians = politicianService.getPoliticians(OFFSET, SIZE, UUID.fromString(id));
         model.addAttribute("politicians", politicians);
         return "proposal";
     }

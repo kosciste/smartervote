@@ -71,13 +71,7 @@ public class ElectionProposalController {
     @GetMapping("/wahlen/{id}")
     public String showSubjects(@ModelAttribute ElectionProposalDTO electionProposalDTO,
                              @PathVariable("id") String id, Model model) {
-        Set<SubjectTO> subjectTOS = null;
-        try {
-            subjectTOS = electionProposalService.getQuestionSubjects(UUID.fromString(id));
-        } catch (IllegalArgumentException e) {
-            return "redirect:/";
-        }
-
+        Set<SubjectTO> subjectTOS = electionProposalService.getQuestionSubjects(UUID.fromString(id));
         electionProposalDTO.setElectionId(UUID.fromString(id));
         electionProposalDTO.setSubjectVOS(Converter.convertToSubjectVO(subjectTOS));
 
