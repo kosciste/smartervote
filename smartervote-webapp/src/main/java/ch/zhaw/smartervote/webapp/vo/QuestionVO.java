@@ -10,6 +10,11 @@ import java.util.UUID;
 public class QuestionVO {
 
     /**
+     * Default answer that is preselected.
+     */
+    public static final String DEFAULT_ANSWER = "2";
+
+    /**
      * The UUID of this question.
      */
     private UUID id;
@@ -22,7 +27,7 @@ public class QuestionVO {
     /**
      * The answer of the user to the question.
      */
-    private String answer;
+    private String answer = DEFAULT_ANSWER;
 
     public void setId(UUID id) {
         this.id = id;

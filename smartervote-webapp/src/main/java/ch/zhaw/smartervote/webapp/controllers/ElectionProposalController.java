@@ -5,6 +5,7 @@ import ch.zhaw.smartervote.contract.transferobject.ElectionTO;
 import ch.zhaw.smartervote.contract.transferobject.QuestionTO;
 import ch.zhaw.smartervote.contract.transferobject.SubjectTO;
 import ch.zhaw.smartervote.webapp.dto.ElectionProposalDTO;
+import ch.zhaw.smartervote.webapp.util.MessageUtil;
 import ch.zhaw.smartervote.webapp.vo.Converter;
 import ch.zhaw.smartervote.webapp.vo.SubjectVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * This class represents the controller for managing the interaction with the ElectionProposalService.
@@ -28,13 +27,35 @@ import java.util.UUID;
 public class ElectionProposalController {
 
     /**
+     * Property key for the error message if only not interested was selected.
+     */
+    private static final String ERROR_MESSAGE_ONLY_NOT_INTERESTED = "error.only.not.interested";
+
+    /**
+     * Property key for the error message if the user tries to open the question page without prior selection.
+     */
+    private static final String ERROR_MESSAGE_NO_PREVIOUS_SELECTION = "error.no.previous.selection";
+
+    /**
+     * Property key for the error message if the user does only select the default answer.
+     */
+    private static final String ERROR_MESSAGE_ONLY_DEFAULT_ANSWER = "error.only.default.answer";
+
+    /**
      * Election proposal service to interact with the backend.
      */
     private final ElectionProposalService electionProposalService;
 
+    /**
+     * Message utility that allows setting error messages.
+     */
+    private final MessageUtil messageUtil;
+
     @Autowired
-    public ElectionProposalController(ElectionProposalService electionProposalService) {
+    public ElectionProposalController(ElectionProposalService electionProposalService,
+                                      MessageUtil messageUtil) {
         this.electionProposalService = electionProposalService;
+        this.messageUtil = messageUtil;
     }
 
     /**
@@ -86,14 +107,19 @@ public class ElectionProposalController {
     }
 
     /**
-     * Method to receive the post request to save the subjects. This does not much because the values are already saved
-     * based on the thymeleaf bindings.
+     * Method to receive the post request to save the subjects.
      *
      * @param electionProposalDTO election proposal data transfer object
      * @return redirect to question page
      */
     @PostMapping("/save-subjects")
-    public String saveQuestionSubjectSelection(@ModelAttribute ElectionProposalDTO electionProposalDTO) {
+    public String saveQuestionSubjectSelection(@ModelAttribute ElectionProposalDTO electionProposalDTO,
+                                               RedirectAttributes redirectAttributes) {
+        if (electionProposalDTO.onlyDefaultWeightSelected()) {
+            messageUtil.createErrorMessage(redirectAttributes, ERROR_MESSAGE_ONLY_NOT_INTERESTED);
+            return "redirect:/election/" + electionProposalDTO.getElectionId();
+        }
+
         return "redirect:/question-catalogue";
     }
 
@@ -105,7 +131,16 @@ public class ElectionProposalController {
      * @return page to answer the questions
      */
     @GetMapping("/question-catalogue")
-    public String showQuestions(@ModelAttribute ElectionProposalDTO electionProposalDTO, Model model) {
+    public String showQuestions(@ModelAttribute ElectionProposalDTO electionProposalDTO,
+                                Model model,
+                                RedirectAttributes redirectAttributes) {
+        // check if previous values were selected
+        if (electionProposalDTO.getElectionId() == null
+                || electionProposalDTO.onlyDefaultWeightSelected()) {
+            messageUtil.createErrorMessage(redirectAttributes, ERROR_MESSAGE_NO_PREVIOUS_SELECTION);
+            return "redirect:/";
+        }
+
         Set<SubjectTO> subjectTOS = Converter.convertToSubjectTO(electionProposalDTO.getSubjectVOS());
         Map<SubjectTO, Set<QuestionTO>> subjectsMap = electionProposalService
                 .getQuestionCatalogue(electionProposalDTO.getElectionId(), subjectTOS);
@@ -133,7 +168,14 @@ public class ElectionProposalController {
      * @return redirect to result page
      */
     @PostMapping("/save-questions")
-    public String saveQuestionSelection(@ModelAttribute ElectionProposalDTO electionProposalDTO, SessionStatus status) {
+    public String saveQuestionSelection(@ModelAttribute ElectionProposalDTO electionProposalDTO,
+                                        SessionStatus status,
+                                        RedirectAttributes redirectAttributes) {
+        if (electionProposalDTO.onlyDefaultAnswerSelected()) {
+            messageUtil.createErrorMessage(redirectAttributes, ERROR_MESSAGE_ONLY_DEFAULT_ANSWER);
+            return "redirect:/question-catalogue";
+        }
+
         Map<SubjectTO, Set<QuestionTO>> results = new HashMap<>();
         for (SubjectVO subjectVO : electionProposalDTO.getSubjectVOS()) {
             results.put(Converter.convertToSubjectTO(subjectVO), Converter.convertToQuestionTO(subjectVO.getQuestionVOS()));
