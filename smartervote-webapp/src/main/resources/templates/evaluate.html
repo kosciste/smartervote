@@ -19,6 +19,7 @@
 <main>
     <form th:action="@{/save-questions}" action="#" th:object="${form}" method="post">
         <div class="container-fluid container-topic">
+            <div th:replace="fragments/alert :: alert"/>
             <div class="row">
                 <div class="col-12">
                     <div class="container-fluid ">
