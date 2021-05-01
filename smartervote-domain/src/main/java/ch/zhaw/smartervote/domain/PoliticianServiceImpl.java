@@ -10,9 +10,9 @@ import ch.zhaw.smartervote.domain.mapping.MapPoliticianProfile;
 import ch.zhaw.smartervote.persistency.entities.Politician;
 import ch.zhaw.smartervote.persistency.entities.ProposalResult;
 import ch.zhaw.smartervote.persistency.entities.ProposalResultScore;
-import ch.zhaw.smartervote.persistency.repositories.iface.PoliticianRepository;
-import ch.zhaw.smartervote.persistency.repositories.iface.ProposalResultRepository;
-import ch.zhaw.smartervote.persistency.repositories.iface.ProposalResultScoreRepository;
+import ch.zhaw.smartervote.persistency.repositories.PoliticianRepository;
+import ch.zhaw.smartervote.persistency.repositories.ProposalResultRepository;
+import ch.zhaw.smartervote.persistency.repositories.ProposalResultScoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

@@ -9,8 +9,8 @@ plugins {
 dependencies {
 	// own dependencies
 	implementation project(':smartervote-interface')
-	runtime project(':smartervote-domain')
-	runtime project(':smartervote-persistency')
+	runtimeOnly project(':smartervote-domain')
+    runtimeOnly project(':smartervote-persistency')
 
 	// external dependencies
 	implementation 'org.springframework.boot:spring-boot-starter-web'

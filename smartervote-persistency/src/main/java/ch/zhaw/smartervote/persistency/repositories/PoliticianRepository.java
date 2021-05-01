@@ -1,4 +1,4 @@
-package ch.zhaw.smartervote.persistency.repositories.iface;
+package ch.zhaw.smartervote.persistency.repositories;
 
 import ch.zhaw.smartervote.persistency.entities.Politician;
 
@@ -7,6 +7,6 @@ import ch.zhaw.smartervote.persistency.entities.Politician;
  *
  * @author Raphael Krebs
  */
-public interface PoliticianRepository extends Repository<Politician> {
+public interface PoliticianRepository extends SmarterVoteRepository<Politician> {
 
 }

@@ -9,6 +9,7 @@ import java.util.Date;
  * @author Stefan Teodoropol
  */
 @Entity
+@Table(name = "mediacoverage")
 public class MediaCoverage extends BaseEntity {
 
     @ManyToOne

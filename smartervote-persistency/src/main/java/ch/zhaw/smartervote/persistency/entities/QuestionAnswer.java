@@ -8,6 +8,7 @@ import javax.persistence.*;
  * @author Stefan Teodoropol
  */
 @Entity
+@Table(name = "questionanswer")
 public class QuestionAnswer extends BaseEntity {
 
     @ManyToOne

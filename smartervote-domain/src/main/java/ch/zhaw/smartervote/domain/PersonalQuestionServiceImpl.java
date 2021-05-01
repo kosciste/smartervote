@@ -1,17 +1,15 @@
 package ch.zhaw.smartervote.domain;
 
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import ch.zhaw.smartervote.contract.PersonalQuestionService;
 import ch.zhaw.smartervote.persistency.entities.PersonalQuestion;
 import ch.zhaw.smartervote.persistency.entities.Politician;
-import ch.zhaw.smartervote.persistency.repositories.iface.PersonalQuestionRepository;
-import ch.zhaw.smartervote.persistency.repositories.iface.PoliticianRepository;
+import ch.zhaw.smartervote.persistency.repositories.PersonalQuestionRepository;
+import ch.zhaw.smartervote.persistency.repositories.PoliticianRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * This class implements the PersonalQuestionService functions
@@ -53,7 +51,7 @@ public class PersonalQuestionServiceImpl implements PersonalQuestionService {
         entityToInsert.setPolitician(politician);
         entityToInsert.setText(questionText);
 
-        personalQuestionRepository.insert(entityToInsert);
+        personalQuestionRepository.save(entityToInsert);
         
         return true;
     }

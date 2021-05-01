@@ -1,14 +1,7 @@
 package ch.zhaw.smartervote.persistency.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
+import javax.persistence.*;
 import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 
 /**
  * Represents the Question table.
@@ -16,10 +9,6 @@ import javax.persistence.OneToMany;
  * @author Stefan Teodoropol
  */
 @Entity
-@NamedQuery(
-        name="Question.findByText",
-        query="SELECT q FROM Question q where q.text like :text"
-)
 public class Question extends BaseEntity {
 
     @ManyToOne
