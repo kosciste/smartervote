@@ -8,6 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *
  * @author Leo Rudin
  */
+// @SpringBootApplication is a wrapper for:
+// @Configuration, @EnableAutoConfiguration, @ComponentScan
 @SpringBootApplication
 public class SmartervoteWebappApplication {
 
