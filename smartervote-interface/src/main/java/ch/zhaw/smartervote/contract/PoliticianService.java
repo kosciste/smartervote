@@ -2,8 +2,10 @@ package ch.zhaw.smartervote.contract;
 
 import ch.zhaw.smartervote.contract.transferobject.PoliticianFilterTO;
 import ch.zhaw.smartervote.contract.transferobject.PoliticianProfileTO;
-import ch.zhaw.smartervote.contract.transferobject.PoliticianTO;
 
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -25,7 +27,7 @@ public interface PoliticianService {
      * @param size the number of politicians to be returned.
      * @return The list of the politicians.
      */
-    List<PoliticianTO> getPoliticians(int offset, int size);
+    PoliticianList getPoliticians(int offset, int size);
 
     /**
      * Returns a list of politicians and their match sorted from highest to lowest match, limited by the given size and
@@ -39,7 +41,7 @@ public interface PoliticianService {
      * @return The list of the politicians.
      * @throws ElementNotFoundException if the result id does not exist.
      */
-    List<PoliticianTO> getPoliticians(int offset, int size, UUID resultId) throws ElementNotFoundException;
+    PoliticianList getPoliticians(int offset, int size, UUID resultId) throws ElementNotFoundException;
 
     /**
      * Returns a filtered list of politicians, limited by the given size and offset. The offset defines the index of the
@@ -51,7 +53,7 @@ public interface PoliticianService {
      * @return The filtered list of politicians.
      * @throws ElementNotFoundException if the result id does not exist.
      */
-    List<PoliticianTO> filterPoliticians(int offset, int size, PoliticianFilterTO filter)
+    PoliticianList filterPoliticians(int offset, int size, PoliticianFilterTO filter)
             throws ElementNotFoundException;
 
     /**
@@ -67,7 +69,7 @@ public interface PoliticianService {
      * @return The filtered list of politicians.
      * @throws ElementNotFoundException if the result id does not exist.
      */
-    List<PoliticianTO> filterPoliticians(int offset, int size, PoliticianFilterTO filter, UUID resultId)
+    PoliticianList filterPoliticians(int offset, int size, PoliticianFilterTO filter, UUID resultId)
             throws ElementNotFoundException;
 
     /**

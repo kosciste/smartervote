@@ -1,15 +1,14 @@
 package ch.zhaw.smartervote.webapp.controllers;
 
+import ch.zhaw.smartervote.contract.PoliticianList;
 import ch.zhaw.smartervote.contract.ElementNotFoundException;
 import ch.zhaw.smartervote.contract.PoliticianService;
-import ch.zhaw.smartervote.contract.transferobject.PoliticianTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -49,7 +48,7 @@ public class PoliticianController {
      */
     @GetMapping("/results/{id}")
     public String showResult(@PathVariable("id") String id, Model model) {
-        List<PoliticianTO> politicians;
+        PoliticianList politicians;
         try {
             politicians = politicianService.getPoliticians(OFFSET, SIZE, UUID.fromString(id));
         } catch (ElementNotFoundException e) {

@@ -1,6 +1,7 @@
 package ch.zhaw.smartervote.domain;
 
 import ch.zhaw.smartervote.contract.ElementNotFoundException;
+import ch.zhaw.smartervote.contract.PoliticianList;
 import ch.zhaw.smartervote.contract.PoliticianService;
 import ch.zhaw.smartervote.contract.transferobject.PoliticianFilterTO;
 import ch.zhaw.smartervote.contract.transferobject.PoliticianProfileTO;
@@ -16,8 +17,10 @@ import ch.zhaw.smartervote.persistency.repositories.iface.ProposalResultScoreRep
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Comparator;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * {@inheritDoc}
@@ -53,8 +56,8 @@ public class PoliticianServiceImpl implements PoliticianService {
      * {@inheritDoc}
      */
     @Override
-    public List<PoliticianTO> getPoliticians(int offset, int size) {
-        List<PoliticianTO> politicians = MapPolitician.toTransferObjects(politicianRepository.findAll());
+    public PoliticianList getPoliticians(int offset, int size) {
+        PoliticianList politicians = MapPolitician.toTransferObjects(politicianRepository.findAll());
         politicians.sort(Comparator.comparing(PoliticianTO::getName));
         return getPoliticianSubset(offset, size, politicians);
     }
@@ -63,15 +66,16 @@ public class PoliticianServiceImpl implements PoliticianService {
      * {@inheritDoc}
      */
     @Override
-    public List<PoliticianTO> getPoliticians(int offset, int size, UUID resultId) throws ElementNotFoundException {
+    public PoliticianList getPoliticians(int offset, int size, UUID resultId) throws ElementNotFoundException {
         Optional<ProposalResult> proposalResultOptional = proposalResultRepository.findById(resultId);
         if (proposalResultOptional.isEmpty()) throw new ElementNotFoundException("Proposal result does not exist.");
         Set<ProposalResultScore> proposalResultScores = proposalResultOptional.get().getProposalResultScores();
-        List<PoliticianTO> politicians = proposalResultScores.stream()
+        PoliticianList politicians = new PoliticianList(proposalResultScores.size());
+        proposalResultScores.stream()
                 .map(proposalResultScore -> MapPolitician.toTransferObject(
                         proposalResultScore.getPolitician(), proposalResultScore.getMatchingScore()))
                 .sorted(Comparator.comparing(PoliticianTO::getMatch).reversed())
-                .collect(Collectors.toList());
+                .forEach(politicians::add);
         return getPoliticianSubset(offset, size, politicians);
     }
 
@@ -79,7 +83,7 @@ public class PoliticianServiceImpl implements PoliticianService {
      * {@inheritDoc}
      */
     @Override
-    public List<PoliticianTO> filterPoliticians(int offset, int size, PoliticianFilterTO filter)
+    public PoliticianList filterPoliticians(int offset, int size, PoliticianFilterTO filter)
             throws ElementNotFoundException {
         return null;
     }
@@ -88,7 +92,7 @@ public class PoliticianServiceImpl implements PoliticianService {
      * {@inheritDoc}
      */
     @Override
-    public List<PoliticianTO> filterPoliticians(int offset, int size, PoliticianFilterTO filter, UUID resultId)
+    public PoliticianList filterPoliticians(int offset, int size, PoliticianFilterTO filter, UUID resultId)
             throws ElementNotFoundException {
         return null;
     }
@@ -112,9 +116,10 @@ public class PoliticianServiceImpl implements PoliticianService {
      * @param politicians the list from where the subset is taken.
      * @return the subset of the list.
      */
-    private List<PoliticianTO> getPoliticianSubset(int offset, int size, List<PoliticianTO> politicians) {
-        if (offset + size > politicians.size()) politicians = politicians.subList(offset, politicians.size());
-        else politicians = politicians.subList(offset, offset + size);
+    private PoliticianList getPoliticianSubset(int offset, int size, PoliticianList politicians) {
+        if (offset + size > politicians.size()) politicians =
+                new PoliticianList(politicians.subList(offset, politicians.size()), politicians.getTotalSize());
+        else politicians = new PoliticianList(politicians.subList(offset, offset + size), politicians.getTotalSize());
         return politicians;
     }
 
