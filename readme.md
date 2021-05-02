@@ -14,14 +14,14 @@ This repository uses the [GitHub flow](https://guides.github.com/pdfs/githubflow
 * This project requires at least java version 11, download openJDK 11 (LTS) here: https://adoptopenjdk.net
   * Preferably "HotSpot" option should be chosen for the JVM
 * Clone this repository to a folder of your preference
-* Create a new postgresql database and configure the connection in the "hibernate.cfg.xml" file in the smartervote-persistency project
-* Open a console and navigate into the root folder of the project
+* Create a new postgresql database and configure the connection in the "application.properties" file in the smartervote-webapp project
+* Open a console and navigate into the root folder of the project there into the "smartervote-webapp" subproject
 * Run following command to run the application:
 ```
-$ .\gradlew.bat bootRun
+$ ..\gradlew.bat bootRun
 ```
 * For linux users:
 ```
-$ .\gradlew bootRun
+$ ..\gradlew bootRun
 ```
 * Access the application at: http://localhost:8080
