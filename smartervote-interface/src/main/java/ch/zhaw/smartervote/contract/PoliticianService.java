@@ -6,10 +6,6 @@ import ch.zhaw.smartervote.contract.transferobject.PoliticianProfileTO;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
 
 /**
  * This interface implements methods to display the politicians and their profile, as well as filtering the list of
@@ -39,9 +35,9 @@ public interface PoliticianService {
      * @param resultId the UUID of the election proposal returned by {@link ElectionProposalService#calculateElectionProposal(UUID,
      * Map)}.
      * @return The list of the politicians.
-     * @throws ElementNotFoundException if the result id does not exist.
+     * @throws DomainException if the result id does not exist.
      */
-    PoliticianList getPoliticians(int offset, int size, UUID resultId) throws ElementNotFoundException;
+    PoliticianList getPoliticians(int offset, int size, UUID resultId) throws DomainException;
 
     /**
      * Returns a filtered list of politicians, limited by the given size and offset. The offset defines the index of the
@@ -51,10 +47,8 @@ public interface PoliticianService {
      * @param size The number of politicians to be returned.
      * @param filter The filter to filter the returned list of politicians.
      * @return The filtered list of politicians.
-     * @throws ElementNotFoundException if the result id does not exist.
      */
-    PoliticianList filterPoliticians(int offset, int size, PoliticianFilterTO filter)
-            throws ElementNotFoundException;
+    PoliticianList filterPoliticians(int offset, int size, PoliticianFilterTO filter);
 
     /**
      * Returns a filtered list of politicians and their match sorted from highest to lowest match, limited by the given
@@ -67,10 +61,10 @@ public interface PoliticianService {
      * @param resultId The UUID of the election proposal returned by {@link ElectionProposalService#calculateElectionProposal(UUID,
      * Map)}.
      * @return The filtered list of politicians.
-     * @throws ElementNotFoundException if the result id does not exist.
+     * @throws DomainException if the result id does not exist.
      */
     PoliticianList filterPoliticians(int offset, int size, PoliticianFilterTO filter, UUID resultId)
-            throws ElementNotFoundException;
+            throws DomainException;
 
     /**
      * Returns an optional containing a politicians profile.

@@ -1,7 +1,7 @@
 package ch.zhaw.smartervote.domain;
 
+import ch.zhaw.smartervote.contract.DomainException;
 import ch.zhaw.smartervote.contract.ElectionProposalService;
-import ch.zhaw.smartervote.contract.ElementNotFoundException;
 import ch.zhaw.smartervote.contract.SubjectWeight;
 import ch.zhaw.smartervote.contract.transferobject.ElectionTO;
 import ch.zhaw.smartervote.contract.transferobject.PoliticianTO;
@@ -72,9 +72,9 @@ public class ElectionProposalServiceImpl implements ElectionProposalService {
      * {@inheritDoc}
      */
     @Override
-    public Set<SubjectTO> getQuestionSubjects(UUID electionId) throws ElementNotFoundException {
+    public Set<SubjectTO> getQuestionSubjects(UUID electionId) throws DomainException {
         Optional<Election> electionOptional = electionRepository.findById(electionId);
-        if (electionOptional.isEmpty()) throw new ElementNotFoundException("Election does not exist.");
+        if (electionOptional.isEmpty()) throw new DomainException("Election does not exist.");
         return MapQuestionSubject.toTransferObjects(electionOptional.get().getQuestionSubjects());
     }
 
@@ -83,12 +83,12 @@ public class ElectionProposalServiceImpl implements ElectionProposalService {
      */
     @Override
     public Map<SubjectTO, Set<QuestionTO>> getQuestionCatalogue(UUID electionId, Set<SubjectTO> selection)
-            throws ElementNotFoundException {
+            throws DomainException {
         Map<SubjectTO, Set<QuestionTO>> questions = new HashMap<>();
         for (SubjectTO subject : selection) {
             if (subject.getWeight() != SubjectWeight.NOT_INTERESTED) {
                 Optional<QuestionSubject> subjectOptional = questionSubjectRepository.findById(subject.getId());
-                if (subjectOptional.isEmpty()) throw new ElementNotFoundException("Election does not exist.");
+                if (subjectOptional.isEmpty()) throw new DomainException("Election does not exist.");
                 questions.put(subject, MapQuestion.toTransferObjects(subjectOptional.get().getQuestions()));
             }
         }
@@ -100,9 +100,9 @@ public class ElectionProposalServiceImpl implements ElectionProposalService {
      */
     @Override
     public UUID calculateElectionProposal(UUID electionId, Map<SubjectTO, Set<QuestionTO>> questions)
-            throws ElementNotFoundException {
+            throws DomainException {
         Optional<Election> electionOptional = electionRepository.findById(electionId);
-        if (electionOptional.isEmpty()) throw new ElementNotFoundException("Election does not exist");
+        if (electionOptional.isEmpty()) throw new DomainException("Election does not exist");
         List<PoliticianTO> politicians = MapPolitician.toTransferObjects(politicianRepository.findAll());
         return electionProposalAlgorithm.calculate(politicians, questions);
     }

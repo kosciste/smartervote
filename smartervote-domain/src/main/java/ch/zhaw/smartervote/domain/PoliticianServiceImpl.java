@@ -1,6 +1,6 @@
 package ch.zhaw.smartervote.domain;
 
-import ch.zhaw.smartervote.contract.ElementNotFoundException;
+import ch.zhaw.smartervote.contract.DomainException;
 import ch.zhaw.smartervote.contract.PoliticianList;
 import ch.zhaw.smartervote.contract.PoliticianService;
 import ch.zhaw.smartervote.contract.transferobject.PoliticianFilterTO;
@@ -66,9 +66,9 @@ public class PoliticianServiceImpl implements PoliticianService {
      * {@inheritDoc}
      */
     @Override
-    public PoliticianList getPoliticians(int offset, int size, UUID resultId) throws ElementNotFoundException {
+    public PoliticianList getPoliticians(int offset, int size, UUID resultId) throws DomainException {
         Optional<ProposalResult> proposalResultOptional = proposalResultRepository.findById(resultId);
-        if (proposalResultOptional.isEmpty()) throw new ElementNotFoundException("Proposal result does not exist.");
+        if (proposalResultOptional.isEmpty()) throw new DomainException("Proposal result does not exist.");
         Set<ProposalResultScore> proposalResultScores = proposalResultOptional.get().getProposalResultScores();
         PoliticianList politicians = new PoliticianList(proposalResultScores.size());
         proposalResultScores.stream()
@@ -83,8 +83,7 @@ public class PoliticianServiceImpl implements PoliticianService {
      * {@inheritDoc}
      */
     @Override
-    public PoliticianList filterPoliticians(int offset, int size, PoliticianFilterTO filter)
-            throws ElementNotFoundException {
+    public PoliticianList filterPoliticians(int offset, int size, PoliticianFilterTO filter) {
         return null;
     }
 
@@ -93,7 +92,7 @@ public class PoliticianServiceImpl implements PoliticianService {
      */
     @Override
     public PoliticianList filterPoliticians(int offset, int size, PoliticianFilterTO filter, UUID resultId)
-            throws ElementNotFoundException {
+            throws DomainException {
         return null;
     }
 

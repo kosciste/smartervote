@@ -1,7 +1,7 @@
 package ch.zhaw.smartervote.webapp.controllers;
 
+import ch.zhaw.smartervote.contract.DomainException;
 import ch.zhaw.smartervote.contract.ElectionProposalService;
-import ch.zhaw.smartervote.contract.ElementNotFoundException;
 import ch.zhaw.smartervote.contract.transferobject.ElectionTO;
 import ch.zhaw.smartervote.contract.transferobject.QuestionTO;
 import ch.zhaw.smartervote.contract.transferobject.SubjectTO;
@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * This class represents the controller for managing the interaction with the ElectionProposalService.
@@ -96,7 +99,7 @@ public class ElectionProposalController {
         Set<SubjectTO> subjectTOS;
         try {
             subjectTOS = electionProposalService.getQuestionSubjects(UUID.fromString(id));
-        } catch (ElementNotFoundException e) {
+        } catch (DomainException e) {
             return "redirect:/";
         }
 
@@ -147,7 +150,7 @@ public class ElectionProposalController {
         try {
             subjectsMap = electionProposalService
                     .getQuestionCatalogue(electionProposalDTO.getElectionId(), subjectTOS);
-        } catch (ElementNotFoundException e) {
+        } catch (DomainException e) {
             return "redirect:/";
         }
 
@@ -190,7 +193,7 @@ public class ElectionProposalController {
         UUID result;
         try {
             result = electionProposalService.calculateElectionProposal(electionProposalDTO.getElectionId(), results);
-        } catch (ElementNotFoundException e) {
+        } catch (DomainException e) {
             return "redirect:/";
         }
 

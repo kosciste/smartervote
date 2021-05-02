@@ -5,9 +5,9 @@ package ch.zhaw.smartervote.contract;
  *
  * @author Rapahel Krebs
  */
-public class ElementNotFoundException extends Exception {
+public class DomainException extends Exception {
 
-    public ElementNotFoundException(String message) {
+    public DomainException(String message) {
         super(message);
     }
 
