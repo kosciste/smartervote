@@ -63,8 +63,7 @@ public interface PoliticianService {
      * @return The filtered list of politicians.
      * @throws DomainException if the result id does not exist.
      */
-    PoliticianList filterPoliticians(int offset, int size, PoliticianFilterTO filter, UUID resultId)
-            throws DomainException;
+    PoliticianList filterPoliticians(int offset, int size, PoliticianFilterTO filter, UUID resultId) throws DomainException;
 
     /**
      * Returns an optional containing a politicians profile.
