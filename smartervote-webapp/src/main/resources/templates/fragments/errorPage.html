@@ -3,13 +3,15 @@
 <body>
 <div th:fragment="name(errorCode, errorMsg)" class="container container-topic">
     <div class="row">
-        <col-12>
-            <h1 th:text="${errorCode}"></h1>
-            <h2 th:text="${errorMsg}"></h2>
+        <div class="col-12">
+            <div class="error-title">
+                <h1 th:text="${errorCode}"></h1>
+                <h2 th:text="${errorMsg}"></h2>
+            </div>
             <form action="/">
-                <button class="btn btn-send btn-error float-left">Zur Startseite</button>
+                <button class="btn btn-send float-left">Zur Startseite</button>
             </form>
-        </col-12>
+        </div>
     </div>
 </div>
 </body>

@@ -489,8 +489,8 @@ a.election{
 /* end questions specific */
 
 /* start error specific */
-.btn-error {
-    margin-top: 80px;
+.error-title{
+    min-height: 150px !important;
 }
 /* end error specific */
 
