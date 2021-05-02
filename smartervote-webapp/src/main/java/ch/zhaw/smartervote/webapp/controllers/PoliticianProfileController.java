@@ -3,10 +3,12 @@ package ch.zhaw.smartervote.webapp.controllers;
 import ch.zhaw.smartervote.contract.PoliticianService;
 import ch.zhaw.smartervote.contract.transferobject.PoliticianProfileTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.UUID;
 
@@ -37,7 +39,13 @@ public class PoliticianProfileController {
      */
     @GetMapping("/politician/{id}")
     public String showPolitician(@PathVariable("id") String id, Model model) {
-        PoliticianProfileTO politician = politicianService.getPoliticianData(UUID.fromString(id)).get();
+        PoliticianProfileTO politician;
+        try {
+            politician = politicianService.getPoliticianData(UUID.fromString(id)).get();
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Result Not Found", e);
+        }
+
         model.addAttribute("politician", politician);
         return "politician";
     }

@@ -98,8 +98,7 @@ public class ElectionProposalController {
         try {
             subjectTOS = electionProposalService.getQuestionSubjects(UUID.fromString(id));
         } catch (IllegalArgumentException e) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Election Not Found", e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Election Not Found", e);
         }
 
         electionProposalDTO.setElectionId(UUID.fromString(id));
