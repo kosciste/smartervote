@@ -1,5 +1,6 @@
 package ch.zhaw.smartervote.domain;
 
+import ch.zhaw.smartervote.contract.DomainException;
 import ch.zhaw.smartervote.contract.SubjectWeight;
 import ch.zhaw.smartervote.contract.transferobject.ElectionTO;
 import ch.zhaw.smartervote.contract.transferobject.QuestionTO;
@@ -93,13 +94,13 @@ class ElectionProposalServiceImplTest {
     }
 
     @Test
-    void getQuestionSubjectsExpectedSize() {
+    void getQuestionSubjectsExpectedSize() throws DomainException {
         Set<SubjectTO> subjects = electionProposalService.getQuestionSubjects(TEST_ELECTION_ID);
         assertEquals(subjects.size(), 13);
     }
 
     @Test
-    void getQuestionSubjectsExpectedValues() {
+    void getQuestionSubjectsExpectedValues() throws DomainException {
         int expectedCount = 1;
         String expectedName1 = "Staatspolitik";
         String expectedName2 = "Aussenbeziehungen";
@@ -112,7 +113,7 @@ class ElectionProposalServiceImplTest {
     }
 
     @Test
-    void getQuestionCatalogueContainingElements() {
+    void getQuestionCatalogueContainingElements() throws DomainException {
         int expectedSize = 6;
         SubjectTO subject = createSubject();
         Set<SubjectTO> subjectTOs = Collections.singleton(subject);
@@ -123,7 +124,7 @@ class ElectionProposalServiceImplTest {
     }
 
     @Test
-    void getQuestionCatalogueWithoutElements() {
+    void getQuestionCatalogueWithoutElements() throws DomainException {
         SubjectTO subject = createSubject();
         subject.setWeight(SubjectWeight.NOT_INTERESTED);
         Set<SubjectTO> subjectTOs = Collections.singleton(subject);
@@ -140,7 +141,7 @@ class ElectionProposalServiceImplTest {
     }
 
     @Test
-    void calculateElectionProposal() {
+    void calculateElectionProposal() throws DomainException {
         int expectedCount = 50;
         UUID electionId = UUID.fromString("bc4c25b6-f1ae-45bc-b7ae-4b3fd10e9c29");
         Map<SubjectTO, Set<QuestionTO>> questions = new HashMap<>();

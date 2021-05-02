@@ -1,5 +1,6 @@
 package ch.zhaw.smartervote.webapp.controllers;
 
+import ch.zhaw.smartervote.contract.DomainException;
 import ch.zhaw.smartervote.contract.PoliticianList;
 import ch.zhaw.smartervote.contract.PoliticianService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,7 @@ public class PoliticianController {
         PoliticianList politicians;
         try {
             politicians = politicianService.getPoliticians(OFFSET, SIZE, UUID.fromString(id));
-        } catch (IllegalArgumentException e) {
+        } catch (DomainException e) {
             return "redirect:/";
         }
         model.addAttribute("politicians", politicians);
