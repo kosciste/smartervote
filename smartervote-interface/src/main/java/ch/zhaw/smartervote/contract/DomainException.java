@@ -1,7 +1,7 @@
 package ch.zhaw.smartervote.contract;
 
 /**
- * This exception is thrown, when an element does not exist in the database.
+ * General exception that is thrown in case of issues on the domain layer.
  *
  * @author Rapahel Krebs
  */
