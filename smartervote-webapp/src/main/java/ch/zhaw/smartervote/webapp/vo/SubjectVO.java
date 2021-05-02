@@ -13,6 +13,11 @@ import java.util.UUID;
 public class SubjectVO {
 
     /**
+     * Default weight that is preselected.
+     */
+    public static final String DEFAULT_WEIGHT = "0";
+
+    /**
      * The UUID of the subject.
      */
     private UUID id;
@@ -25,8 +30,11 @@ public class SubjectVO {
     /**
      * The weight of the subject.
      */
-    private String weight;
+    private String weight = DEFAULT_WEIGHT;
 
+    /**
+     * Questions that are attached to this subject.
+     */
     private List<QuestionVO> questionVOS;
 
     public UUID getId() {

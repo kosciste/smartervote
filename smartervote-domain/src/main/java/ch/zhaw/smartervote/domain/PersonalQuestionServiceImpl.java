@@ -1,7 +1,7 @@
 package ch.zhaw.smartervote.domain;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,12 +47,6 @@ public class PersonalQuestionServiceImpl implements PersonalQuestionService {
         if (queryResult.isEmpty()) return false; // false if politician doesnt exist
 
         Politician politician = queryResult.get();
-
-        List<PersonalQuestion> politicianQuestions = personalQuestionRepository.findAll();
-        for (PersonalQuestion q : politicianQuestions) {
-            if (q.getText().equals(questionText)) return false; // false if question id already exists
-            System.out.println("Checking: " + q.getId().toString() + " == " + questionText);
-        }
 
         PersonalQuestion entityToInsert = new PersonalQuestion();
 

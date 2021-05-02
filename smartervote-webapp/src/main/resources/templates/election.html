@@ -3,11 +3,11 @@
 <head th:replace="fragments/head :: head"></head>
 <body>
 <nav th:replace="fragments/navigation :: navigation"></nav>
-<header th:replace="fragments/header :: name('Themengewichtung',
-'Gewichten Sie die Themen, die Ihnen wichtig scheinen')"></header>
+<header th:replace="fragments/header :: name('Themengewichtung', 'Gewichten Sie die Themen, die Ihnen wichtig scheinen')"></header>
 <main>
     <form th:action="@{/save-subjects}" action="#" th:object="${form}" method="post">
         <div class="container-fluid container-topic">
+            <div th:replace="fragments/alert :: alert"/>
             <div class="row">
                 <div class="col-12">
                     <div class="container-fluid ">
