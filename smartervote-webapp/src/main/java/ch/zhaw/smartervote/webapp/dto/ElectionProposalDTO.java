@@ -1,5 +1,6 @@
 package ch.zhaw.smartervote.webapp.dto;
 
+import ch.zhaw.smartervote.webapp.vo.QuestionVO;
 import ch.zhaw.smartervote.webapp.vo.SubjectVO;
 
 import java.util.List;
@@ -22,6 +23,34 @@ public class ElectionProposalDTO {
      * Subject with their set weight.
      */
     private List<SubjectVO> subjectVOS;
+
+    /**
+     * Returns true if all subjects have the default weight selected.
+     *
+     * @return true if only the default weight is selected
+     */
+    public boolean onlyDefaultWeightSelected() {
+        for (SubjectVO subjectVO : subjectVOS) {
+            if (!SubjectVO.DEFAULT_WEIGHT.equals(subjectVO.getWeight())) return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Returns true if all questions have the default answer selected.
+     *
+     * @return true if only the default answer is selected
+     */
+    public boolean onlyDefaultAnswerSelected() {
+        for (SubjectVO subjectVO : subjectVOS) {
+            for (QuestionVO questionVO : subjectVO.getQuestionVOS()) {
+                if (!QuestionVO.DEFAULT_ANSWER.equals(questionVO.getAnswer())) return false;
+            }
+        }
+
+        return true;
+    }
 
     public void addSubject(SubjectVO subjectVO) {
         this.subjectVOS.add(subjectVO);

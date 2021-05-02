@@ -18,12 +18,13 @@
 <main>
     <form th:object="${elections}" action="#" method="post">
         <div class="container-fluid container-topic">
+            <div th:replace="fragments/alert :: alert"/>
             <div class="row">
                 <div class="col-12">
                     <div class="container-fluid container-topic-inner">
                         <div th:each="election: ${elections}" class="row election-row grey-bg">
                             <div class="col-12">
-                                <a th:href="@{wahlen/{id}(id=${election.id})}" th:text="${election.name}"  class="election"></a>
+                                <a th:href="@{election/{id}(id=${election.id})}" th:text="${election.name}" class="election"></a>
                             </div>
                         </div>
                     </div>
