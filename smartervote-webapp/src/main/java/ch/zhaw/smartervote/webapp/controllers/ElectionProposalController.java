@@ -150,10 +150,9 @@ public class ElectionProposalController {
         Set<SubjectTO> subjectTOS = Converter.convertToSubjectTO(electionProposalDTO.getSubjectVOS());
         Map<SubjectTO, Set<QuestionTO>> subjectsMap;
         try {
-            subjectsMap = electionProposalService
-                    .getQuestionCatalogue(electionProposalDTO.getElectionId(), subjectTOS);
+            subjectsMap = electionProposalService.getQuestionCatalogue(electionProposalDTO.getElectionId(), subjectTOS);
         } catch (DomainException e) {
-            return "redirect:/";
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         for (Map.Entry<SubjectTO, Set<QuestionTO>> entry : subjectsMap.entrySet()) {
@@ -196,7 +195,7 @@ public class ElectionProposalController {
         try {
             result = electionProposalService.calculateElectionProposal(electionProposalDTO.getElectionId(), results);
         } catch (DomainException e) {
-            return "redirect:/";
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         status.setComplete();

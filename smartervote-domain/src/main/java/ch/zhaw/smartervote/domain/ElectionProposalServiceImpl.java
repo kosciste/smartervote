@@ -88,10 +88,15 @@ public class ElectionProposalServiceImpl implements ElectionProposalService {
         for (SubjectTO subject : selection) {
             if (subject.getWeight() != SubjectWeight.NOT_INTERESTED) {
                 Optional<QuestionSubject> subjectOptional = questionSubjectRepository.findById(subject.getId());
-                if (subjectOptional.isEmpty()) throw new DomainException("Election does not exist.");
+
+                if (subjectOptional.isEmpty()) throw new DomainException("Provided question subject does not exist.");
+                if (!electionId.equals(subjectOptional.get().getElection().getId()))
+                    throw new DomainException("Question subject does not belong to the provided election id.");
+
                 questions.put(subject, MapQuestion.toTransferObjects(subjectOptional.get().getQuestions()));
             }
         }
+
         return questions;
     }
 

@@ -54,8 +54,9 @@ public class PoliticianController {
         try {
             politicians = politicianService.getPoliticians(OFFSET, SIZE, UUID.fromString(id));
         } catch (IllegalArgumentException | DomainException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Result Not Found", e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Proposal Result Not Found", e);
         }
+
         model.addAttribute("politicians", politicians);
         return "proposal";
     }

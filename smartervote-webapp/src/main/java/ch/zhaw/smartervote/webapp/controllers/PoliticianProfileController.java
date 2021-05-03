@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -39,14 +40,18 @@ public class PoliticianProfileController {
      */
     @GetMapping("/politician/{id}")
     public String showPolitician(@PathVariable("id") String id, Model model) {
-        PoliticianProfileTO politician;
+        Optional<PoliticianProfileTO> politicianProfileTOOptional;
         try {
-            politician = politicianService.getPoliticianData(UUID.fromString(id)).get();
+            politicianProfileTOOptional = politicianService.getPoliticianData(UUID.fromString(id));
         } catch (IllegalArgumentException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Result Not Found", e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Politician Not Found", e);
         }
 
-        model.addAttribute("politician", politician);
+        if (politicianProfileTOOptional.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        model.addAttribute("politician", politicianProfileTOOptional.get());
         return "politician";
     }
 
