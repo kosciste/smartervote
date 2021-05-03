@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="de">
+<head th:replace="fragments/head :: head"></head>
+<body>
+<nav th:replace="fragments/navigation :: navigation"></nav>
+<main th:insert="fragments/errorPage :: name('Diese Seite existiert nicht','Bitte überprüfe die URL')"></main>
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>
