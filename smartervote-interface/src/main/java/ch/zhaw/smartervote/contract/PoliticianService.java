@@ -35,8 +35,9 @@ public interface PoliticianService {
      * @param resultId the UUID of the election proposal returned by {@link ElectionProposalService#calculateElectionProposal(UUID,
      * Map)}.
      * @return The list of the politicians.
+     * @throws DomainException if the result id does not exist.
      */
-    PoliticianList getPoliticians(int offset, int size, UUID resultId);
+    PoliticianList getPoliticians(int offset, int size, UUID resultId) throws DomainException;
 
     /**
      * Returns a filtered list of politicians, limited by the given size and offset. The offset defines the index of the
@@ -60,8 +61,9 @@ public interface PoliticianService {
      * @param resultId The UUID of the election proposal returned by {@link ElectionProposalService#calculateElectionProposal(UUID,
      * Map)}.
      * @return The filtered list of politicians.
+     * @throws DomainException if the result id does not exist.
      */
-    PoliticianList filterPoliticians(int offset, int size, PoliticianFilterTO filter, UUID resultId);
+    PoliticianList filterPoliticians(int offset, int size, PoliticianFilterTO filter, UUID resultId) throws DomainException;
 
     /**
      * Returns an optional containing a politicians profile.

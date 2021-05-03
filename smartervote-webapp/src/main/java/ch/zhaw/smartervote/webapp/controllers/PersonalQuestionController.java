@@ -1,5 +1,6 @@
 package ch.zhaw.smartervote.webapp.controllers;
 
+import ch.zhaw.smartervote.contract.DomainException;
 import ch.zhaw.smartervote.contract.PersonalQuestionService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +40,13 @@ public class PersonalQuestionController {
      */
     @PostMapping("/politician/{id}/addQuestion")
     public String addQuestion(@PathVariable("id") String politicianId, @RequestBody Object personalQuestion) {
-        String text = ((LinkedHashMap<String, String>)personalQuestion).get("text");
-        boolean result = personalQuestionService.addQuestion(UUID.fromString(politicianId), text);
+        boolean result;
+        try {
+            String text = ((LinkedHashMap<String, String>)personalQuestion).get("text");
+            result = personalQuestionService.addQuestion(UUID.fromString(politicianId), text);
+        } catch (IllegalArgumentException | DomainException e) {
+            return "redirect:/";
+        }
         return String.valueOf(result);
     }
 
@@ -53,7 +59,12 @@ public class PersonalQuestionController {
      */
     @PostMapping("/question/{id}/upvote")
     public String upvoteQuestion(@PathVariable("id") String id, @RequestBody String ip) {
-        boolean result = personalQuestionService.upvoteQuestion(UUID.fromString(id), ip);
+        boolean result;
+        try {
+            result = personalQuestionService.upvoteQuestion(UUID.fromString(id), ip);
+        } catch (IllegalArgumentException | DomainException e) {
+            return "redirect:/";
+        }
         return String.valueOf(result);
     }
 

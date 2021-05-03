@@ -29,8 +29,9 @@ public interface ElectionProposalService {
      *
      * @param electionId the UUID of the election.
      * @return All question subjects for the given election.
+     * @throws DomainException if the election id does not exist.
      */
-    Set<SubjectTO> getQuestionSubjects(UUID electionId);
+    Set<SubjectTO> getQuestionSubjects(UUID electionId) throws DomainException;
 
     /**
      * Returns the question catalogue for a given election, where the topic of the selection does not equal 0.
@@ -39,8 +40,10 @@ public interface ElectionProposalService {
      * @param selection a map containing the UUID of the topics, and the weight of these topics. Topics with weight zero
      * will be ignored.
      * @return A map with all subject that where not wighted with 0, and their corresponding questions.
+     * @throws DomainException if the election id does not exist.
      */
-    Map<SubjectTO, Set<QuestionTO>> getQuestionCatalogue(UUID electionId, Set<SubjectTO> selection);
+    Map<SubjectTO, Set<QuestionTO>> getQuestionCatalogue(UUID electionId, Set<SubjectTO> selection)
+            throws DomainException;
 
     /**
      * Returns the UUID of the calculated election proposal for the answers of the user. The UUID can be used to get the
@@ -50,7 +53,9 @@ public interface ElectionProposalService {
      * @param electionId the UUID of the election.
      * @param questions a map with the weighted subjects, and the answered questions.
      * @return the UUID of the election proposal.
+     * @throws DomainException if the election id does not exist.
      */
-    UUID calculateElectionProposal(UUID electionId, Map<SubjectTO, Set<QuestionTO>> questions);
+    UUID calculateElectionProposal(UUID electionId, Map<SubjectTO, Set<QuestionTO>> questions)
+            throws DomainException;
 
 }
