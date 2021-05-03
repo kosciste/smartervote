@@ -1,7 +1,7 @@
 package ch.zhaw.smartervote.domain.algorithm;
 
 import ch.zhaw.smartervote.persistency.entities.QuestionAnswer;
-import ch.zhaw.smartervote.persistency.repositories.iface.QuestionAnswerRepository;
+import ch.zhaw.smartervote.persistency.repositories.QuestionAnswerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

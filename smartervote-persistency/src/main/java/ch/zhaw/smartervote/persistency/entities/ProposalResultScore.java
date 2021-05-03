@@ -1,9 +1,6 @@
 package ch.zhaw.smartervote.persistency.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 /**
  * Represents the PersonalProposalScore table.
@@ -11,6 +8,7 @@ import javax.persistence.ManyToOne;
  * @author Leo Rudin
  */
 @Entity
+@Table(name = "proposalresultscore")
 public class ProposalResultScore extends BaseEntity {
 
     @ManyToOne

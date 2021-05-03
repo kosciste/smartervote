@@ -1,4 +1,4 @@
-package ch.zhaw.smartervote.persistency.repositories.iface;
+package ch.zhaw.smartervote.persistency.repositories;
 
 import ch.zhaw.smartervote.persistency.entities.Question;
 
@@ -7,5 +7,6 @@ import ch.zhaw.smartervote.persistency.entities.Question;
  *
  * @author Leo Rudin
  */
-public interface QuestionRepository extends Repository<Question> {
+public interface QuestionRepository extends SmarterVoteRepository<Question> {
+
 }

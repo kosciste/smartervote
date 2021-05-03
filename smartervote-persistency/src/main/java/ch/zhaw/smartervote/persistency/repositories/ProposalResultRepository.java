@@ -1,4 +1,4 @@
-package ch.zhaw.smartervote.persistency.repositories.iface;
+package ch.zhaw.smartervote.persistency.repositories;
 
 import ch.zhaw.smartervote.persistency.entities.ProposalResult;
 
@@ -7,6 +7,6 @@ import ch.zhaw.smartervote.persistency.entities.ProposalResult;
  *
  * @author Raphael Krebs
  */
-public interface ProposalResultRepository extends Repository<ProposalResult> {
+public interface ProposalResultRepository extends SmarterVoteRepository<ProposalResult> {
 
 }

@@ -14,9 +14,9 @@ import ch.zhaw.smartervote.domain.mapping.MapQuestion;
 import ch.zhaw.smartervote.domain.mapping.MapQuestionSubject;
 import ch.zhaw.smartervote.persistency.entities.Election;
 import ch.zhaw.smartervote.persistency.entities.QuestionSubject;
-import ch.zhaw.smartervote.persistency.repositories.iface.ElectionRepository;
-import ch.zhaw.smartervote.persistency.repositories.iface.PoliticianRepository;
-import ch.zhaw.smartervote.persistency.repositories.iface.QuestionSubjectRepository;
+import ch.zhaw.smartervote.persistency.repositories.ElectionRepository;
+import ch.zhaw.smartervote.persistency.repositories.PoliticianRepository;
+import ch.zhaw.smartervote.persistency.repositories.QuestionSubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -47,7 +47,6 @@ public class ElectionProposalServiceImpl implements ElectionProposalService {
      * The algorithm for the election proposal.
      */
     private final ElectionProposalAlgorithm electionProposalAlgorithm;
-
 
     @Autowired
     public ElectionProposalServiceImpl(ElectionRepository electionRepository,

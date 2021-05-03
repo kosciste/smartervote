@@ -1,11 +1,26 @@
 // these are the local project build settings for the smartervote-persistency project
 // for the global gradle settings please see ../build.gradle
 
+plugins {
+    id 'org.springframework.boot' version '2.4.3'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+}
+
+// to use spring boot dependency management in a project that just acts as a library
+// project it needs to be marked as such by disabled looking for a main()-method and
+// marking it as a simple jar dependency
+bootJar {
+    enabled = false
+}
+jar {
+    enabled = true
+}
+
 dependencies {
 	// external dependencies
 	implementation 'org.postgresql:postgresql:42.2.19'
-	implementation 'org.hibernate:hibernate-core:5.4.29.Final'
-	implementation 'org.springframework:spring-context:5.3.4'
+	implementation 'org.springframework:spring-context' // dependency injection from spring
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // spring jpa support
 
 	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
 	testImplementation 'org.mockito:mockito-core:2.+'

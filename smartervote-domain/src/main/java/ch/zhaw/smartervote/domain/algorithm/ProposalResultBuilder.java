@@ -4,9 +4,9 @@ import ch.zhaw.smartervote.contract.transferobject.PoliticianTO;
 import ch.zhaw.smartervote.persistency.entities.Politician;
 import ch.zhaw.smartervote.persistency.entities.ProposalResult;
 import ch.zhaw.smartervote.persistency.entities.ProposalResultScore;
-import ch.zhaw.smartervote.persistency.repositories.iface.PoliticianRepository;
-import ch.zhaw.smartervote.persistency.repositories.iface.ProposalResultRepository;
-import ch.zhaw.smartervote.persistency.repositories.iface.ProposalResultScoreRepository;
+import ch.zhaw.smartervote.persistency.repositories.PoliticianRepository;
+import ch.zhaw.smartervote.persistency.repositories.ProposalResultRepository;
+import ch.zhaw.smartervote.persistency.repositories.ProposalResultScoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -69,8 +69,8 @@ public class ProposalResultBuilder {
      */
     public void writeResults() {
         proposalResult.setProposalResultScores(proposalResultScores);
-        proposalResultRepository.insert(proposalResult);
-        proposalResultScoreRepository.insert(new ArrayList<>(proposalResultScores));
+        proposalResultRepository.save(proposalResult);
+        proposalResultScoreRepository.saveAll(new ArrayList<>(proposalResultScores));
     }
 
     /**

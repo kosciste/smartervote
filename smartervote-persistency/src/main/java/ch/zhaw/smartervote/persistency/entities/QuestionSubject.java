@@ -1,14 +1,9 @@
 package ch.zhaw.smartervote.persistency.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.persistence.Column;
 
 /**
  * Represents the QuestionSubject table.
@@ -16,6 +11,7 @@ import javax.persistence.Column;
  * @author Stefan Teodoropol
  */
 @Entity
+@Table(name = "questionsubject")
 public class QuestionSubject extends BaseEntity {
 
     @ManyToOne
