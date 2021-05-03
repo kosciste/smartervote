@@ -1,12 +1,15 @@
 package ch.zhaw.smartervote.webapp.controllers;
 
+import ch.zhaw.smartervote.contract.DomainException;
 import ch.zhaw.smartervote.contract.PoliticianList;
 import ch.zhaw.smartervote.contract.PoliticianService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.UUID;
 
@@ -50,9 +53,10 @@ public class PoliticianController {
         PoliticianList politicians;
         try {
             politicians = politicianService.getPoliticians(OFFSET, SIZE, UUID.fromString(id));
-        } catch (IllegalArgumentException e) {
-            return "redirect:/";
+        } catch (IllegalArgumentException | DomainException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Proposal Result Not Found", e);
         }
+
         model.addAttribute("politicians", politicians);
         return "proposal";
     }

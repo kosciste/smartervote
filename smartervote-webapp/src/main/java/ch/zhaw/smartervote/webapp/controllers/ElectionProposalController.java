@@ -1,5 +1,6 @@
 package ch.zhaw.smartervote.webapp.controllers;
 
+import ch.zhaw.smartervote.contract.DomainException;
 import ch.zhaw.smartervote.contract.ElectionProposalService;
 import ch.zhaw.smartervote.contract.transferobject.ElectionTO;
 import ch.zhaw.smartervote.contract.transferobject.QuestionTO;
@@ -9,13 +10,18 @@ import ch.zhaw.smartervote.webapp.util.MessageUtil;
 import ch.zhaw.smartervote.webapp.vo.Converter;
 import ch.zhaw.smartervote.webapp.vo.SubjectVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * This class represents the controller for managing the interaction with the ElectionProposalService.
@@ -95,8 +101,8 @@ public class ElectionProposalController {
         Set<SubjectTO> subjectTOS;
         try {
             subjectTOS = electionProposalService.getQuestionSubjects(UUID.fromString(id));
-        } catch (IllegalArgumentException e) {
-            return "redirect:/";
+        } catch (IllegalArgumentException | DomainException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Election Not Found", e);
         }
 
         electionProposalDTO.setElectionId(UUID.fromString(id));
@@ -142,8 +148,12 @@ public class ElectionProposalController {
         }
 
         Set<SubjectTO> subjectTOS = Converter.convertToSubjectTO(electionProposalDTO.getSubjectVOS());
-        Map<SubjectTO, Set<QuestionTO>> subjectsMap = electionProposalService
-                .getQuestionCatalogue(electionProposalDTO.getElectionId(), subjectTOS);
+        Map<SubjectTO, Set<QuestionTO>> subjectsMap;
+        try {
+            subjectsMap = electionProposalService.getQuestionCatalogue(electionProposalDTO.getElectionId(), subjectTOS);
+        } catch (DomainException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
         for (Map.Entry<SubjectTO, Set<QuestionTO>> entry : subjectsMap.entrySet()) {
             for (SubjectVO subjectVO : electionProposalDTO.getSubjectVOS()) {
@@ -181,7 +191,12 @@ public class ElectionProposalController {
             results.put(Converter.convertToSubjectTO(subjectVO), Converter.convertToQuestionTO(subjectVO.getQuestionVOS()));
         }
 
-        UUID result = electionProposalService.calculateElectionProposal(electionProposalDTO.getElectionId(), results);
+        UUID result;
+        try {
+            result = electionProposalService.calculateElectionProposal(electionProposalDTO.getElectionId(), results);
+        } catch (DomainException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
         status.setComplete();
         return "redirect:/result/" + result;
