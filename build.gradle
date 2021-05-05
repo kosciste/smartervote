@@ -1,5 +1,9 @@
 // global gradle settings that are applied to all subprojects
 
+plugins {
+    id 'com.bmuschko.docker-remote-api' version '6.7.0'
+}
+
 allprojects {
     group = 'ch.zhaw.pm3.smartervote'
     version = '2021.3'
@@ -27,4 +31,44 @@ subprojects {
         }
     }
 
+}
+
+// Tasks for starting the database container with docker
+import com.bmuschko.gradle.docker.tasks.container.*
+
+def dbContainerName = "smartervote-db"
+
+task stopContainer(type: DockerStopContainer) {
+    targetContainerId(dbContainerName)
+    onError {}
+}
+
+task removeContainer(type: DockerRemoveContainer) {
+    group = "Docker"
+    dependsOn stopContainer
+    targetContainerId(dbContainerName)
+    onError { exception ->
+        if (!exception.message.contains('No such container'))
+            throw exception
+    }
+}
+
+task createDatabaseContainer(type: DockerCreateContainer) {
+    dependsOn removeContainer
+    targetImageId 'draka/smartervote-db:1.0'
+    containerName.set(dbContainerName)
+    hostConfig.autoRemove.set(true)
+    hostConfig.portBindings.set(['5432:5432'])
+    envVars.set('POSTGRES_PASSWORD': '123456')
+    def sqlDir =  file('smartervote-persistency/sql/').absolutePath
+    hostConfig.binds.set(
+            ["${sqlDir}/create-database.sql":"/create-database.sql",
+             "${sqlDir}/create-tables.sql":"/create-tables.sql",
+             "${sqlDir}/create-data.sql":"/create-data.sql"])
+}
+
+task startDatabaseContainer(type: DockerStartContainer) {
+    group = "Docker"
+    dependsOn createDatabaseContainer
+    targetContainerId(dbContainerName)
 }
