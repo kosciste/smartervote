@@ -3,6 +3,7 @@ package ch.zhaw.smartervote.contract;
 import ch.zhaw.smartervote.contract.transferobject.PoliticianFilterTO;
 import ch.zhaw.smartervote.contract.transferobject.PoliticianProfileTO;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -64,6 +65,12 @@ public interface PoliticianService {
      * @throws DomainException if the result id does not exist.
      */
     PoliticianList filterPoliticians(int offset, int size, PoliticianFilterTO filter, UUID resultId) throws DomainException;
+
+    /**
+     * Returns all Parties that happen to exist in a specicfic result.
+     * @return The list of PartyTOs
+     */
+    List<String> getParties(int offset, int size,UUID resultId) throws DomainException;
 
     /**
      * Returns an optional containing a politicians profile.

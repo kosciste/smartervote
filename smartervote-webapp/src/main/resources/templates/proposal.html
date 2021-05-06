@@ -5,19 +5,54 @@
 <nav th:replace="fragments/navigation :: navigation"></nav>
 <header th:replace="fragments/header :: name('Wahlempfehlung', 'Folgend finden Sie Ihre Wahlempfehlungen')"></header>
 <main>
+    <form action="#" th:action="@{/filter}" th:object="${filter}" method="post">
         <div class="container-fluid container-topic">
+            <div class="row grey-bg filter-row">
+                <div class="col-lg-4">
+                    <label class="filter-property"> Geschlecht</label>
+                    <div class="switch-field switch-filter">
+                        <input type="radio" th:field="*{gender}" id="male" name="gender" value="Male"/>
+                        <label th:for="male">Männlich</label>
+                        <input type="radio" th:field="*{gender}"id="female" name="gender" value="Female"/>
+                        <label th:for="female">Weiblich</label>
+                        <input type="radio" th:field="*{gender}"id="other" name="gender" value="Other"/>
+                        <label th:for="other">Andere</label>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <label class="filter-property"> Alter</label>
+                    <div>
+                        <input class="age-field" type="text" th:field="*{ageFrom}" id="start-age" name="start-age" value="18"/>
+                        <label th:for="end-age">bis</label>
+                        <input class="age-field" type="text" th:field="*{ageTo}" id="end-age" name="end-age"  value="100"/>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="filter-property" for="party">Partei</label>
+                    <div>
+                        <select th:field="*{party}"class="custom-select" name="party" id="party">
+                            <option th:each="p : ${parties}" th:text="${p}" th:value="${p}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <button type="submit" id="submitButton" th:value="Save" class="btn btn-filter">filtern</button>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-12">
                     <div class="container-fluid container-topic-inner">
                         <div th:each="politician: ${politicians}" class="row election-row grey-bg">
                             <div class="col-12">
-                                <a th:href="@{../politician/{id}(id=${politician.id})}" th:text="${politician.name} + '-' +  ${politician.match}"  class="election"></a>
+                                <a th:href="@{../politician/{id}(id=${politician.id})}"
+                                   th:text="${politician.name} + '-' +  ${politician.match}"  class="election"></a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </form>
 </main>
 <footer th:replace="fragments/footer :: footer"></footer>
 </body>

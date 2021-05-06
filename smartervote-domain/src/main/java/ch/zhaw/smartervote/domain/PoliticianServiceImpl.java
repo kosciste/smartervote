@@ -17,10 +17,9 @@ import ch.zhaw.smartervote.persistency.repositories.ProposalResultScoreRepositor
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Comparator;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.time.LocalDate;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * {@inheritDoc}
@@ -84,7 +83,14 @@ public class PoliticianServiceImpl implements PoliticianService {
      */
     @Override
     public PoliticianList filterPoliticians(int offset, int size, PoliticianFilterTO filter) {
-        return null;
+        List<PoliticianTO> politicianTOS = politicianRepository.findAll().stream()
+                .filter(p->p.getParty().getName().equals(filter.getParty())
+                        && p.getGender().toString().equals(filter.getGender())
+                        && filter.getAgeFrom() <= calculateAge(p.getBirthyear())
+                        && filter.getAgeTo() >= calculateAge(p.getBirthyear()))
+                .map(p->MapPolitician.toTransferObject(p)).collect(Collectors.toList());
+        PoliticianList politicians = new PoliticianList(politicianTOS, politicianTOS.size());
+        return politicians;
     }
 
     /**
@@ -93,7 +99,29 @@ public class PoliticianServiceImpl implements PoliticianService {
     @Override
     public PoliticianList filterPoliticians(int offset, int size, PoliticianFilterTO filter, UUID resultId)
             throws DomainException {
-        return null;
+        Optional<ProposalResult> proposalResultOptional = proposalResultRepository.findById(resultId);
+        if (proposalResultOptional.isEmpty()) throw new DomainException("Proposal result does not exist.");
+        Set<ProposalResultScore> proposalResultScores = proposalResultOptional.get().getProposalResultScores();
+        List<PoliticianTO> politicianTOS = proposalResultScores.stream()
+                .filter(r->r.getPolitician().getParty().getName().equals(filter.getParty())
+                        && r.getPolitician().getGender().toString().equals(filter.getGender())
+                        && filter.getAgeFrom() <= calculateAge(r.getPolitician().getBirthyear())
+                        && filter.getAgeTo() >= calculateAge(r.getPolitician().getBirthyear()))
+                .map(r->MapPolitician.toTransferObject(r.getPolitician(), r.getMatchingScore()))
+                .sorted(Comparator.comparing(PoliticianTO::getMatch).reversed()).collect(Collectors.toList());
+        PoliticianList politicians = new PoliticianList(politicianTOS, proposalResultScores.size());
+        return politicians;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<String> getParties(int offset, int size,UUID resultId) throws DomainException{
+        PoliticianList politicianList = getPoliticians(offset,size, resultId);
+        List<String> parties = politicianList.stream()
+                .map(p->p.getParty()).distinct().collect(Collectors.toList());
+        return parties;
     }
 
     /**
@@ -120,6 +148,15 @@ public class PoliticianServiceImpl implements PoliticianService {
                 new PoliticianList(politicians.subList(offset, politicians.size()), politicians.getTotalSize());
         else politicians = new PoliticianList(politicians.subList(offset, offset + size), politicians.getTotalSize());
         return politicians;
+    }
+
+    /**
+     * This method provides a primitive way to
+     * @param birthYear
+     * @return the current age
+     */
+    private int calculateAge(int birthYear) {
+        return LocalDate.now().getYear() - birthYear;
     }
 
 }
