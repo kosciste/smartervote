@@ -10,7 +10,7 @@ public abstract class AbstractIntegrationTest {
     /**
      * Use port one number higher than the standard postgres port for the test container database.
      */
-    private static final int PORT = 5433;
+    private static final int PORT = 5432;
 
     private static final String POSTGRES_PASSWORD = "123456";
 
@@ -30,6 +30,7 @@ public abstract class AbstractIntegrationTest {
                 .withExposedPorts(PORT);
 
         CONTAINER.start();
+        System.setProperty("db.port", String.valueOf(CONTAINER.getFirstMappedPort()));
     }
 
     @AfterAll
