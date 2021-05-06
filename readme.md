@@ -28,13 +28,15 @@ This repository uses the [GitHub flow](https://guides.github.com/pdfs/githubflow
 
 ### Start the database
 
+* **Please Note:** Currently on Windows only Docker in combination with WSL is supported!
+  * In case you run into issues while trying to run the docker container, you can always install a normal postgreSQL server and execute the sql files manually as described here: https://github.zhaw.ch/pm3-smartervote/smartervote/blob/master/smartervote-persistency/sql/create-database.sql
 * Open a console and navigate into the root folder of the project
 * Start the database Docker container by running the following command:
 
-#### For windows Users:
+#### For Windows users:
 
 ```
-$ ..\gradlew.bat startDatabaseContainer
+$ .\gradlew.bat startDatabaseContainer
 ```
 
 Note: the Docker service must be running.
@@ -42,17 +44,18 @@ Note: the Docker service must be running.
 #### For linux users:
 
 ```
-$ ..\gradlew startDatabaseContainer
+$ .\gradlew startDatabaseContainer
 ```
 
 Note: the Docker service must be running, and the user must have permission to run the docker command.
 
 ### Start the application
 
+* Note: The application won't start unless the database connection is working!
 * Open a console and navigate into the smartervote-webapp directory.
 * Run following command to start the application. Afterwards the application can be accessed at http://localhost:8080.
 
-#### For Windows Users
+#### For Windows users
 
 ```
 $ ..\gradlew.bat bootRun
@@ -69,7 +72,7 @@ $ ..\gradlew bootRun
 * Open a console and navigate into the root folder of the project
 * Stop and remove the database container by running the following command:
 
-#### For windows Users:
+#### For Windows users:
 
 ```
 $ ..\gradlew.bat removeContainer
