@@ -5,11 +5,18 @@ import org.junit.jupiter.api.BeforeAll;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.utility.DockerImageName;
 
+/**
+ * Abstract super class that needs to be extended by every integration test. Starts the test container to which the test
+ * is testing to.
+ *
+ * @author Leo Rudin
+ */
 public abstract class AbstractIntegrationTest {
 
-    /**
-     * Use port one number higher than the standard postgres port for the test container database.
-     */
+    private static final String COLON = ":";
+
+    private static final String NOTHING = "";
+
     private static final int PORT = 5432;
 
     private static final String POSTGRES_PASSWORD = "123456";
@@ -18,18 +25,27 @@ public abstract class AbstractIntegrationTest {
 
     @BeforeAll
     static void beforeAll() {
-        String createDatabase = AbstractIntegrationTest.class.getResource("/sql/create-database.sql").getPath();
-        String createTables = AbstractIntegrationTest.class.getResource("/sql/create-tables.sql").getPath();
-        String createData = AbstractIntegrationTest.class.getResource("/sql/create-data.sql").getPath();
+        String createDatabaseSqlPath = AbstractIntegrationTest.class.getResource("/sql/create-database.sql").getPath();
+        String createTablesSqlPath = AbstractIntegrationTest.class.getResource("/sql/create-tables.sql").getPath();
+        String createDataSqlPath = AbstractIntegrationTest.class.getResource("/sql/create-data.sql").getPath();
+
+        // on windows systems docker runs within WSL which is not compatible with windows like paths
+        // in order to make it work the colon symbol in the path has to be removed so that the
+        // sql files can be properly mounted into the docker container
+        createDatabaseSqlPath = createDatabaseSqlPath.replaceAll(COLON, NOTHING);
+        createTablesSqlPath = createTablesSqlPath.replaceAll(COLON, NOTHING);
+        createDataSqlPath = createDataSqlPath.replaceAll(COLON, NOTHING);
 
         CONTAINER = new GenericContainer<>(DockerImageName.parse("draka/smartervote-db:1.0"))
-                .withFileSystemBind(createDatabase, "/create-database.sql")
-                .withFileSystemBind(createTables, "/create-tables.sql")
-                .withFileSystemBind(createData, "/create-data.sql")
+                .withFileSystemBind(createDatabaseSqlPath, "/create-database.sql")
+                .withFileSystemBind(createTablesSqlPath, "/create-tables.sql")
+                .withFileSystemBind(createDataSqlPath, "/create-data.sql")
                 .withEnv("POSTGRES_PASSWORD", POSTGRES_PASSWORD)
                 .withExposedPorts(PORT);
 
         CONTAINER.start();
+
+        // test containers expose random port numbers so this has to be configured dynamically
         System.setProperty("db.port", String.valueOf(CONTAINER.getFirstMappedPort()));
     }
 
