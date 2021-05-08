@@ -27,18 +27,24 @@
                                 <p th:text="'ID: ' + ${politician.id}" hidden></p>
                                 <p th:text="'Name: ' + ${politician.name}"></p>
                                 <p th:text="'Party: ' + ${politician.party}"></p>
-                            <p th:text="'Jahrgang: ' + ${politician.birthYear}"></p>
+                                <p th:text="'Jahrgang: ' + ${politician.birthYear}"></p>
                                 <p th:text="'Beruf: ' + ${politician.profession}"></p>
                                 <p th:text="'Geschlecht: ' + ${politician.gender}"></p>
-                            <p th:text="'Zuletzt in den Medien:'"></p>
+                                <p th:text="'Zuletzt in den Medien:'"></p>
                                 <div th:each="mediaEntry: ${politician.mediaEntries}">
                                     <p th:href="${mediaEntry.link}" th:text="${mediaEntry.eventDate} + ' - ' +  ${mediaEntry.headline}"></p>
                                     <p th:text="${mediaEntry.description}"></p>
                                 </div>
-                            <p th:text="'Persönliche Fragen:'"></p>
+                                <p th:text="'Persönliche Fragen:'"></p>
                                 <div th:each="question: ${politician.questions}">
                                     <p th:text="${question.text}"></p>
                                     <p th:text="'Antwort: ' + ${question.answer.text}"></p>
+                                </div>
+                                <input type='button' value="Persoenliche Frage stellen" onclick="toggleQuestionInput()">
+                                <div id="hideableQuestionInput">
+                                    <p>Gebe deine Frage ein:</p>
+                                    <input type='text'>
+                                    <input type='button' value="Absenden!" onclick="askQuestion()">
                                 </div>
                             </div>
                         </div>

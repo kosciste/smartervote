@@ -22,3 +22,25 @@ function changeNav(){
     
   }
 }
+
+function toggleQuestionInput(){
+  alert('Trying to toggle Inputfield');
+  var x = document.getElementById("hideableQuestionInput");
+  if (x.style.display === "none") {
+      x.style.display = "block";
+  } else {
+      x.style.display = "none";
+  }
+}
+
+function askQuestion(){
+  alert('Trying to askQuestion');
+  $.ajax({
+    type: 'POST',    
+    url:'/addQuestion',
+    data:'Static Test question.',
+    success: function(msg){
+        alert('Danke für Ihre Frage!');
+    }
+});
+}
