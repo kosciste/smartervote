@@ -1,5 +1,9 @@
 // global gradle settings that are applied to all subprojects
 
+plugins {
+    id 'com.bmuschko.docker-remote-api' version '6.7.0'
+}
+
 allprojects {
     group = 'ch.zhaw.pm3.smartervote'
     version = '2021.3'
@@ -27,4 +31,65 @@ subprojects {
         }
     }
 
+}
+
+// Tasks for starting the database container with docker
+import com.bmuschko.gradle.docker.tasks.container.*
+
+def dbContainerName = "smartervote-db"
+
+task stopContainer(type: DockerStopContainer) {
+    targetContainerId(dbContainerName)
+    onError {}
+}
+
+task removeContainer(type: DockerRemoveContainer) {
+    group = "Docker"
+    dependsOn stopContainer
+    targetContainerId(dbContainerName)
+    onError { exception ->
+        if (!exception.message.contains('No such container'))
+            throw exception
+    }
+}
+
+task createDatabaseContainer(type: DockerCreateContainer) {
+    dependsOn removeContainer
+    targetImageId 'draka/smartervote-db:1.0'
+    containerName.set(dbContainerName)
+    hostConfig.autoRemove.set(true)
+    hostConfig.portBindings.set(['5432:5432'])
+    envVars.set('POSTGRES_PASSWORD': '123456')
+    Map<String, String> map = new HashMap<>();
+    def createDatabase
+    def createTables
+    def createData
+    if (System.properties['os.name'].toLowerCase().contains('windows')) {
+        // Sets up the proper path for docker on WSL2
+        createDatabase = file('smartervote-persistency/sql/create-database.sql')
+                .getPath().replaceAll("\\\\", "/").replaceAll(":","")
+        createTables = file('smartervote-persistency/sql/create-tables.sql')
+                .getPath().replaceAll("\\\\", "/").replaceAll(":","")
+        createData = file('smartervote-persistency/sql/create-data.sql')
+                .getPath().replaceAll("\\\\", "/").replaceAll(":","")
+        String driveLetter = createDatabase[0].toLowerCase()
+        createDatabase = "/run/desktop/mnt/host/" + createDatabase.replaceFirst("^(.)", driveLetter)
+        createTables = "/run/desktop/mnt/host/" + createTables.replaceFirst("^(.)", driveLetter)
+        createData = "/run/desktop/mnt/host/" + createData.replaceFirst("^(.)", driveLetter)
+
+    } else {
+        createDatabase = file('smartervote-persistency/sql/create-database.sql').getPath()
+        createTables = file('smartervote-persistency/sql/create-tables.sql').getPath()
+        createData = file('smartervote-persistency/sql/create-data.sql').getPath()
+    }
+    map.put(createDatabase, "/create-database.sql")
+    map.put(createTables, "/create-tables.sql")
+    map.put(createData, "/create-data.sql")
+    hostConfig.binds.set(map)
+}
+
+task startDatabaseContainer(type: DockerStartContainer) {
+    group = "Docker"
+    dependsOn createDatabaseContainer
+    targetContainerId(dbContainerName)
 }
