@@ -17,66 +17,42 @@ import java.util.UUID;
 public interface PoliticianService {
 
     /**
-     * Returns a list of all the politicians in the database, limited by the given size and offset. The offset defines
-     * the index of the first politician that is returned, the size defines the number of politicians returned.
-     *
-     * @param offset the index of the first politician to be returned.
-     * @param size the number of politicians to be returned.
-     * @return The list of the politicians.
-     */
-    PoliticianList getPoliticians(int offset, int size);
-
-    /**
-     * Returns a list of politicians and their match sorted from highest to lowest match, limited by the given size and
-     * offset. The offset defines the index of the first politician that is returned, the size defines the number of
-     * politicians returned.
-     *
-     * @param offset the index of the first politician to be returned.
-     * @param size the number of politicians to be returned.
-     * @param resultId the UUID of the election proposal returned by {@link ElectionProposalService#calculateElectionProposal(UUID,
-     * Map)}.
-     * @return The list of the politicians.
-     * @throws DomainException if the result id does not exist.
-     */
-    PoliticianList getPoliticians(int offset, int size, UUID resultId) throws DomainException;
-
-    /**
      * Returns a filtered list of politicians, limited by the given size and offset. The offset defines the index of the
      * first politician that is returned, the size defines the number of politicians returned.
      *
-     * @param offset The index of the first politician to be returned.
-     * @param size The number of politicians to be returned.
-     * @param filter The filter to filter the returned list of politicians.
-     * @return The filtered list of politicians.
+     * @param offset index of the first politician to be returned.
+     * @param size number of politicians to be returned.
+     * @param filter to filter the returned list of politicians.
+     * @return filtered list of politicians
      */
     PoliticianList filterPoliticians(int offset, int size, PoliticianFilterTO filter);
 
     /**
-     * Returns a filtered list of politicians and their match sorted from highest to lowest match, limited by the given
-     * size and offset. The offset defines the index of the first politician that is returned, the size defines the
-     * number of politicians returned.
+     * Returns a filtered list of politicians from a given proposal result id and their match sorted from highest to
+     * lowest match, limited by the given size and offset. The offset defines the index of the first politician that is
+     * returned, the size defines the number of politicians returned.
      *
-     * @param offset The index of the first politician to be returned.
-     * @param size The number of politicians to be returned.
-     * @param filter The filter to filter the returned list of politicians.
-     * @param resultId The UUID of the election proposal returned by {@link ElectionProposalService#calculateElectionProposal(UUID,
-     * Map)}.
-     * @return The filtered list of politicians.
-     * @throws DomainException if the result id does not exist.
+     * @param offset index of the first politician to be returned.
+     * @param size number of politicians to be returned.
+     * @param filter to filter the returned list of politicians.
+     * @param resultId UUID of the election proposal result
+     * @return filtered list of politicians.
+     * @throws DomainException if the result id does not exist
      */
     PoliticianList filterPoliticians(int offset, int size, PoliticianFilterTO filter, UUID resultId) throws DomainException;
 
     /**
-     * Returns all Parties that happen to exist in a specicfic result.
-     * @return The list of PartyTOs
+     * Returns all available parties.
+     *
+     * @return list of party names
      */
-    List<String> getParties(int offset, int size,UUID resultId) throws DomainException;
+    List<String> getParties();
 
     /**
      * Returns an optional containing a politicians profile.
      *
-     * @param politicianId the UUID of the politician.
-     * @return an optional containing the politicians profile.
+     * @param politicianId UUID of the politician
+     * @return an optional containing the politicians profile
      */
     Optional<PoliticianProfileTO> getPoliticianData(UUID politicianId);
 

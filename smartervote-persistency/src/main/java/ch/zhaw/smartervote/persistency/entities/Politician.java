@@ -26,6 +26,9 @@ public class Politician extends BaseEntity {
     @OneToMany(mappedBy = "politician")
     private Set<MediaCoverage> mediaCoverage;
 
+    @OneToMany(mappedBy = "politician")
+    private Set<ProposalResultScore> proposalResultScores;
+
     @Column(name = "name", nullable = false)
     private String name;
 
@@ -33,8 +36,7 @@ public class Politician extends BaseEntity {
     private int birthyear;
 
     @Column(name = "gender", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
+    private String gender;
 
     @Column(name = "profession", nullable = false)
     private String profession;
@@ -61,6 +63,11 @@ public class Politician extends BaseEntity {
         return mediaCoverage;
     }
 
+    public Set<ProposalResultScore> getProposalResultScores() {
+        if (proposalResultScores == null) return new HashSet<>();
+        return proposalResultScores;
+    }
+
     public String getName() {
         return name;
     }
@@ -69,7 +76,7 @@ public class Politician extends BaseEntity {
         return birthyear;
     }
 
-    public Gender getGender() {
+    public String getGender() {
         return gender;
     }
 
@@ -106,7 +113,7 @@ public class Politician extends BaseEntity {
         this.birthyear = birthyear;
     }
 
-    public void setGender(Gender gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 

@@ -107,7 +107,6 @@ public final class Converter {
                 politicianFilterVO.getGender(),
                 Integer.parseInt(politicianFilterVO.getAgeFrom()),
                 Integer.parseInt(politicianFilterVO.getAgeTo()));
-
     }
 
 }

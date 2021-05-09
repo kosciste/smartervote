@@ -25,7 +25,7 @@ public class MapPoliticianProfile {
                 entity.getBirthyear(),
                 0,
                 entity.getProfession(),
-                entity.getGender().toString(),
+                entity.getGender(),
                 MapMediaCoverage.toTransferObjects(entity.getMediaCoverage()),
                 MapPersonalQuestion.toTransferObjects(entity.getPersonalQuestions()));
     }
@@ -44,7 +44,7 @@ public class MapPoliticianProfile {
                 entity.getBirthyear(),
                 match,
                 entity.getProfession(),
-                entity.getGender().toString(),
+                entity.getGender(),
                 MapMediaCoverage.toTransferObjects(entity.getMediaCoverage()),
                 MapPersonalQuestion.toTransferObjects(entity.getPersonalQuestions()));
     }
