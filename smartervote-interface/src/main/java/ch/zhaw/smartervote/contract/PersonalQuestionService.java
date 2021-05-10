@@ -10,6 +10,11 @@ import java.util.UUID;
 public interface PersonalQuestionService {
 
     /**
+     * Constant which defines the max length of a question that can be used by clients to validate the question length.
+     */
+    int MAX_QUESTION_LENGTH = 255;
+
+    /**
      * Adds a question to the politicians profile.
      *
      * @param politicianId the id of the politician
