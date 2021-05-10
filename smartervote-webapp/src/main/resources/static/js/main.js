@@ -23,6 +23,31 @@ function changeNav(){
   }
 }
 
+$(document).ready(function() {
+
+    $(document).on("click", ".upvote", function() {
+        let id = $(this).attr("id")
+        let ref = $(this)
+
+        $.ajax({
+            type: "POST",
+            url: "/api/upvote-question",
+            data: {
+                id: id
+            },
+            success: function (data) {
+                ref.attr("disabled", true)
+                ref.html("Upvoted")
+                $(".upvotes-" + id).html("Upvotes: " + data)
+            },
+            error: function () {
+                window.alert("Der Upvote hat leider nicht funktioniert!")
+            }
+        });
+    });
+
+});
+
 function askQuestion(){
   alert('Trying to askQuestion');
   $.ajax({

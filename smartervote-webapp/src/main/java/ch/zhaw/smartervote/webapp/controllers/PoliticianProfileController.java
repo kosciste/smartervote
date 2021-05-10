@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -69,10 +70,10 @@ public class PoliticianProfileController {
      * @return result page
      */
     @GetMapping("/politician/{id}")
-    public String showPolitician(@PathVariable("id") String id, Model model) {
+    public String showPolitician(@PathVariable("id") String id, Model model, HttpServletRequest request) {
         Optional<PoliticianProfileTO> politicianProfileTOOptional;
         try {
-            politicianProfileTOOptional = politicianService.getPoliticianData(UUID.fromString(id));
+            politicianProfileTOOptional = politicianService.getPoliticianData(UUID.fromString(id), request.getRemoteAddr());
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Politician Not Found", e);
         }

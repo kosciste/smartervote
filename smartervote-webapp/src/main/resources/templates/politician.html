@@ -7,9 +7,11 @@
     <!-- stylesheets -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css">
     <link rel="stylesheet" th:href="@{/styles/custom.css}">
     <!-- js -->
-    <script type="text/javascript" src="js/main.js" defer></script>
+    <script type="text/javascript" th:src="@{~/js/jquery.min.js}" defer></script>
+    <script type="text/javascript" th:src="@{~/js/main.js}" defer></script>
     <title>Smartervote</title>
 </head>
 <body>
@@ -39,8 +41,10 @@
                                 <p th:text="'Persönliche Fragen:'"></p>
                                 <p>---</p>
                                 <div th:each="question: ${politician.questions}">
+                                    <button th:id="${question.id}" th:class="'btn btn-primary upvote' + (${question.upvoted} ? ' disabled' : '')" th:disabled="${question.upvoted}" th:text="(${question.upvoted} ? 'Upvoted' : 'Upvote')"></button>
                                     <p th:text="'Frage: ' + ${question.text}"></p>
                                     <p th:text="'Antwort: ' + ${question.answer.text}"></p>
+                                    <p th:class="'upvotes-' + ${question.id}" th:text="'Upvotes: ' + ${question.upvotes}"></p>
                                     <p>---</p>
                                 </div>
                                 <form th:action="@{/politician/{id}/add-question(id=${politician.id})}" th:object="${personalQuestionForm}" method="post">

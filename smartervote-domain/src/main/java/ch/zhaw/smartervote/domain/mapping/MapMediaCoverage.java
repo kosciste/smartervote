@@ -30,7 +30,7 @@ public class MapMediaCoverage {
      * @param entities a set of question entities.
      * @return the set of question transfer objects.
      */
-    public static List<MediaEntryTO> toTransferObjects(Set<MediaCoverage> entities) {
+    public static List<MediaEntryTO> toTransferObjects(List<MediaCoverage> entities) {
         return entities.stream().map(MapMediaCoverage::toTransferObject).collect(Collectors.toList());
     }
 

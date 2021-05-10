@@ -29,9 +29,9 @@ public interface PersonalQuestionService {
      *
      * @param questionId the UUID of the personal question to be upvoted
      * @param ipAddress the ip address of the user that upvoted the question
-     * @return true if the question was upvoted, false otherwise
+     * @return new amount of upvotes
      * @throws DomainException in case of any issues e.g. question id does not exist
      */
-    boolean upvoteQuestion(UUID questionId, String ipAddress) throws DomainException;
+    long upvoteQuestion(UUID questionId, String ipAddress) throws DomainException;
 
 }

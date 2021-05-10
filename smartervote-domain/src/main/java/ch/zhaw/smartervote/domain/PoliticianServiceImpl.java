@@ -8,19 +8,17 @@ import ch.zhaw.smartervote.contract.transferobject.PoliticianProfileTO;
 import ch.zhaw.smartervote.contract.transferobject.PoliticianTO;
 import ch.zhaw.smartervote.domain.mapping.MapPolitician;
 import ch.zhaw.smartervote.domain.mapping.MapPoliticianProfile;
-import ch.zhaw.smartervote.persistency.entities.Politician;
-import ch.zhaw.smartervote.persistency.entities.ProposalResult;
-import ch.zhaw.smartervote.persistency.entities.ProposalResultScore;
+import ch.zhaw.smartervote.persistency.repositories.MediaCoverageRepository;
+import ch.zhaw.smartervote.persistency.entities.*;
+import ch.zhaw.smartervote.persistency.repositories.PersonalQuestionRepository;
 import ch.zhaw.smartervote.persistency.repositories.PoliticianRepository;
 import ch.zhaw.smartervote.persistency.repositories.ProposalResultRepository;
 import ch.zhaw.smartervote.persistency.repositories.ProposalResultScoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Comparator;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * {@inheritDoc}
@@ -43,13 +41,27 @@ public class PoliticianServiceImpl implements PoliticianService {
      */
     ProposalResultScoreRepository proposalResultScoreRepository;
 
+    /**
+     * Personal question repository.
+     */
+    PersonalQuestionRepository personalQuestionRepository;
+
+    /**
+     * Media coverage repository.
+     */
+    MediaCoverageRepository mediaCoverageRepository;
+
     @Autowired
     public PoliticianServiceImpl(PoliticianRepository politicianRepository,
                                  ProposalResultRepository proposalResultRepository,
-                                 ProposalResultScoreRepository proposalResultScoreRepository) {
+                                 ProposalResultScoreRepository proposalResultScoreRepository,
+                                 PersonalQuestionRepository personalQuestionRepository,
+                                 MediaCoverageRepository mediaCoverageRepository) {
         this.politicianRepository = politicianRepository;
         this.proposalResultRepository = proposalResultRepository;
         this.proposalResultScoreRepository = proposalResultScoreRepository;
+        this.personalQuestionRepository = personalQuestionRepository;
+        this.mediaCoverageRepository = mediaCoverageRepository;
     }
 
     /**
@@ -100,10 +112,16 @@ public class PoliticianServiceImpl implements PoliticianService {
      * {@inheritDoc}
      */
     @Override
-    public Optional<PoliticianProfileTO> getPoliticianData(UUID politicianId) {
+    public Optional<PoliticianProfileTO> getPoliticianData(UUID politicianId, String ipAddress) {
         Optional<Politician> politician = politicianRepository.findById(politicianId);
         if (politician.isEmpty()) return Optional.empty();
-        else return Optional.of(MapPoliticianProfile.toTransferObject(politician.get()));
+
+        List<PersonalQuestion> personalQuestions = personalQuestionRepository.findPersonalQuestionByPoliticianIdOrderByUpvotesDesc(politician.get().getId());
+        Set<UUID> ids = personalQuestions.stream().map(BaseEntity::getId).collect(Collectors.toSet());
+        List<PersonalQuestion> upvotedPersonalQuestions = personalQuestionRepository.findPersonalQuestionsByIdsAndIpAddress(ids, ipAddress);
+        List<MediaCoverage> mediaCoverages = mediaCoverageRepository.findMediaCoverageByPoliticianIdOrderByCreationTime(politician.get().getId());
+
+        return Optional.of(MapPoliticianProfile.toTransferObject(politician.get(), personalQuestions, mediaCoverages, upvotedPersonalQuestions));
     }
 
     /**

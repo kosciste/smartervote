@@ -69,8 +69,10 @@ public interface PoliticianService {
      * Returns an optional containing a politicians profile.
      *
      * @param politicianId the UUID of the politician.
+     * @param ipAddress ip address of the user so that the personal question can be marked as already upvoted if the
+     * user did so
      * @return an optional containing the politicians profile.
      */
-    Optional<PoliticianProfileTO> getPoliticianData(UUID politicianId);
+    Optional<PoliticianProfileTO> getPoliticianData(UUID politicianId, String ipAddress);
 
 }
