@@ -1,6 +1,5 @@
 package ch.zhaw.smartervote.domain.mapping;
 
-import ch.zhaw.smartervote.contract.PoliticianList;
 import ch.zhaw.smartervote.contract.transferobject.PoliticianTO;
 import ch.zhaw.smartervote.persistency.entities.Politician;
 import ch.zhaw.smartervote.persistency.entities.ProposalResultScore;

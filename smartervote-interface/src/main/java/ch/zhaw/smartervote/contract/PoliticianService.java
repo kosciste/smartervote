@@ -4,7 +4,6 @@ import ch.zhaw.smartervote.contract.transferobject.PoliticianFilterTO;
 import ch.zhaw.smartervote.contract.transferobject.PoliticianProfileTO;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 

@@ -8,16 +8,8 @@ import ch.zhaw.smartervote.contract.transferobject.PoliticianProfileTO;
 import ch.zhaw.smartervote.contract.transferobject.PoliticianTO;
 import ch.zhaw.smartervote.domain.mapping.MapPolitician;
 import ch.zhaw.smartervote.domain.mapping.MapPoliticianProfile;
-import ch.zhaw.smartervote.persistency.entities.Party;
-import ch.zhaw.smartervote.persistency.entities.Politician;
-import ch.zhaw.smartervote.persistency.entities.ProposalResult;
-import ch.zhaw.smartervote.persistency.repositories.PartyRepository;
-import ch.zhaw.smartervote.persistency.repositories.MediaCoverageRepository;
 import ch.zhaw.smartervote.persistency.entities.*;
-import ch.zhaw.smartervote.persistency.repositories.PersonalQuestionRepository;
-import ch.zhaw.smartervote.persistency.repositories.PoliticianRepository;
-import ch.zhaw.smartervote.persistency.repositories.ProposalResultRepository;
-import ch.zhaw.smartervote.persistency.repositories.ProposalResultScoreRepository;
+import ch.zhaw.smartervote.persistency.repositories.*;
 import ch.zhaw.smartervote.persistency.specificiations.PoliticianFilterSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,9 +18,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -75,9 +66,8 @@ public class PoliticianServiceImpl implements PoliticianService {
     @Autowired
     public PoliticianServiceImpl(PoliticianRepository politicianRepository,
                                  ProposalResultRepository proposalResultRepository,
-                                 ProposalResultScoreRepository proposalResultScoreRepository,
                                  PersonalQuestionRepository personalQuestionRepository,
-                                 MediaCoverageRepository mediaCoverageRepository) {
+                                 MediaCoverageRepository mediaCoverageRepository,
                                  ProposalResultScoreRepository proposalResultScoreRepository,
                                  PartyRepository partyRepository) {
         this.politicianRepository = politicianRepository;
