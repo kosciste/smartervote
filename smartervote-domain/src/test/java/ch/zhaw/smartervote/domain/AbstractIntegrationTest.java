@@ -18,8 +18,6 @@ public abstract class AbstractIntegrationTest {
 
     /**
      * Utility function that allows committing the current transaction so further check on the data can be performed.
-     *
-     * @author Leo Rudin
      */
     static void commitAndCreateNewTransaction() {
         TestTransaction.flagForCommit();
