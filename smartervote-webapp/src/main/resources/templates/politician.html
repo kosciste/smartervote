@@ -4,9 +4,26 @@
 <body>
 <nav th:replace="fragments/navigation :: navigation"></nav>
 <header th:replace="fragments/header :: name('Profil von ' + ${politician.name}, 'Hier finden Sie weitere Infos')"></header>
-<main>
+<main class="container">
+    <div th:replace="fragments/alert :: alert"/>
+    <div class="politician-profile-header">
+        <div class="row align-items-center">
+            <div class="col-md-4">
+                <img th:src="@{'~/images/politicians/' + ${politician.imageUrl}}" th:alt="${politician.name}">
+            </div>
+            <div class="col-md-8">
+                <h3 th:text="${politician.name}"></h3>
+                <p><strong>Partei:</strong> <span th:text="${politician.party}"></span></p>
+                <p><strong>Jahrgang:</strong> <span th:text="${politician.birthYear}"></span></p>
+                <p><strong>Beruf:</strong> <span th:text="${politician.profession}"></span></p>
+                <p><strong>Geschlecht:</strong> <span th:text="${politician.gender}"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <!--
         <div class="container-fluid container-topic">
-            <div th:replace="fragments/alert :: alert"/>
+
             <div class="row">
                 <div class="col-12">
                     <div class="container-fluid container-topic-inner">
@@ -48,7 +65,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
 </main>
 <footer th:replace="fragments/footer :: footer"></footer>
 </body>

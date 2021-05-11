@@ -1,40 +1,43 @@
 <!DOCTYPE html>
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
 <body>
-<nav th:fragment="navigation">
-    <div id="myNav" class="overlay">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"
-        >&times;</a
-        >
-        <div class="overlay-content">
-            <a id="link" href="/" class="active-link">START</a>
-            <a id="link" href="/wahlempfehlung">WAHLEMPFEHLUNG</a>
-            <a id="link" href="/ueber">ÜBER</a>
-        </div>
-    </div>
-
-    <div class="container-fluid nav-container">
+<nav class="main-nav" th:fragment="navigation">
+    <div class="container">
         <div class="row">
-
-            <a href="/">
-                <span id="brand" class="brand float-left">Smartervote</span>
-            </a>
-            <a class="nav-link" href="/wahlempfehlung">WAHLEMPFEHLUNG</a>
-            <a class="nav-link" href="/ueber.html">ÜBER</a>
-            <div
-                    id="menu-symbol"
-                    class="float-right"
-                    onmouseout="changeNav()"
-                    onmouseover="changeNav()"
-                    onclick="openNav()"
-            >
-                <div class="bar bar1"></div>
-                <div class="bar bar2"></div>
-                <div class="bar bar3"></div>
+            <div class="col">
+                <span class="brand-text">SmarterVote</span>
             </div>
-
+            <div class="col smartervote-nav">
+                <ul class="nav justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Startseite</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Alle Politiker</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Über</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
+
+    <!-- responsive menu -->
+    <div id="responsive-menu-symbol" onmouseout="changeNav()" onmouseover="changeNav()" onclick="openNav()">
+        <div class="bar bar1"></div>
+        <div class="bar bar2"></div>
+        <div class="bar bar3"></div>
+    </div>
+    <div id="smartervote-overlay">
+        <a href="javascript:void(0)" class="close-btn" onclick="closeNav()">&times;</a>
+        <div class="overlay-content">
+            <a href="/">Startseite</a>
+            <a href="/">Alle Politiker</a>
+            <a href="/">Über</a>
+        </div>
+    </div>
+
 </nav>
 </body>
 </html>
