@@ -1,14 +1,9 @@
 package ch.zhaw.smartervote.webapp.vo;
 
-import ch.zhaw.smartervote.contract.transferobject.PersonalAnswerTO;
-import ch.zhaw.smartervote.contract.transferobject.PersonalQuestionTO;
 import ch.zhaw.smartervote.contract.transferobject.QuestionTO;
 import ch.zhaw.smartervote.contract.transferobject.SubjectTO;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * This class represents a static Converter-Class used for convenient converting between View-Objects and
@@ -32,7 +27,7 @@ public final class Converter {
             subjectVO.setName(subjectTO.getName());
             subjectVOs.add(subjectVO);
         }
-
+        subjectVOs.sort(Comparator.comparing(SubjectVO::getName));
         return subjectVOs;
     }
 
@@ -75,7 +70,7 @@ public final class Converter {
             questionVO.setText(questionTO.getText());
             questionVOS.add(questionVO);
         }
-
+        questionVOS.sort(Comparator.comparing(QuestionVO::getText));
         return questionVOS;
     }
 
