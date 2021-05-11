@@ -11,12 +11,14 @@ import ch.zhaw.smartervote.persistency.repositories.PoliticianRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 /**
  * This class implements the PersonalQuestionService functions
- * 
+ *
  * @author Stefan Teodoropol
  */
 @Component("personalQuestionService")
@@ -63,7 +65,7 @@ public class PersonalQuestionServiceImpl implements PersonalQuestionService {
         entityToInsert.setText(questionText);
 
         personalQuestionRepository.save(entityToInsert);
-        
+
         return true;
     }
 
@@ -75,18 +77,26 @@ public class PersonalQuestionServiceImpl implements PersonalQuestionService {
         Optional<PersonalQuestion> questionOptional = personalQuestionRepository.findById(questionId);
         if (questionOptional.isEmpty()) throw new DomainException("Personal question not found.");
 
-        PersonalQuestion personalQuestion = questionOptional.get();
-        long newUpvotes = personalQuestion.getUpvotes() + 1;
-        personalQuestion.setUpvotes(newUpvotes);
+        List<PersonalQuestion> upvotedPersonalQuestions =
+                personalQuestionRepository.findPersonalQuestionsByIdsAndIpAddress(
+                        Collections.singleton(questionOptional.get().getId()), ipAddress);
+        if (upvotedPersonalQuestions.size() > 0) {
+            throw new DomainException("Question was already upvoted by given ip address.");
+        }
 
-        PersonalQuestionUpvote personalQuestionUpvote = new PersonalQuestionUpvote();
-        personalQuestionUpvote.setIpAddress(ipAddress);
-        personalQuestionUpvote.setPersonalQuestion(personalQuestion);
+        int updated = personalQuestionRepository.upvotePersonalQuestion(questionId);
+        if (updated == 1) {
+            questionOptional = personalQuestionRepository.findById(questionId);
+            PersonalQuestionUpvote personalQuestionUpvote = new PersonalQuestionUpvote();
+            personalQuestionUpvote.setIpAddress(ipAddress);
+            personalQuestionUpvote.setPersonalQuestion(questionOptional.get());
+            personalQuestionUpvoteRepository.save(personalQuestionUpvote);
 
-        personalQuestionRepository.save(personalQuestion);
-        personalQuestionUpvoteRepository.save(personalQuestionUpvote);
+            return questionOptional.get().getUpvotes();
 
-        return newUpvotes;
+        }
+
+        throw new DomainException("Upvote failed.");
     }
-    
+
 }
