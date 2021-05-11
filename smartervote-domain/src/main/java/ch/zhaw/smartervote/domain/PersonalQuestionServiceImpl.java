@@ -11,6 +11,7 @@ import ch.zhaw.smartervote.persistency.repositories.PoliticianRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -59,12 +60,11 @@ public class PersonalQuestionServiceImpl implements PersonalQuestionService {
 
         Politician politician = queryResult.get();
 
-        PersonalQuestion entityToInsert = new PersonalQuestion();
+        PersonalQuestion personalQuestion = new PersonalQuestion();
+        personalQuestion.setPolitician(politician);
+        personalQuestion.setText(questionText);
 
-        entityToInsert.setPolitician(politician);
-        entityToInsert.setText(questionText);
-
-        personalQuestionRepository.save(entityToInsert);
+        personalQuestionRepository.save(personalQuestion);
 
         return true;
     }
