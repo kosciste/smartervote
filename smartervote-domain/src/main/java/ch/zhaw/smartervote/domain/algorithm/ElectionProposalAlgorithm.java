@@ -4,6 +4,9 @@ import ch.zhaw.smartervote.contract.SubjectWeight;
 import ch.zhaw.smartervote.contract.transferobject.PoliticianTO;
 import ch.zhaw.smartervote.contract.transferobject.QuestionTO;
 import ch.zhaw.smartervote.contract.transferobject.SubjectTO;
+import ch.zhaw.smartervote.persistency.repositories.PoliticianRepository;
+import ch.zhaw.smartervote.persistency.repositories.ProposalResultRepository;
+import ch.zhaw.smartervote.persistency.repositories.ProposalResultScoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,21 +25,36 @@ import java.util.UUID;
 public class ElectionProposalAlgorithm {
 
     /**
-     * The builder to create the proposal result.
-     */
-    private final ProposalResultBuilder proposalResultBuilder;
-
-    /**
      * The question answer matcher, to get the answers of the politicians.
      */
     private final QuestionAnswerMatcher questionAnswerMatcher;
 
+    /**
+     * The repository for politicians.
+     */
+    private final PoliticianRepository politicianRepository;
+
+    /**
+     * The repository for the proposal result.
+     */
+    private final ProposalResultRepository proposalResultRepository;
+
+    /**
+     * The repository for the proposal result scores.
+     */
+    private final ProposalResultScoreRepository proposalResultScoreRepository;
+
     @Autowired
-    public ElectionProposalAlgorithm(ProposalResultBuilder proposalResultBuilder,
-                                     QuestionAnswerMatcher questionAnswerMatcher) {
-        this.proposalResultBuilder = proposalResultBuilder;
+    public ElectionProposalAlgorithm(QuestionAnswerMatcher questionAnswerMatcher,
+                                     ProposalResultRepository proposalResultRepository,
+                                     PoliticianRepository politicianRepository,
+                                     ProposalResultScoreRepository proposalResultScoreRepository) {
+        this.politicianRepository = politicianRepository;
+        this.proposalResultRepository = proposalResultRepository;
+        this.proposalResultScoreRepository = proposalResultScoreRepository;
         this.questionAnswerMatcher = questionAnswerMatcher;
     }
+
 
     /**
      * Calculates the election match based on the answered questions of the user. This is a prototype implementation of
@@ -47,6 +65,10 @@ public class ElectionProposalAlgorithm {
      * @return the UUID of the result.
      */
     public UUID calculate(List<PoliticianTO> politicians, Map<SubjectTO, Set<QuestionTO>> questions) {
+        ProposalResultBuilder proposalResultBuilder = new ProposalResultBuilder(
+                proposalResultRepository,
+                politicianRepository,
+                proposalResultScoreRepository);
         for (PoliticianTO politician : politicians) {
             int score = calculateResult(politician, questions);
             proposalResultBuilder.addScore(politician, score);
