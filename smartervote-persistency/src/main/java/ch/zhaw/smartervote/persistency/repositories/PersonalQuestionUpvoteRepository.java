@@ -3,7 +3,7 @@ package ch.zhaw.smartervote.persistency.repositories;
 import ch.zhaw.smartervote.persistency.entities.PersonalQuestionUpvote;
 
 /**
- * Repository for the personal question upvotes.
+ * Repository for the {@link PersonalQuestionUpvote} entity.
  *
  * @author Leo Rudin
  */

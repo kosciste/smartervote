@@ -5,21 +5,23 @@ import ch.zhaw.smartervote.persistency.entities.MediaCoverage;
 import ch.zhaw.smartervote.persistency.entities.PersonalQuestion;
 import ch.zhaw.smartervote.persistency.entities.Politician;
 
-import javax.print.attribute.standard.Media;
 import java.util.List;
 
 /**
- * Maps Politician entitys to PoliticianProfileTO transfer objects.
+ * Maps Politician entities to PoliticianProfileTO transfer objects.
  *
  * @author Stefan Teodoropol
  */
 public class MapPoliticianProfile {
 
     /**
-     * Maps a single Politician entity to a PoliticianProfileTO transfer object.
+     * Maps the given list of elements to a politician profile to object.
      *
-     * @param entity the politician entity to be mapped.
-     * @return the mapped transfer object.
+     * @param entity politician entity to map
+     * @param sortedPersonalQuestions sorted list of personal questions
+     * @param sortedMediaCoverages sorted list of media coverages
+     * @param upvotedPersonalQuestions questions that were upvoted by the user of the current request
+     * @return politician profile to
      */
     public static PoliticianProfileTO toTransferObject(Politician entity,
                                                        List<PersonalQuestion> sortedPersonalQuestions,

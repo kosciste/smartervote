@@ -31,6 +31,13 @@ public class PersonalQuestionUpvoteRestController {
         this.personalQuestionService = personalQuestionService;
     }
 
+    /**
+     * Upvotes the question with the given id in the post request.
+     *
+     * @param id id to upvote
+     * @param request request to fetch the ip address
+     * @return new upvote count
+     */
     @PostMapping("/api/upvote-question")
     public Object upvoteQuestion(@RequestParam("id") String id, HttpServletRequest request) {
         try {
