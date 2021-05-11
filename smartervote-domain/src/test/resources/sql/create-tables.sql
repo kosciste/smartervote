@@ -13,11 +13,6 @@ DROP TABLE IF EXISTS QuestionSubject;
 DROP TABLE IF EXISTS Election;
 DROP TYPE IF EXISTS Gender;
 
-CREATE TYPE Gender AS ENUM (
-	'Male',
-	'Female',
-	'Other'
-);
 CREATE TABLE Election
 (
     id            UUID         NOT NULL,
@@ -64,7 +59,7 @@ CREATE TABLE Politician
     party_id      UUID         NOT NULL,
     name          VARCHAR(256) NOT NULL,
     birthyear     INT          NOT NULL,
-    gender        Gender       NOT NULL,
+    gender        VARCHAR(20)  NOT NULL,
     profession    VARCHAR(256) NOT NULL,
     picture       VARCHAR(128),
     creation_time TIMESTAMP    NOT NULL,

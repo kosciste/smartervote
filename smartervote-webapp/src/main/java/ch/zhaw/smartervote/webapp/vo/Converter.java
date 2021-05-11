@@ -1,7 +1,6 @@
 package ch.zhaw.smartervote.webapp.vo;
 
-import ch.zhaw.smartervote.contract.transferobject.PersonalAnswerTO;
-import ch.zhaw.smartervote.contract.transferobject.PersonalQuestionTO;
+import ch.zhaw.smartervote.contract.transferobject.PoliticianFilterTO;
 import ch.zhaw.smartervote.contract.transferobject.QuestionTO;
 import ch.zhaw.smartervote.contract.transferobject.SubjectTO;
 
@@ -94,6 +93,20 @@ public final class Converter {
         }
 
         return questionTOS;
+    }
+
+    /**
+     * Converts PoliticianFilterVO to PoliticianFilterTO.
+     *
+     * @param politicianFilterVO to convert
+     * @return converted PoliticianFilterTO object
+     */
+    public static PoliticianFilterTO convertToPoliticianFilterTO(PoliticianFilterVO politicianFilterVO){
+        return new PoliticianFilterTO(
+                politicianFilterVO.getParty(),
+                politicianFilterVO.getGender(),
+                Integer.parseInt(politicianFilterVO.getAgeFrom()),
+                Integer.parseInt(politicianFilterVO.getAgeTo()));
     }
 
 }

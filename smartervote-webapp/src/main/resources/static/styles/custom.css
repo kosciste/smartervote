@@ -35,7 +35,13 @@
   #link{
     font-size: 40px;
   }
-
+  .btn-filter {
+      margin-left: 10px !important;
+      margin-bottom: 0px !important;
+  }
+  .switch-field.switch-filter{
+      margin-bottom: 36px !important;
+  }
 }
 
 /* Extra large devices (large desktops, 1200px and up)*/
@@ -500,3 +506,48 @@ a.election{
 	height: 200px;
 }
 /* end politician profile specific */
+
+/* start filtering specific */
+.custom-select{
+    width: 200px;
+}
+
+.filter-row{
+    padding-top: 20px;
+    margin-bottom: 100px;
+}
+
+.filter-property{
+    font-size: 1.5rem;
+    margin-top: 10px;
+}
+
+.age-field{
+    width: 50px;
+}
+
+.btn-filter{
+    border: none;
+    border-radius: 0%;
+    width: 160px;
+    height: 55px;
+    background-color: #5aa8f3;
+    color: white;
+    font-size: 1.5rem;
+    margin-top: 30px;
+    margin-left: 0px !important;
+    margin-bottom: 10px;
+    float: left;
+}
+
+.btn-filter:hover{
+    color: white !important;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 3px 10px 0 rgba(0,0,0,0.19);
+    margin-top: 30px;
+}
+
+.switch-field.switch-filter{
+    margin-bottom: 0px;
+}
+
+/* end filtering specific */

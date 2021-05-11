@@ -1,10 +1,10 @@
 package ch.zhaw.smartervote.domain.mapping;
 
-import ch.zhaw.smartervote.contract.PoliticianList;
 import ch.zhaw.smartervote.contract.transferobject.PoliticianTO;
 import ch.zhaw.smartervote.persistency.entities.Politician;
+import ch.zhaw.smartervote.persistency.entities.ProposalResultScore;
 
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class MapPolitician {
 
     /**
-     * Maps a single election entity to transfer object.
+     * Maps a single politician entity to transfer object.
      *
      * @param entity the election entity to be mapped
      * @return the mapped transfer object
@@ -29,9 +29,9 @@ public class MapPolitician {
     }
 
     /**
-     * Maps a single election entity to transfer object, and adds the matching score.
+     * Maps a single politician entity to transfer object, and adds the matching score.
      *
-     * @param entity the election entity to be mapped
+     * @param entity the politician entity to be mapped
      * @param match the matching score
      * @return the mapped transfer object
      */
@@ -47,16 +47,28 @@ public class MapPolitician {
     }
 
     /**
-     * Maps a list of election entities to a set of transfer objects.
+     * Maps a list of politician entities to a set of transfer objects.
      *
      * @param entities the list of entities.
      * @return the set of election transfer objects.
      */
-    public static PoliticianList toTransferObjects(List<Politician> entities) {
-        return new PoliticianList(entities.stream()
-                .map(MapPolitician::toTransferObject)
-                .collect(Collectors.toList())
-                , entities.size());
+    public static List<PoliticianTO> toTransferObjects(List<Politician> entities) {
+        return entities.stream().map(MapPolitician::toTransferObject).collect(Collectors.toList());
+    }
+
+    /**
+     * Maps a list of politician entities to a set of transfer objects.
+     *
+     * @param entities the list of entities.
+     * @return the set of election transfer objects.
+     */
+    public static List<PoliticianTO> toTransferObjects(List<Politician> entities, Set<ProposalResultScore> resultScores) {
+        Map<UUID, Integer> scores = new HashMap<>();
+        resultScores.forEach(e -> scores.put(e.getPolitician().getId(), e.getMatchingScore()));
+
+        return entities.stream()
+                .map(e -> toTransferObject(e, scores.get(e.getId())))
+                .collect(Collectors.toList());
     }
 
 }

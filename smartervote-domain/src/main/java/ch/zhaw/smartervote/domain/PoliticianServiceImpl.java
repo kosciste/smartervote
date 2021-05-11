@@ -8,20 +8,27 @@ import ch.zhaw.smartervote.contract.transferobject.PoliticianProfileTO;
 import ch.zhaw.smartervote.contract.transferobject.PoliticianTO;
 import ch.zhaw.smartervote.domain.mapping.MapPolitician;
 import ch.zhaw.smartervote.domain.mapping.MapPoliticianProfile;
-import ch.zhaw.smartervote.persistency.repositories.MediaCoverageRepository;
 import ch.zhaw.smartervote.persistency.entities.*;
-import ch.zhaw.smartervote.persistency.repositories.PersonalQuestionRepository;
-import ch.zhaw.smartervote.persistency.repositories.PoliticianRepository;
-import ch.zhaw.smartervote.persistency.repositories.ProposalResultRepository;
-import ch.zhaw.smartervote.persistency.repositories.ProposalResultScoreRepository;
+import ch.zhaw.smartervote.persistency.repositories.*;
+import ch.zhaw.smartervote.persistency.specificiations.PoliticianFilterSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
- * {@inheritDoc}
+ * This interface implements methods to display the politicians and their profile, as well as filtering the list of
+ * politicians to display.
+ *
+ * @author Raphael Krebs
+ * @author Leo Rudin
+ * @author Stefan Koscica
  */
 @Component("politicianService")
 public class PoliticianServiceImpl implements PoliticianService {
@@ -42,6 +49,11 @@ public class PoliticianServiceImpl implements PoliticianService {
     ProposalResultScoreRepository proposalResultScoreRepository;
 
     /**
+     * The party repository.
+     */
+    PartyRepository partyRepository;
+
+    /**
      * Personal question repository.
      */
     PersonalQuestionRepository personalQuestionRepository;
@@ -54,58 +66,66 @@ public class PoliticianServiceImpl implements PoliticianService {
     @Autowired
     public PoliticianServiceImpl(PoliticianRepository politicianRepository,
                                  ProposalResultRepository proposalResultRepository,
-                                 ProposalResultScoreRepository proposalResultScoreRepository,
                                  PersonalQuestionRepository personalQuestionRepository,
-                                 MediaCoverageRepository mediaCoverageRepository) {
+                                 MediaCoverageRepository mediaCoverageRepository,
+                                 ProposalResultScoreRepository proposalResultScoreRepository,
+                                 PartyRepository partyRepository) {
         this.politicianRepository = politicianRepository;
         this.proposalResultRepository = proposalResultRepository;
         this.proposalResultScoreRepository = proposalResultScoreRepository;
         this.personalQuestionRepository = personalQuestionRepository;
         this.mediaCoverageRepository = mediaCoverageRepository;
+        this.partyRepository = partyRepository;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public PoliticianList getPoliticians(int offset, int size) {
-        PoliticianList politicians = MapPolitician.toTransferObjects(politicianRepository.findAll());
-        politicians.sort(Comparator.comparing(PoliticianTO::getName));
-        return getPoliticianSubset(offset, size, politicians);
+    public PoliticianList filterPoliticians(int page, int pageSize, PoliticianFilterTO filter) {
+        PoliticianFilterSpecification specification = new PoliticianFilterSpecification(
+                PoliticianService.DEFAULT_FILTER,
+                filter.getParty(),
+                filter.getGender(),
+                filter.getAgeFrom(),
+                filter.getAgeTo());
+
+        Page<Politician> pageResult = politicianRepository.findAll(specification, PageRequest.of(page, pageSize));
+
+        List<PoliticianTO> politicianTOS = MapPolitician.toTransferObjects(pageResult.getContent());
+        return new PoliticianList(politicianTOS, pageResult.getPageable().getPageNumber(), pageResult.getTotalPages());
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public PoliticianList getPoliticians(int offset, int size, UUID resultId) throws DomainException {
+    public PoliticianList filterPoliticians(int page, int pageSize, PoliticianFilterTO filter, UUID resultId)
+            throws DomainException {
         Optional<ProposalResult> proposalResultOptional = proposalResultRepository.findById(resultId);
         if (proposalResultOptional.isEmpty()) throw new DomainException("Proposal result does not exist.");
-        Set<ProposalResultScore> proposalResultScores = proposalResultOptional.get().getProposalResultScores();
-        PoliticianList politicians = new PoliticianList(proposalResultScores.size());
-        proposalResultScores.stream()
-                .map(proposalResultScore -> MapPolitician.toTransferObject(
-                        proposalResultScore.getPolitician(), proposalResultScore.getMatchingScore()))
-                .sorted(Comparator.comparing(PoliticianTO::getMatch).reversed())
-                .forEach(politicians::add);
-        return getPoliticianSubset(offset, size, politicians);
+
+        PoliticianFilterSpecification specification = new PoliticianFilterSpecification(
+                PoliticianService.DEFAULT_FILTER,
+                filter.getParty(),
+                filter.getGender(),
+                filter.getAgeFrom(),
+                filter.getAgeTo(),
+                resultId);
+
+        Page<Politician> pageResult = politicianRepository.findAll(specification, PageRequest.of(page, pageSize));
+        List<PoliticianTO> politicianTOS = MapPolitician.toTransferObjects(pageResult.getContent(),
+                proposalResultOptional.get().getProposalResultScores());
+
+        return new PoliticianList(politicianTOS, pageResult.getPageable().getPageNumber(), pageResult.getTotalPages());
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public PoliticianList filterPoliticians(int offset, int size, PoliticianFilterTO filter) {
-        return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public PoliticianList filterPoliticians(int offset, int size, PoliticianFilterTO filter, UUID resultId)
-            throws DomainException {
-        return null;
+    public List<String> getParties() {
+        return partyRepository.findAll().stream().map(Party::getName).collect(Collectors.toList());
     }
 
     /**
@@ -122,22 +142,6 @@ public class PoliticianServiceImpl implements PoliticianService {
         List<MediaCoverage> mediaCoverages = mediaCoverageRepository.findMediaCoverageByPoliticianIdOrderByCreationTime(politician.get().getId());
 
         return Optional.of(MapPoliticianProfile.toTransferObject(politician.get(), personalQuestions, mediaCoverages, upvotedPersonalQuestions));
-    }
-
-    /**
-     * Takes a list of politicians and returns a subset of the given list. If the end index exceeds the size of the
-     * list, the rest of the list is returned.
-     *
-     * @param offset the first element to return.
-     * @param size the size of the subset.
-     * @param politicians the list from where the subset is taken.
-     * @return the subset of the list.
-     */
-    private PoliticianList getPoliticianSubset(int offset, int size, PoliticianList politicians) {
-        if (offset + size > politicians.size()) politicians =
-                new PoliticianList(politicians.subList(offset, politicians.size()), politicians.getTotalSize());
-        else politicians = new PoliticianList(politicians.subList(offset, offset + size), politicians.getTotalSize());
-        return politicians;
     }
 
 }
