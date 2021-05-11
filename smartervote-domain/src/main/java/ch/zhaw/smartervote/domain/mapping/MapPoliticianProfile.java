@@ -32,7 +32,6 @@ public class MapPoliticianProfile {
                 entity.getName(),
                 entity.getParty().getName(),
                 entity.getBirthyear(),
-                0,
                 entity.getProfession(),
                 entity.getGender().toString(),
                 MapMediaCoverage.toTransferObjects(sortedMediaCoverages),

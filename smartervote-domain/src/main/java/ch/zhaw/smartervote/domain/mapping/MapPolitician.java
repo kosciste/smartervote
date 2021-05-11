@@ -25,8 +25,7 @@ public class MapPolitician {
                 entity.getPicture(),
                 entity.getName(),
                 entity.getParty().getName(),
-                entity.getBirthyear(),
-                0);
+                entity.getBirthyear());
     }
 
     /**
@@ -37,12 +36,14 @@ public class MapPolitician {
      * @return the mapped transfer object
      */
     public static PoliticianTO toTransferObject(Politician entity, int match) {
-        return new PoliticianTO(entity.getId(),
+        PoliticianTO politician = new PoliticianTO(entity.getId(),
                 entity.getPicture(),
                 entity.getName(),
                 entity.getParty().getName(),
-                entity.getBirthyear(),
-                match);
+                entity.getBirthyear());
+        politician.setMatch(match);
+        return politician;
+
     }
 
     /**

@@ -10,6 +10,8 @@ import java.util.UUID;
  */
 public class PoliticianTO {
 
+    public static final int DEFAULT_MATCH = 0;
+
     /**
      * The UUUID of the politician.
      */
@@ -41,13 +43,13 @@ public class PoliticianTO {
      */
     private int match;
 
-    public PoliticianTO(UUID id, String imageUrl, String name, String party, int birthYear, int match) {
+    public PoliticianTO(UUID id, String imageUrl, String name, String party, int birthYear) {
         this.id = id;
         this.imageUrl = imageUrl;
         this.name = name;
         this.party = party;
         this.birthYear = birthYear;
-        this.match = match;
+        this.match = DEFAULT_MATCH;
     }
 
     public UUID getId() {
