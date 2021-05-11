@@ -16,8 +16,8 @@ public class MapQuestion {
     /**
      * Maps a single entity to transfer object.
      *
-     * @param entity the question entity.
-     * @return the question transfer object.
+     * @param entity the question entity
+     * @return the question transfer object
      */
     public static QuestionTO toTransferObject(Question entity) {
         return new QuestionTO(entity.getId(), entity.getText());
@@ -26,8 +26,8 @@ public class MapQuestion {
     /**
      * Maps a single entity to transfer object.
      *
-     * @param entities a set of question entities.
-     * @return the set of question transfer objects.
+     * @param entities a set of question entities
+     * @return the set of question transfer objects
      */
     public static Set<QuestionTO> toTransferObjects(Set<Question> entities) {
         return entities.stream().map(MapQuestion::toTransferObject).collect(Collectors.toSet());

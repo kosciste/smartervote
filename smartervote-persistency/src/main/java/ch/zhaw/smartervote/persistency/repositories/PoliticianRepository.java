@@ -4,7 +4,7 @@ import ch.zhaw.smartervote.persistency.entities.Politician;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 /**
- * Repository for the politicians.
+ * Repository for the {@link Politician} entity.
  *
  * @author Raphael Krebs
  */

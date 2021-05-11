@@ -1,23 +1,32 @@
 package ch.zhaw.smartervote.domain.mapping;
 
 import ch.zhaw.smartervote.contract.transferobject.PoliticianProfileTO;
+import ch.zhaw.smartervote.persistency.entities.MediaCoverage;
+import ch.zhaw.smartervote.persistency.entities.PersonalQuestion;
 import ch.zhaw.smartervote.persistency.entities.Politician;
 
+import java.util.List;
+
 /**
- * Maps Politician entitys to PoliticianProfileTO transfer objects.
+ * Maps Politician entities to PoliticianProfileTO transfer objects.
  *
  * @author Stefan Teodoropol
  */
 public class MapPoliticianProfile {
 
     /**
-     * Maps a single Politician entity to a PoliticianProfileTO transfer object.
+     * Maps the given list of elements to a politician profile to object.
      *
-     * @param entity the politician entity to be mapped.
-     * @return the mapped transfer object.
+     * @param entity politician entity to map
+     * @param sortedPersonalQuestions sorted list of personal questions
+     * @param sortedMediaCoverages sorted list of media coverages
+     * @param upvotedPersonalQuestions questions that were upvoted by the user of the current request
+     * @return politician profile to
      */
-    public static PoliticianProfileTO toTransferObject(Politician entity) {
-
+    public static PoliticianProfileTO toTransferObject(Politician entity,
+                                                       List<PersonalQuestion> sortedPersonalQuestions,
+                                                       List<MediaCoverage> sortedMediaCoverages,
+                                                       List<PersonalQuestion> upvotedPersonalQuestions) {
         return new PoliticianProfileTO(entity.getId(),
                 entity.getPicture(),
                 entity.getName(),
@@ -25,28 +34,9 @@ public class MapPoliticianProfile {
                 entity.getBirthyear(),
                 0,
                 entity.getProfession(),
-                entity.getGender(),
-                MapMediaCoverage.toTransferObjects(entity.getMediaCoverage()),
-                MapPersonalQuestion.toTransferObjects(entity.getPersonalQuestions()));
-    }
-
-    /**
-     * Maps a single Politician entity with the matching score to a PoliticianProfileTO transfer object.
-     *
-     * @param entity the politician entity to be mapped.
-     * @return the mapped transfer object.
-     */
-    public static PoliticianProfileTO toTransferObject(Politician entity, int match) {
-        return new PoliticianProfileTO(entity.getId(),
-                entity.getPicture(),
-                entity.getName(),
-                entity.getParty().getName(),
-                entity.getBirthyear(),
-                match,
-                entity.getProfession(),
-                entity.getGender(),
-                MapMediaCoverage.toTransferObjects(entity.getMediaCoverage()),
-                MapPersonalQuestion.toTransferObjects(entity.getPersonalQuestions()));
+                entity.getGender().toString(),
+                MapMediaCoverage.toTransferObjects(sortedMediaCoverages),
+                MapPersonalQuestion.toTransferObjects(sortedPersonalQuestions, upvotedPersonalQuestions));
     }
     
 }

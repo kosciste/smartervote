@@ -10,6 +10,11 @@ import java.util.UUID;
 public interface PersonalQuestionService {
 
     /**
+     * Constant which defines the max length of a question that can be used by clients to validate the question length.
+     */
+    int MAX_QUESTION_LENGTH = 255;
+
+    /**
      * Adds a question to the politicians profile.
      *
      * @param politicianId the id of the politician
@@ -24,9 +29,9 @@ public interface PersonalQuestionService {
      *
      * @param questionId the UUID of the personal question to be upvoted
      * @param ipAddress the ip address of the user that upvoted the question
-     * @return true if the question was upvoted, false otherwise
+     * @return new amount of upvotes
      * @throws DomainException in case of any issues e.g. question id does not exist
      */
-    boolean upvoteQuestion(UUID questionId, String ipAddress) throws DomainException;
+    long upvoteQuestion(UUID questionId, String ipAddress) throws DomainException;
 
 }

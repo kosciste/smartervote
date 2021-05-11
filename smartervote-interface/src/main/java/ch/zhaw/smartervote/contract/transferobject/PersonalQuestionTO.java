@@ -23,17 +23,23 @@ public class PersonalQuestionTO {
     /**
      * The upvotes this politician question received.
      */
-    private int upvotes;
+    private final int upvotes;
+
+    /**
+     * Indicates if the user already upvoted the personal question.
+     */
+    private final boolean upvoted;
 
     /**
      * The politicians answer to the question.
      */
     private final PersonalAnswerTO answer;
-    
-    public PersonalQuestionTO(UUID id, String text, int upvotes, PersonalAnswerTO answer) {
+
+    public PersonalQuestionTO(UUID id, String text, int upvotes, boolean upvoted, PersonalAnswerTO answer) {
         this.id = id;
         this.text = text;
         this.upvotes = upvotes;
+        this.upvoted = upvoted;
         this.answer = answer;
     }
 
@@ -49,12 +55,12 @@ public class PersonalQuestionTO {
         return upvotes;
     }
 
-    public void setUpvotes(int upvotes) {
-        this.upvotes = upvotes;
-    }
-
     public PersonalAnswerTO getAnswer() {
         return answer;
+    }
+
+    public boolean isUpvoted() {
+        return upvoted;
     }
 
 }
