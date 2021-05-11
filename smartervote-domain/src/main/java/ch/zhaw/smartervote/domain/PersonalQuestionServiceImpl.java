@@ -12,9 +12,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * This class implements the PersonalQuestionService functions
- * 
- * @author Stefan Teodoropol
+ * Implementation to ask questions to politicians and upvoting these questions.
+ *
+ * @author Raphael Krebs
  */
 @Component("personalQuestionService")
 public class PersonalQuestionServiceImpl implements PersonalQuestionService {

@@ -5,19 +5,17 @@
 <nav th:replace="fragments/navigation :: navigation"></nav>
 <header th:replace="fragments/header :: name('Wahlempfehlung', 'Folgend finden Sie Ihre Wahlempfehlungen')"></header>
 <main>
-    <form action="#" th:action="@{/result/{id}(id=${id})}" th:object="${filter}" method="get">
+    <form action="#" th:action="@{/result/{id}/page/{page}(id=${id},page=1)}" th:object="${filter}" method="get">
         <div class="container-fluid container-topic">
             <div class="row grey-bg filter-row">
                 <div class="col-lg-4">
-                    <label class="filter-property"> Geschlecht</label>
-                    <div class="switch-field switch-filter">
-                        <input type="radio" th:field="*{gender}" id="male" name="gender" value="Male"/>
-                        <label th:for="male">Männlich</label>
-                        <input type="radio" th:field="*{gender}" id="female" name="gender" value="Female"/>
-                        <label th:for="female">Weiblich</label>
-                        <input type="radio" th:field="*{gender}" id="other" name="gender" value="Other"/>
-                        <label th:for="other">Andere</label>
-                    </div>
+                    <label class="filter-property" for="gender">Geschlecht:</label>
+                    <select th:field="*{gender}" class="custom-select" name="gender" id="gender">
+                        <option th:text="'Keine Auswahl'" th:value="${defaultFilter}"></option>
+                        <option th:text="'Männlich'" th:value="'Male'"></option>
+                        <option th:text="'Weiblich'" th:value="'Female'"></option>
+                        <option th:text="'Andere'" th:value="'Other'"></option>
+                    </select>
                 </div>
                 <div class="col-lg-2">
                     <label class="filter-property">Alter</label>
@@ -28,9 +26,10 @@
                     </div>
                 </div>
                 <div class="col-lg-3">
-                    <label class="filter-property" for="party">Partei</label>
+                    <label class="filter-property" for="party">Partei:</label>
                     <div>
                         <select th:field="*{party}" class="custom-select" name="party" id="party">
+                            <option th:text="'Alle Parteien'" th:value="${defaultFilter}"></option>
                             <option th:each="p : ${parties}" th:text="${p}" th:value="${p}"></option>
                         </select>
                     </div>
@@ -52,6 +51,25 @@
                     </div>
                 </div>
             </div>
+
+            <div class="alert alert-info" th:if="${politicians.size() == 0}">
+                Es konnten keine Politiker mit ihren Filterkriterien gefunden werden.
+            </div>
+
+            <nav aria-label="Politician pagination" th:if="${politicians.size() != 0}">
+                <ul class="pagination">
+                    <li th:class="'page-item' + (${prevLinkEnabled} ? '' : ' disabled')">
+                        <a class="page-link" th:href="@{/result/{id}/page/{page}(id=${id},page=${prevPage},gender=${filter.gender},ageFrom=${filter.ageFrom},ageTo=${filter.ageTo},party=${filter.party})}">Previous</a>
+                    </li>
+                    <li th:each="i : ${#numbers.sequence(1,totalPages)}" th:class="'page-item' + (${i == currentPage} ? ' active' : '')">
+                        <a class="page-link" th:text="${i}" th:href="@{/result/{id}/page/{page}(id=${id},page=${i},gender=${filter.gender},ageFrom=${filter.ageFrom},ageTo=${filter.ageTo},party=${filter.party})}"></a>
+                    </li>
+                    <li th:class="'page-item' + (${nextLinkEnabled} ? '' : ' disabled')">
+                        <a class="page-link" th:href="@{/result/{id}/page/{page}(id=${id},page=${nextPage},gender=${filter.gender},ageFrom=${filter.ageFrom},ageTo=${filter.ageTo},party=${filter.party})}">Next</a>
+                    </li>
+                </ul>
+            </nav>
+
         </div>
     </form>
 </main>

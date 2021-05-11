@@ -14,21 +14,27 @@ import java.util.Collection;
 public class PoliticianList extends ArrayList<PoliticianTO> {
 
     /**
-     * The total count of all the politicians in the database.
+     * Page number that contains this list of politicians.
      */
-    private final int totalSize;
+    private final int currentPage;
 
-    public PoliticianList(int totalSize) {
-        this.totalSize = totalSize;
-    }
+    /**
+     * Total pages that are possible with the current filter.
+     */
+    private final int totalPages;
 
-    public PoliticianList(Collection<PoliticianTO> c, int totalSize) {
+    public PoliticianList(Collection<? extends PoliticianTO> c, int currentPage, int totalPages) {
         super(c);
-        this.totalSize = totalSize;
+        this.currentPage = currentPage + 1;
+        this.totalPages = totalPages;
     }
 
-    public int getTotalSize() {
-        return totalSize;
+    public int getCurrentPage() {
+        return currentPage;
+    }
+
+    public int getTotalPages() {
+        return totalPages;
     }
 
 }

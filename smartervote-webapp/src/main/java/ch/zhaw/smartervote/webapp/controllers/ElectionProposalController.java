@@ -199,7 +199,7 @@ public class ElectionProposalController {
         }
 
         status.setComplete();
-        return "redirect:/result/" + result;
+        return "redirect:/result/" + result + "/page/1";
     }
 
 }

@@ -1,5 +1,7 @@
 package ch.zhaw.smartervote.webapp.vo;
 
+import ch.zhaw.smartervote.contract.PoliticianService;
+
 import java.util.UUID;
 
 public class PoliticianFilterVO {
@@ -11,12 +13,12 @@ public class PoliticianFilterVO {
     /**
      * The party that should be displayed.
      */
-    private String party;
+    private String party = PoliticianService.DEFAULT_FILTER;
 
     /**
      * The gender that should be displayed.
      */
-    private String gender;
+    private String gender = PoliticianService.DEFAULT_FILTER;
 
     /**
      * The minimum age of the politicians that should be displayed.
@@ -27,7 +29,6 @@ public class PoliticianFilterVO {
      * The maximum age of the politicians that should be displayed.
      */
     private String ageTo = AGE_TO;
-
 
     public String getParty() {
         return party;

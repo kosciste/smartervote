@@ -8,21 +8,31 @@ import ch.zhaw.smartervote.contract.transferobject.PoliticianProfileTO;
 import ch.zhaw.smartervote.contract.transferobject.PoliticianTO;
 import ch.zhaw.smartervote.domain.mapping.MapPolitician;
 import ch.zhaw.smartervote.domain.mapping.MapPoliticianProfile;
-import ch.zhaw.smartervote.persistency.entities.*;
+import ch.zhaw.smartervote.persistency.entities.Party;
+import ch.zhaw.smartervote.persistency.entities.Politician;
+import ch.zhaw.smartervote.persistency.entities.ProposalResult;
 import ch.zhaw.smartervote.persistency.repositories.PartyRepository;
 import ch.zhaw.smartervote.persistency.repositories.PoliticianRepository;
 import ch.zhaw.smartervote.persistency.repositories.ProposalResultRepository;
 import ch.zhaw.smartervote.persistency.repositories.ProposalResultScoreRepository;
 import ch.zhaw.smartervote.persistency.specificiations.PoliticianFilterSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
- * {@inheritDoc}
+ * This interface implements methods to display the politicians and their profile, as well as filtering the list of
+ * politicians to display.
+ *
+ * @author Raphael Krebs
+ * @author Leo Rudin
+ * @author Stefan Koscica
  */
 @Component("politicianService")
 public class PoliticianServiceImpl implements PoliticianService {
@@ -62,35 +72,42 @@ public class PoliticianServiceImpl implements PoliticianService {
      * {@inheritDoc}
      */
     @Override
-    public PoliticianList filterPoliticians(int offset, int size, PoliticianFilterTO filter) {
+    public PoliticianList filterPoliticians(int page, int pageSize, PoliticianFilterTO filter) {
         PoliticianFilterSpecification specification = new PoliticianFilterSpecification(
+                PoliticianService.DEFAULT_FILTER,
                 filter.getParty(),
                 filter.getGender(),
                 filter.getAgeFrom(),
                 filter.getAgeTo());
 
-        List<PoliticianTO> politicianTOS = MapPolitician.toTransferObjects(politicianRepository.findAll(specification));
-        return new PoliticianList(politicianTOS, 0);
+        Page<Politician> pageResult = politicianRepository.findAll(specification, PageRequest.of(page, pageSize));
+
+        List<PoliticianTO> politicianTOS = MapPolitician.toTransferObjects(pageResult.getContent());
+        return new PoliticianList(politicianTOS, pageResult.getPageable().getPageNumber(), pageResult.getTotalPages());
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public PoliticianList filterPoliticians(int offset, int size, PoliticianFilterTO filter, UUID resultId)
+    public PoliticianList filterPoliticians(int page, int pageSize, PoliticianFilterTO filter, UUID resultId)
             throws DomainException {
         Optional<ProposalResult> proposalResultOptional = proposalResultRepository.findById(resultId);
         if (proposalResultOptional.isEmpty()) throw new DomainException("Proposal result does not exist.");
 
         PoliticianFilterSpecification specification = new PoliticianFilterSpecification(
+                PoliticianService.DEFAULT_FILTER,
                 filter.getParty(),
                 filter.getGender(),
                 filter.getAgeFrom(),
                 filter.getAgeTo(),
                 resultId);
 
-        List<PoliticianTO> politicianTOS = MapPolitician.toTransferObjects(politicianRepository.findAll(specification));
-        return new PoliticianList(politicianTOS, 0);
+        Page<Politician> pageResult = politicianRepository.findAll(specification, PageRequest.of(page, pageSize));
+        List<PoliticianTO> politicianTOS = MapPolitician.toTransferObjects(pageResult.getContent(),
+                proposalResultOptional.get().getProposalResultScores());
+
+        return new PoliticianList(politicianTOS, pageResult.getPageable().getPageNumber(), pageResult.getTotalPages());
     }
 
     /**

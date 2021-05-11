@@ -17,29 +17,36 @@ import java.util.UUID;
 public interface PoliticianService {
 
     /**
-     * Returns a filtered list of politicians, limited by the given size and offset. The offset defines the index of the
-     * first politician that is returned, the size defines the number of politicians returned.
-     *
-     * @param offset index of the first politician to be returned.
-     * @param size number of politicians to be returned.
-     * @param filter to filter the returned list of politicians.
-     * @return filtered list of politicians
+     * String constant that is used for various filters e.g. the gender or the party to indicate that no filtering
+     * should be done.
      */
-    PoliticianList filterPoliticians(int offset, int size, PoliticianFilterTO filter);
+    String DEFAULT_FILTER = "all";
 
     /**
-     * Returns a filtered list of politicians from a given proposal result id and their match sorted from highest to
-     * lowest match, limited by the given size and offset. The offset defines the index of the first politician that is
-     * returned, the size defines the number of politicians returned.
+     * Returns a filtered list of all politicians. It is possible to give the page number that should be displayed and
+     * page size for a page. The returned politician list will then contain the total amount of pages and the current
+     * page number as well as the content itself.
      *
-     * @param offset index of the first politician to be returned.
-     * @param size number of politicians to be returned.
-     * @param filter to filter the returned list of politicians.
+     * @param page current page for which the data should be returned
+     * @param pageSize number of politician on the page
+     * @param filter to filter the returned list of politicians
+     * @return filtered list of politicians
+     */
+    PoliticianList filterPoliticians(int page, int pageSize, PoliticianFilterTO filter);
+
+    /**
+     * Returns a filtered list of the politician that are contained in the given proposal result id. It is possible to
+     * give the page number that should be displayed and page size for a page. The returned politician list will then
+     * contain the total amount of pages and the current page number as well as the content itself.
+     *
+     * @param page current page for which the data should be returned
+     * @param pageSize number of politician on the page
+     * @param filter to filter the returned list of politicians
      * @param resultId UUID of the election proposal result
      * @return filtered list of politicians.
      * @throws DomainException if the result id does not exist
      */
-    PoliticianList filterPoliticians(int offset, int size, PoliticianFilterTO filter, UUID resultId) throws DomainException;
+    PoliticianList filterPoliticians(int page, int pageSize, PoliticianFilterTO filter, UUID resultId) throws DomainException;
 
     /**
      * Returns all available parties.
