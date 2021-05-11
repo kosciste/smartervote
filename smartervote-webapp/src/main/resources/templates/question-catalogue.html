@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="de">
+<head th:replace="fragments/head :: head"></head>
+<body>
+<nav th:replace="fragments/navigation :: navigation"></nav>
+<header th:replace="fragments/header :: name('Fragebogen', 'Sie können nun den Fragebogen ausfüllen. Anhand Ihrer Antworten berechnen wir den optimalen Kandidaten für Sie.')"></header>
+<main>
+    <form th:action="@{/save-questions}" action="#" th:object="${form}" method="post">
+        <div class="container-fluid container-topic">
+            <div th:replace="fragments/alert :: alert"/>
+            <div class="row">
+                <div class="col-12">
+                    <div class="container-fluid ">
+                        <div th:each="subject, itemStat : *{subjectVOS}">
+                            <h2 th:text="${subject.name}"></h2>
+                            <div th:each="question, qStat: *{subjectVOS[__${itemStat.index}__].questionVOS}" class="row topic-row grey-bg">
+                                <div class="col-md-6">
+                                    <label class="question" th:text="${question.text}"></label>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="switch-field">
+                                        <input type="radio" th:field="*{subjectVOS[__${itemStat.index}__].questionVOS[__${qStat.index}__].answer}"
+                                               th:id="'radio-one-'+${question.id}" th:name="'radio-one-'+${question.id}" value="0"/>
+                                        <label th:for="'radio-one-'+${question.id}">Nein</label>
+                                        <input type="radio" th:field="*{subjectVOS[__${itemStat.index}__].questionVOS[__${qStat.index}__].answer}"
+                                               th:id="'radio-two-'+${question.id}" th:name="'radio-two-'+${question.id}"  value="1"/>
+                                        <label th:for="'radio-two-'+${question.id}">Eher Nein</label>
+                                        <input type="radio" th:field="*{subjectVOS[__${itemStat.index}__].questionVOS[__${qStat.index}__].answer}"
+                                               th:id="'radio-three-'+${question.id}" th:name="'radio-three-'+${question.id}"  value="2"/>
+                                        <label th:for="'radio-three-'+${question.id}">Enthalten</label>
+                                        <input type="radio" th:field="*{subjectVOS[__${itemStat.index}__].questionVOS[__${qStat.index}__].answer}"
+                                               th:id="'radio-four-'+${question.id}" th:name="'radio-four-'+${question.id}"  value="3"/>
+                                        <label th:for="'radio-four-'+${question.id}">Eher ja</label>
+                                        <input type="radio" th:field="*{subjectVOS[__${itemStat.index}__].questionVOS[__${qStat.index}__].answer}"
+                                               th:id="'radio-five-'+${question.id}" th:name="'radio-five-'+${question.id}"  value="4"/>
+                                        <label th:for="'radio-five-'+${question.id}">Ja</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid container-send">
+            <div class="row">
+                <div class="col-12">
+                    <button type="submit" id="submitButton" th:value="Save" class="btn btn-send">Senden</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</main>
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>
