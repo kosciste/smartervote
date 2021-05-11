@@ -22,8 +22,8 @@ public class MapQuestionSubject {
     /**
      * Maps a single question subject entity to a transfer object.
      *
-     * @param entity the question subject entity to be mapped.
-     * @return the mapped transfer object.
+     * @param entity the question subject entity to be mapped
+     * @return the mapped transfer object
      */
     public static SubjectTO toTransferObject(QuestionSubject entity) {
         return new SubjectTO(entity.getId(), entity.getName(), DEFAULT_WEIGHT);
@@ -32,8 +32,8 @@ public class MapQuestionSubject {
     /**
      * Maps a set of question subject entities to a set of transfer objects.
      *
-     * @param entities the set of question subject entities to be mapped.
-     * @return the set of mapped transfer objects.
+     * @param entities the set of question subject entities to be mapped
+     * @return the set of mapped transfer objects
      */
     public static Set<SubjectTO> toTransferObjects(Set<QuestionSubject> entities) {
         return entities.stream().map(MapQuestionSubject::toTransferObject).collect(Collectors.toSet());

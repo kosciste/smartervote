@@ -3,7 +3,7 @@ package ch.zhaw.smartervote.persistency.repositories;
 import ch.zhaw.smartervote.persistency.entities.Election;
 
 /**
- * Repository to interact with the election table.
+ * Repository for the {@link Election} entity.
  *
  * @author Raphael Krebs
  */

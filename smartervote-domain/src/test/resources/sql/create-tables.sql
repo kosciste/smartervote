@@ -134,7 +134,7 @@ CREATE TABLE PersonalQuestionUpvote
     change_time          TIMESTAMP   NOT NULL,
 
     CONSTRAINT pk_personal_question_upvote PRIMARY KEY (id),
-    CONSTRAINT fk_pqu_personal_question_id FOREIGN KEY (personal_question_id) REFERENCES PersonalQuestionUpvote (id)
+    CONSTRAINT fk_pqu_personal_question_id FOREIGN KEY (personal_question_id) REFERENCES PersonalQuestion (id)
 );
 CREATE TABLE ProposalResult
 (

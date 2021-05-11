@@ -3,7 +3,7 @@ package ch.zhaw.smartervote.persistency.repositories;
 import ch.zhaw.smartervote.persistency.entities.ProposalResultScore;
 
 /**
- * Repository for the proposal result table.
+ * Repository for the {@link ProposalResultScore} entity.
  *
  * @author Raphael Krebs
  */

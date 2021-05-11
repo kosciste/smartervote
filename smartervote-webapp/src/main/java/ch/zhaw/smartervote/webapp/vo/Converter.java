@@ -1,5 +1,7 @@
 package ch.zhaw.smartervote.webapp.vo;
 
+import ch.zhaw.smartervote.contract.transferobject.PersonalAnswerTO;
+import ch.zhaw.smartervote.contract.transferobject.PersonalQuestionTO;
 import ch.zhaw.smartervote.contract.transferobject.QuestionTO;
 import ch.zhaw.smartervote.contract.transferobject.SubjectTO;
 

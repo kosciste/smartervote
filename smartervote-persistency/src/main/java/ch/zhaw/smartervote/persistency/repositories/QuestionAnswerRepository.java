@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Repository for the question answers.
+ * Repository for the {@link QuestionAnswer} entity.
  *
  * @author Raphael Krebs
  */

@@ -3,7 +3,7 @@ package ch.zhaw.smartervote.persistency.repositories;
 import ch.zhaw.smartervote.persistency.entities.Politician;
 
 /**
- * Repository for the politicians.
+ * Repository for the {@link Politician} entity.
  *
  * @author Raphael Krebs
  */
