@@ -5,19 +5,73 @@
 <nav th:replace="fragments/navigation :: navigation"></nav>
 <header th:replace="fragments/header :: name('Wahlempfehlung', 'Folgend finden Sie Ihre Wahlempfehlungen')"></header>
 <main>
+    <form action="#" th:action="@{/result/{id}/page/{page}(id=${id},page=1)}" th:object="${filter}" method="get">
         <div class="container-fluid container-topic">
+            <div class="row grey-bg filter-row">
+                <div class="col-lg-4">
+                    <label class="filter-property" for="gender">Geschlecht:</label>
+                    <select th:field="*{gender}" class="custom-select" name="gender" id="gender">
+                        <option th:text="'Keine Auswahl'" th:value="${defaultFilter}"></option>
+                        <option th:text="'Männlich'" th:value="'Male'"></option>
+                        <option th:text="'Weiblich'" th:value="'Female'"></option>
+                        <option th:text="'Andere'" th:value="'Other'"></option>
+                    </select>
+                </div>
+                <div class="col-lg-2">
+                    <label class="filter-property">Alter</label>
+                    <div>
+                        <input class="age-field" type="text" th:field="*{ageFrom}" id="start-age" name="start-age" value="18"/>
+                        <label th:for="end-age">bis</label>
+                        <input class="age-field" type="text" th:field="*{ageTo}" id="end-age" name="end-age"  value="100"/>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="filter-property" for="party">Partei:</label>
+                    <div>
+                        <select th:field="*{party}" class="custom-select" name="party" id="party">
+                            <option th:text="'Alle Parteien'" th:value="${defaultFilter}"></option>
+                            <option th:each="p : ${parties}" th:text="${p}" th:value="${p}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <button type="submit" id="submitButton" th:value="Save" class="btn btn-filter">filtern</button>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-12">
                     <div class="container-fluid container-topic-inner">
                         <div th:each="politician: ${politicians}" class="row election-row grey-bg">
                             <div class="col-12">
-                                <a th:href="@{../politician/{id}(id=${politician.id})}" th:text="${politician.name} + '-' +  ${politician.match}"  class="election"></a>
+                                <a th:href="@{/politician/{id}(id=${politician.id})}"
+                                   th:text="${politician.name} + '-' +  ${politician.match}"  class="election"></a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <div class="alert alert-info" th:if="${politicians.size() == 0}">
+                Es konnten keine Politiker mit ihren Filterkriterien gefunden werden.
+            </div>
+
+            <nav aria-label="Politician pagination" th:if="${politicians.size() != 0}">
+                <ul class="pagination">
+                    <li th:class="'page-item' + (${prevLinkEnabled} ? '' : ' disabled')">
+                        <a class="page-link" th:href="@{/result/{id}/page/{page}(id=${id},page=${prevPage},gender=${filter.gender},ageFrom=${filter.ageFrom},ageTo=${filter.ageTo},party=${filter.party})}">Previous</a>
+                    </li>
+                    <li th:each="i : ${#numbers.sequence(1,totalPages)}" th:class="'page-item' + (${i == currentPage} ? ' active' : '')">
+                        <a class="page-link" th:text="${i}" th:href="@{/result/{id}/page/{page}(id=${id},page=${i},gender=${filter.gender},ageFrom=${filter.ageFrom},ageTo=${filter.ageTo},party=${filter.party})}"></a>
+                    </li>
+                    <li th:class="'page-item' + (${nextLinkEnabled} ? '' : ' disabled')">
+                        <a class="page-link" th:href="@{/result/{id}/page/{page}(id=${id},page=${nextPage},gender=${filter.gender},ageFrom=${filter.ageFrom},ageTo=${filter.ageTo},party=${filter.party})}">Next</a>
+                    </li>
+                </ul>
+            </nav>
+
         </div>
+    </form>
 </main>
 <footer th:replace="fragments/footer :: footer"></footer>
 </body>
