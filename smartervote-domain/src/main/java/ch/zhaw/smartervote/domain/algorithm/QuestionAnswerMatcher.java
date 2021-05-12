@@ -11,7 +11,7 @@ import java.util.UUID;
 /**
  * The question answer matcher matches a politician with a question, to get the answer of the politician.
  */
-@Component("questionAnswerMatcher")
+@Component
 public class QuestionAnswerMatcher {
 
     /**

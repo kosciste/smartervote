@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
  * @author Leo Rudin
  * @author Stefan Koscica
  */
-@Component("politicianService")
+@Component
 public class PoliticianServiceImpl implements PoliticianService {
 
     /**

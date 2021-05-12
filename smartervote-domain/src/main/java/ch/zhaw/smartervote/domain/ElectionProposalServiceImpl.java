@@ -30,7 +30,7 @@ import java.util.*;
  * @author Leo Rudin
  * @author Karin Birle
  */
-@Component("electionProposalService")
+@Component
 public class ElectionProposalServiceImpl implements ElectionProposalService {
 
     /**
