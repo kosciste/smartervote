@@ -200,6 +200,9 @@ header h2 {
 
 
 /* ---- start content specific ---- */
+main {
+    min-height: 300px;
+}
 main a {
     color: black;
 }
@@ -274,6 +277,11 @@ main .politician-profile-header {
 }
 main .politician-profile-open-article-link:hover {
     text-decoration: none;
+}
+
+/* error page */
+main .error-page {
+    padding-top: 100px;
 }
 
 /* ---- end content specific ---- */

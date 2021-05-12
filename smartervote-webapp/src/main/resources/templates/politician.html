@@ -34,7 +34,7 @@
         <p th:if="${mediaEntry.description != null}" th:text="${mediaEntry.description}" class="profile-box-text"></p>
         <div class="row">
             <div class="col-md">
-                <span th:text="'Veröffentlicht: ' + ${mediaEntry.eventDate}"></span>
+                <span th:text="'Veröffentlicht: ' + ${#dates.format(mediaEntry.eventDate, 'dd.MM.yyyy')}"></span>
             </div>
             <div class="col-md text-right">
                 <a th:if="${mediaEntry.link != null}" th:href="${mediaEntry.link}" target="_blank" class="politician-profile-open-article-link">Artikel öffnen <i class="fas fa-arrow-right"></i></a>

@@ -10,13 +10,10 @@
             <div class="col smartervote-nav">
                 <ul class="nav justify-content-end">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Startseite</a>
+                        <a class="nav-link" th:href="@{~/}" href="#">Startseite</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Alle Politiker</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Über</a>
+                        <a class="nav-link" th:href="@{~/about}">Über</a>
                     </li>
                 </ul>
             </div>
@@ -32,9 +29,8 @@
     <div id="smartervote-overlay">
         <a href="javascript:void(0)" class="close-btn" onclick="closeNav()">&times;</a>
         <div class="overlay-content">
-            <a href="/">Startseite</a>
-            <a href="/">Alle Politiker</a>
-            <a href="/">Über</a>
+            <a th:href="@{~/}">Startseite</a>
+            <a th:href="@{~/about}">Über</a>    
         </div>
     </div>
 
