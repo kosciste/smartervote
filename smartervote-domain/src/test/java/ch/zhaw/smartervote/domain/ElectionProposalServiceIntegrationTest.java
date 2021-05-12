@@ -14,8 +14,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -45,7 +45,7 @@ class ElectionProposalServiceIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     void testGetAvailableSelections() {
-        Set<ElectionTO> result = electionProposalService.getAvailableElections();
+        List<ElectionTO> result = electionProposalService.getAvailableElections();
         assertEquals(1, result.size());
         assertEquals(VALID_ELECTION_ID, result.iterator().next().getId());
         assertEquals("Nationalratswahlen", result.iterator().next().getName());
@@ -53,7 +53,7 @@ class ElectionProposalServiceIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     void testGetQuestionSubjects() throws DomainException {
-        Set<SubjectTO> subjectTOS = electionProposalService.getQuestionSubjects(VALID_ELECTION_ID);
+        List<SubjectTO> subjectTOS = electionProposalService.getQuestionSubjects(VALID_ELECTION_ID);
         assertEquals(13, subjectTOS.size());
     }
 
@@ -70,8 +70,8 @@ class ElectionProposalServiceIntegrationTest extends AbstractIntegrationTest {
     void testGetQuestionCatalogue() throws DomainException {
         SubjectTO subject = createValidTestSubject();
 
-        Map<SubjectTO, Set<QuestionTO>> questionCatalogue =
-                electionProposalService.getQuestionCatalogue(VALID_ELECTION_ID, Collections.singleton(subject));
+        Map<SubjectTO, List<QuestionTO>> questionCatalogue =
+                electionProposalService.getQuestionCatalogue(VALID_ELECTION_ID, Collections.singletonList(subject));
 
         assertTrue(questionCatalogue.containsKey(subject));
         assertEquals(6, questionCatalogue.get(subject).size());
@@ -80,7 +80,7 @@ class ElectionProposalServiceIntegrationTest extends AbstractIntegrationTest {
     @Test
     void testGetQuestionCatalogueWithInvalidElection() {
         DomainException ex = assertThrows(DomainException.class, () -> {
-            electionProposalService.getQuestionCatalogue(INVALID_ELECTION_ID, Collections.singleton(createValidTestSubject()));
+            electionProposalService.getQuestionCatalogue(INVALID_ELECTION_ID, Collections.singletonList(createValidTestSubject()));
         });
 
         assertEquals("Question subject does not belong to the provided election id.", ex.getMessage());
@@ -94,7 +94,7 @@ class ElectionProposalServiceIntegrationTest extends AbstractIntegrationTest {
                 SubjectWeight.NORMAL);
 
         DomainException ex = assertThrows(DomainException.class, () -> {
-            electionProposalService.getQuestionCatalogue(VALID_ELECTION_ID, Collections.singleton(invalidSubject));
+            electionProposalService.getQuestionCatalogue(VALID_ELECTION_ID, Collections.singletonList(invalidSubject));
         });
 
         assertEquals("Provided question subject does not exist.", ex.getMessage());

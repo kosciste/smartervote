@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -57,14 +56,13 @@ public class ElectionProposalAlgorithm {
 
 
     /**
-     * Calculates the election match based on the answered questions of the user. This is a prototype implementation of
-     * the algorithm. The full algorithm will be implemented in the beta release.
+     * Calculates the election match based on the answered questions of the user.
      *
      * @param politicians the politician for which the matching should be determined.
      * @param questions the answered questions.
      * @return the UUID of the result.
      */
-    public UUID calculate(List<PoliticianTO> politicians, Map<SubjectTO, Set<QuestionTO>> questions) {
+    public UUID calculate(List<PoliticianTO> politicians, Map<SubjectTO, List<QuestionTO>> questions) {
         ProposalResultBuilder proposalResultBuilder = new ProposalResultBuilder(
                 proposalResultRepository,
                 politicianRepository,
@@ -84,12 +82,12 @@ public class ElectionProposalAlgorithm {
      * @param questionSubjects the answered questions and their weighted subjects.
      * @return the proposal result scores for each politician.
      */
-    private int calculateResult(PoliticianTO politician, Map<SubjectTO, Set<QuestionTO>> questionSubjects) {
+    private int calculateResult(PoliticianTO politician, Map<SubjectTO, List<QuestionTO>> questionSubjects) {
         double error = 0;
         double maxError = 0;
-        for (Map.Entry<SubjectTO, Set<QuestionTO>> entry : questionSubjects.entrySet()) {
+        for (Map.Entry<SubjectTO, List<QuestionTO>> entry : questionSubjects.entrySet()) {
             SubjectTO subject = entry.getKey();
-            Set<QuestionTO> questions = entry.getValue();
+            List<QuestionTO> questions = entry.getValue();
             SubjectWeight weight = subject.getWeight();
             if (weight != SubjectWeight.NOT_INTERESTED) {
                 error += calculateError(politician, questions) * weight.ordinal();
@@ -108,7 +106,7 @@ public class ElectionProposalAlgorithm {
      * @param questions the answered questions of the users.
      * @return the squared error for the politician.
      */
-    private double calculateError(PoliticianTO politician, Set<QuestionTO> questions) {
+    private double calculateError(PoliticianTO politician, List<QuestionTO> questions) {
         double error = 0;
         for (QuestionTO question : questions) {
             int politicianAnswer = questionAnswerMatcher.getPoliticianAnswer(politician.getId(), question.getId());

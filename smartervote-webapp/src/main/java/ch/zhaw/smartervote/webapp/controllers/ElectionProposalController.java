@@ -19,8 +19,8 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -82,7 +82,7 @@ public class ElectionProposalController {
      */
     @GetMapping("/")
     public String index(Model model) {
-        Set<ElectionTO> elections = electionProposalService.getAvailableElections();
+        List<ElectionTO> elections = electionProposalService.getAvailableElections();
         model.addAttribute("elections", elections);
         return "index";
     }
@@ -98,7 +98,7 @@ public class ElectionProposalController {
     @GetMapping("/election/{id}")
     public String showQuestionSubjects(@ModelAttribute ElectionProposalDTO electionProposalDTO,
                                        @PathVariable("id") String id, Model model) {
-        Set<SubjectTO> subjectTOS;
+        List<SubjectTO> subjectTOS;
         try {
             subjectTOS = electionProposalService.getQuestionSubjects(UUID.fromString(id));
         } catch (IllegalArgumentException | DomainException e) {
@@ -147,15 +147,15 @@ public class ElectionProposalController {
             return "redirect:/";
         }
 
-        Set<SubjectTO> subjectTOS = Converter.convertToSubjectTO(electionProposalDTO.getSubjectVOS());
-        Map<SubjectTO, Set<QuestionTO>> subjectsMap;
+        List<SubjectTO> subjectTOS = Converter.convertToSubjectTO(electionProposalDTO.getSubjectVOS());
+        Map<SubjectTO, List<QuestionTO>> subjectsMap;
         try {
             subjectsMap = electionProposalService.getQuestionCatalogue(electionProposalDTO.getElectionId(), subjectTOS);
         } catch (DomainException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        for (Map.Entry<SubjectTO, Set<QuestionTO>> entry : subjectsMap.entrySet()) {
+        for (Map.Entry<SubjectTO, List<QuestionTO>> entry : subjectsMap.entrySet()) {
             for (SubjectVO subjectVO : electionProposalDTO.getSubjectVOS()) {
                 if (subjectVO.getId().equals(entry.getKey().getId())) {
                     subjectVO.setQuestionVOS(Converter.convertToQuestionVO(entry.getValue()));
@@ -186,7 +186,7 @@ public class ElectionProposalController {
             return "redirect:/question-catalogue";
         }
 
-        Map<SubjectTO, Set<QuestionTO>> results = new HashMap<>();
+        Map<SubjectTO, List<QuestionTO>> results = new HashMap<>();
         for (SubjectVO subjectVO : electionProposalDTO.getSubjectVOS()) {
             results.put(Converter.convertToSubjectTO(subjectVO), Converter.convertToQuestionTO(subjectVO.getQuestionVOS()));
         }
