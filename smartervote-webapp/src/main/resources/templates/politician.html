@@ -6,7 +6,7 @@
 <header th:replace="fragments/header :: name('Profil von ' + ${politician.name}, 'Hier finden Sie weitere Infos')"></header>
 <main class="container">
     <div th:replace="fragments/alert :: alert"/>
-    <div class="politician-profile-header">
+    <div class="politician-profile-box">
         <div class="row align-items-center">
             <div class="col-md-4">
                 <img th:src="@{'~/images/politicians/' + ${politician.imageUrl}}" th:alt="${politician.name}">
@@ -16,56 +16,58 @@
                 <p><strong>Partei:</strong> <span th:text="${politician.party}"></span></p>
                 <p><strong>Jahrgang:</strong> <span th:text="${politician.birthYear}"></span></p>
                 <p><strong>Beruf:</strong> <span th:text="${politician.profession}"></span></p>
-                <p><strong>Geschlecht:</strong> <span th:text="${politician.gender}"></span></p>
+                <p>
+                    <strong>Geschlecht:</strong>
+                    <span th:if="${politician.gender == 'Male'}">Männlich</span>
+                    <span th:if="${politician.gender == 'Female'}">Weiblich</span>
+                    <span th:if="${politician.gender == 'Other'}">Nicht spezifiziert</span>
+                </p>
             </div>
         </div>
     </div>
-
-    <!--
-        <div class="container-fluid container-topic">
-
-            <div class="row">
-                <div class="col-12">
-                    <div class="container-fluid container-topic-inner">
-                        <div th:each="politician: ${politician}" class="grey-bg">
-                            <div class="col-12">
-                                <p th:text="'Bild:'"></p>
-                                <img th:src="@{'../images/politicians/' + ${politician.imageUrl}}" class="profilePic"/>
-                                <p th:text="'ID: ' + ${politician.id}" hidden></p>
-                                <p th:text="'Name: ' + ${politician.name}"></p>
-                                <p th:text="'Party: ' + ${politician.party}"></p>
-                                <p th:text="'Jahrgang: ' + ${politician.birthYear}"></p>
-                                <p th:text="'Beruf: ' + ${politician.profession}"></p>
-                                <p th:text="'Geschlecht: ' + ${politician.gender}"></p>
-                                <p th:text="'Zuletzt in den Medien:'"></p>
-                                <div th:each="mediaEntry: ${politician.mediaEntries}">
-                                    <p th:href="${mediaEntry.link}" th:text="${mediaEntry.eventDate} + ' - ' +  ${mediaEntry.headline}"></p>
-                                    <p th:text="${mediaEntry.description}"></p>
-                                </div>
-                                <p th:text="'Persönliche Fragen:'"></p>
-                                <p>---</p>
-                                <div th:each="question: ${politician.questions}">
-                                    <button th:id="${question.id}" th:class="'btn btn-primary upvote' + (${question.upvoted} ? ' disabled' : '')" th:disabled="${question.upvoted}" th:text="(${question.upvoted} ? 'Upvoted' : 'Upvote')"></button>
-                                    <p th:text="'Frage: ' + ${question.text}"></p>
-                                    <p th:text="'Antwort: ' + ${question.answer.text}"></p>
-                                    <p th:class="'upvotes-' + ${question.id}" th:text="'Upvotes: ' + ${question.upvotes}"></p>
-                                    <p>---</p>
-                                </div>
-                                <form th:action="@{/politician/{id}/add-question(id=${politician.id})}" th:object="${personalQuestionForm}" method="post">
-                                    <div class="form-group">
-                                        <label for="text">Frage:</label>
-                                        <textarea id="text" class="form-control" th:field="*{text}"></textarea>
-                                    </div>
-                                    <div class="float-right clear">
-                                        <input type="submit" class="btn btn-primary">
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <h3 class="politician-profile-header">Medien Beiträge</h3>
+    <div class="alert alert-info" th:if="${politician.mediaEntries.size() == 0}">
+        Es konnten keine Medieneinträge für diesen Politiker gefunden werden.
+    </div>
+    <div th:each="mediaEntry: ${politician.mediaEntries}" class="politician-profile-box politician-profile-content-box">
+        <h4 th:text="${mediaEntry.headline}"></h4>
+        <p th:if="${mediaEntry.description != null}" th:text="${mediaEntry.description}" class="profile-box-text"></p>
+        <div class="row">
+            <div class="col-md">
+                <span th:text="'Veröffentlicht: ' + ${mediaEntry.eventDate}"></span>
             </div>
-        </div>-->
+            <div class="col-md text-right">
+                <a th:if="${mediaEntry.link != null}" th:href="${mediaEntry.link}" target="_blank" class="politician-profile-open-article-link">Artikel öffnen <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+    <h3 class="politician-profile-header">Fragen und Antworten</h3>
+    <div class="alert alert-info" th:if="${politician.questions.size() == 0}">
+        Es konnten keine Fragen für diesen Politiker gefunden werden.
+    </div>
+    <div th:each="question: ${politician.questions}" class="politician-profile-box politician-profile-content-box">
+        <h4 th:text="${question.text}"></h4>
+        <p th:if="${question.answer.text != null}" th:text="${question.answer.text}" class="profile-box-text"></p>
+        <div class="row align-items-center">
+            <div class="col-md-1 offset-md-10 text-right">
+                <span th:class="'upvotes-' + ${question.id}" th:text="'Likes: ' + ${question.upvotes}"></span>
+            </div>
+            <div class="col-md-1 text-right">
+                <button th:id="${question.id}"
+                        th:class="'btn btn-primary upvote' + (${question.upvoted} ? ' disabled' : '')"
+                        th:disabled="${question.upvoted}"><i class="far fa-thumbs-up"></i></button>
+            </div>
+        </div>
+    </div>
+    <form th:action="@{/politician/{id}/add-question(id=${politician.id})}" th:object="${personalQuestionForm}" method="post">
+        <div class="form-group">
+            <label for="text" class="text-hide">Selbst eine Frage stellen:</label>
+            <textarea id="text" class="form-control" placeholder="Stellen Sie dem Politiker hier ihre Frage..." th:field="*{text}"></textarea>
+        </div>
+        <div class="clearfix">
+            <input type="submit" class="btn btn-send btn-send-small float-right" value="Abschicken">
+        </div>
+    </form>
 </main>
 <footer th:replace="fragments/footer :: footer"></footer>
 </body>

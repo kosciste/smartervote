@@ -44,8 +44,7 @@ $(document).ready(function () {
             },
             success: function (data) {
                 ref.attr("disabled", true)
-                ref.html("Upvoted")
-                $(".upvotes-" + id).html("Upvotes: " + data)
+                $(".upvotes-" + id).html("Likes: " + data)
             },
             error: function () {
                 window.alert("Der Upvote hat leider nicht funktioniert!")
