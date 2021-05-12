@@ -23,7 +23,12 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 /**
- * {@inheritDoc}
+ * Implementation for the election proposal service which provides functionality for the whole election proposal
+ * process.
+ *
+ * @author Raphael Krebs
+ * @author Leo Rudin
+ * @author Karin Birle
  */
 @Component("electionProposalService")
 public class ElectionProposalServiceImpl implements ElectionProposalService {
