@@ -4,23 +4,25 @@ import ch.zhaw.smartervote.contract.DomainException;
 import ch.zhaw.smartervote.contract.ElectionProposalService;
 import ch.zhaw.smartervote.contract.SubjectWeight;
 import ch.zhaw.smartervote.contract.transferobject.ElectionTO;
-import ch.zhaw.smartervote.contract.transferobject.PoliticianTO;
 import ch.zhaw.smartervote.contract.transferobject.QuestionTO;
 import ch.zhaw.smartervote.contract.transferobject.SubjectTO;
 import ch.zhaw.smartervote.domain.algorithm.ElectionProposalAlgorithm;
+import ch.zhaw.smartervote.domain.algorithm.ProposalResultBuilder;
 import ch.zhaw.smartervote.domain.mapping.MapElection;
-import ch.zhaw.smartervote.domain.mapping.MapPolitician;
 import ch.zhaw.smartervote.domain.mapping.MapQuestion;
 import ch.zhaw.smartervote.domain.mapping.MapQuestionSubject;
 import ch.zhaw.smartervote.persistency.entities.Election;
+import ch.zhaw.smartervote.persistency.entities.Politician;
+import ch.zhaw.smartervote.persistency.entities.QuestionAnswer;
 import ch.zhaw.smartervote.persistency.entities.QuestionSubject;
 import ch.zhaw.smartervote.persistency.repositories.ElectionRepository;
 import ch.zhaw.smartervote.persistency.repositories.PoliticianRepository;
+import ch.zhaw.smartervote.persistency.repositories.QuestionAnswerRepository;
 import ch.zhaw.smartervote.persistency.repositories.QuestionSubjectRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Implementation for the election proposal service which provides functionality for the whole election proposal
@@ -53,15 +55,22 @@ public class ElectionProposalServiceImpl implements ElectionProposalService {
      */
     private final ElectionProposalAlgorithm electionProposalAlgorithm;
 
-    @Autowired
+    private final QuestionAnswerRepository questionAnswerRepository;
+
+    private final ProposalResultBuilder proposalResultBuilder;
+
     public ElectionProposalServiceImpl(ElectionRepository electionRepository,
                                        QuestionSubjectRepository questionSubjectRepository,
                                        ElectionProposalAlgorithm electionProposalAlgorithm,
-                                       PoliticianRepository politicianRepository) {
+                                       PoliticianRepository politicianRepository,
+                                       ProposalResultBuilder proposalResultBuilder,
+                                       QuestionAnswerRepository questionAnswerRepository) {
         this.electionRepository = electionRepository;
         this.questionSubjectRepository = questionSubjectRepository;
         this.electionProposalAlgorithm = electionProposalAlgorithm;
         this.politicianRepository = politicianRepository;
+        this.proposalResultBuilder = proposalResultBuilder;
+        this.questionAnswerRepository = questionAnswerRepository;
     }
 
     /**
@@ -112,8 +121,16 @@ public class ElectionProposalServiceImpl implements ElectionProposalService {
             throws DomainException {
         Optional<Election> electionOptional = electionRepository.findById(electionId);
         if (electionOptional.isEmpty()) throw new DomainException("Election does not exist");
-        List<PoliticianTO> politicians = MapPolitician.toTransferObjects(politicianRepository.findAll());
-        return electionProposalAlgorithm.calculate(politicians, questions);
+
+        Set<UUID> subjectIds = questions.keySet().stream().map(SubjectTO::getId).collect(Collectors.toSet());
+        List<Politician> politicians = politicianRepository.findPoliticianBySubject(subjectIds);
+
+        Map<Politician, Integer> matchingScores = new HashMap<>();
+        for (Politician politician : politicians) {
+            List<QuestionAnswer> questionAnswers = questionAnswerRepository.findQuestionAnswerByPolitician(politician);
+            matchingScores.put(politician, electionProposalAlgorithm.calculateResult(questionAnswers, questions));
+        }
+        return proposalResultBuilder.writeScores(matchingScores);
     }
 
 }

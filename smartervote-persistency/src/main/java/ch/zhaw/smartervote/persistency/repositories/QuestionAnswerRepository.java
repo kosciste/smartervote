@@ -1,9 +1,11 @@
 package ch.zhaw.smartervote.persistency.repositories;
 
+import ch.zhaw.smartervote.persistency.entities.Politician;
 import ch.zhaw.smartervote.persistency.entities.QuestionAnswer;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,5 +25,10 @@ public interface QuestionAnswerRepository extends SmarterVoteRepository<Question
      */
     @Query("SELECT qa FROM QuestionAnswer qa WHERE qa.politician.id = :politicianId AND qa.question.id = :questionId")
     Optional<QuestionAnswer> findPoliticianQuestion(@Param("politicianId") UUID politicianId, @Param("questionId") UUID questionId);
+
+    @Query("SELECT qa FROM QuestionAnswer qa, QuestionSubject qs, Question where qs.id = :questionSubjectId")
+    List<QuestionAnswer> findQuestionAnswers(@Param("questionSubjectId") UUID questionSubjectId);
+
+    List<QuestionAnswer> findQuestionAnswerByPolitician(Politician politician);
 
 }
