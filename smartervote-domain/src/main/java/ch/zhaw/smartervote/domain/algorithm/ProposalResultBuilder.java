@@ -7,17 +7,18 @@ import ch.zhaw.smartervote.persistency.entities.ProposalResultScore;
 import ch.zhaw.smartervote.persistency.repositories.PoliticianRepository;
 import ch.zhaw.smartervote.persistency.repositories.ProposalResultRepository;
 import ch.zhaw.smartervote.persistency.repositories.ProposalResultScoreRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.*;
 
 /**
  * The proposal result builder assembles the proposal result and writes it to the database.
  */
-@Component("proposalResultBuilder")
+
 public class ProposalResultBuilder {
 
+    /**
+     * The proposal result.
+     */
     private final ProposalResult proposalResult;
 
     /**
@@ -37,7 +38,6 @@ public class ProposalResultBuilder {
 
     Set<ProposalResultScore> proposalResultScores;
 
-    @Autowired
     public ProposalResultBuilder(ProposalResultRepository proposalResultRepository,
                                  PoliticianRepository politicianRepository,
                                  ProposalResultScoreRepository proposalResultScoreRepository) {
