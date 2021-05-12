@@ -36,13 +36,12 @@ public class MapPolitician {
      * @return the mapped transfer object
      */
     public static PoliticianTO toTransferObject(Politician entity, int match) {
-        PoliticianTO politician = new PoliticianTO(entity.getId(),
+        return new PoliticianTO(entity.getId(),
                 entity.getPicture(),
                 entity.getName(),
                 entity.getParty().getName(),
-                entity.getBirthyear());
-        politician.setMatch(match);
-        return politician;
+                entity.getBirthyear(),
+                match);
 
     }
 
