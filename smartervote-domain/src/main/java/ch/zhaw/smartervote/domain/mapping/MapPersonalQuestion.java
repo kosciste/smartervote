@@ -27,7 +27,7 @@ public class MapPersonalQuestion {
     public static PersonalQuestionTO toTransferObject(PersonalQuestion entity, boolean upvoted) {
         PersonalAnswerTO answer;
         if (entity.getPersonalQuestionAnswer() == null) {
-            answer = new PersonalAnswerTO("Not yet answered...");
+            answer = new PersonalAnswerTO(null);
         } else {
             answer = new PersonalAnswerTO(entity.getPersonalQuestionAnswer().getText());
         }

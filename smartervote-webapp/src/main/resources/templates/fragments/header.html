@@ -1,14 +1,10 @@
 <!DOCTYPE html>
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
 <body>
-<header th:fragment="name(title, subtitle)" class="header-inner">
-    <div class="container-fluid h-100 header-container-inner">
-        <div class="row h-100">
-            <div class="col-md-8 text-left">
-                <h1 th:text="${title}" class="font-header-title"></h1>
-                <p th:text="${subtitle}" class="under-title"></p>
-            </div>
-        </div>
+<header th:fragment="name(title, subtitle)">
+    <div class="container">
+        <h1 th:text="${title}"></h1>
+        <h2 th:text="${subtitle}"></h2>
     </div>
 </header>
 </body>
