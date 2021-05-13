@@ -109,7 +109,7 @@ public class ElectionProposalServiceImpl implements ElectionProposalService {
                 if (!electionId.equals(subjectOptional.get().getElection().getId()))
                     throw new DomainException("Question subject does not belong to the provided election id.");
                 questions.put(subject, MapQuestion.toTransferObjects(
-                        questionRepository.findQuestionByQuestionSubjectOrderByText(subjectOptional.get())));
+                        questionRepository.findQuestionByQuestionSubjectOrderById(subjectOptional.get())));
             }
         }
         return questions;

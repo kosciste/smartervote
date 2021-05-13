@@ -15,9 +15,9 @@ public interface QuestionRepository extends SmarterVoteRepository<Question> {
     /**
      * Returns a sorted list of {@link Question} for the given question subject.
      *
-     * @param subject subect for which to fetch the question
+     * @param subject subject for which to fetch the question
      * @return sorted list of {@link Question} entities
      */
-    List<Question> findQuestionByQuestionSubjectOrderByText(QuestionSubject subject);
+    List<Question> findQuestionByQuestionSubjectOrderById(QuestionSubject subject);
 
 }
