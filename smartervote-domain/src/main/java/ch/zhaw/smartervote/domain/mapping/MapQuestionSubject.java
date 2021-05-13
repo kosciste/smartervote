@@ -4,7 +4,7 @@ import ch.zhaw.smartervote.contract.SubjectWeight;
 import ch.zhaw.smartervote.contract.transferobject.SubjectTO;
 import ch.zhaw.smartervote.persistency.entities.QuestionSubject;
 
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -30,13 +30,13 @@ public class MapQuestionSubject {
     }
 
     /**
-     * Maps a set of question subject entities to a set of transfer objects.
+     * Maps a list of question subject entities to a list of transfer objects.
      *
-     * @param entities the set of question subject entities to be mapped
-     * @return the set of mapped transfer objects
+     * @param entities the list of question subject entities to be mapped
+     * @return the list of mapped transfer objects
      */
-    public static Set<SubjectTO> toTransferObjects(Set<QuestionSubject> entities) {
-        return entities.stream().map(MapQuestionSubject::toTransferObject).collect(Collectors.toSet());
+    public static List<SubjectTO> toTransferObjects(List<QuestionSubject> entities) {
+        return entities.stream().map(MapQuestionSubject::toTransferObject).collect(Collectors.toList());
     }
 
 }
