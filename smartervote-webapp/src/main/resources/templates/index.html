@@ -3,24 +3,12 @@
 <head th:replace="fragments/head :: head"></head>
 <body>
 <nav th:replace="fragments/navigation :: navigation"></nav>
-<header th:replace="fragments/header :: name('Vorauswahl', 'Wählen Sie die Wahlen aus, die Sie interessieren')"></header>
-<main>
-    <form th:object="${elections}" action="#" method="post">
-        <div class="container-fluid container-topic">
-            <div th:replace="fragments/alert :: alert"/>
-            <div class="row">
-                <div class="col-12">
-                    <div class="container-fluid container-topic-inner">
-                        <div th:each="election: ${elections}" class="row election-row grey-bg">
-                            <div class="col-12">
-                                <a th:href="@{election/{id}(id=${election.id})}" th:text="${election.name}" class="election"></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
+<header th:replace="fragments/header :: name('Vorauswahl', 'Wählen Sie die Wahlen aus, die Sie interessieren.')"></header>
+<main class="container">
+    <div th:replace="fragments/alert :: alert"/>
+    <div th:each="election: ${elections}" class="election-row">
+        <a th:href="@{election/{id}(id=${election.id})}" th:text="${election.name}"></a>
+    </div>
 </main>
 <footer th:replace="fragments/footer :: footer"></footer>
 </body>

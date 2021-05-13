@@ -11,6 +11,11 @@ import java.util.UUID;
 public class PoliticianTO {
 
     /**
+     * The matching score set if no matching score is passed in the constructor.
+     */
+    public static final int DEFAULT_MATCH = 0;
+
+    /**
      * The UUUID of the politician.
      */
     private final UUID id;
@@ -39,7 +44,16 @@ public class PoliticianTO {
      * How good the politicians answers match the answer of the user. The match represents a percentage value from 0 to
      * 100.
      */
-    private int match;
+    private final int match;
+
+    public PoliticianTO(UUID id, String imageUrl, String name, String party, int birthYear) {
+        this.id = id;
+        this.imageUrl = imageUrl;
+        this.name = name;
+        this.party = party;
+        this.birthYear = birthYear;
+        this.match = DEFAULT_MATCH;
+    }
 
     public PoliticianTO(UUID id, String imageUrl, String name, String party, int birthYear, int match) {
         this.id = id;
@@ -72,10 +86,6 @@ public class PoliticianTO {
 
     public int getMatch() {
         return match;
-    }
-
-    public void setMatch(int match) {
-        this.match = match;
     }
 
     /**

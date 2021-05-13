@@ -109,7 +109,7 @@ public class ElectionProposalController {
         electionProposalDTO.setSubjectVOS(Converter.convertToSubjectVO(subjectTOS));
 
         model.addAttribute("form", electionProposalDTO);
-        return "election";
+        return "question-subjects";
     }
 
     /**
@@ -167,7 +167,7 @@ public class ElectionProposalController {
         electionProposalDTO.getSubjectVOS().removeIf(subjectVO -> subjectVO.getQuestionVOS() == null);
 
         model.addAttribute("form", electionProposalDTO);
-        return "evaluate";
+        return "question-catalogue";
     }
 
     /**
