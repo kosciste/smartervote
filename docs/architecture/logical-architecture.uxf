@@ -2,7 +2,7 @@
 --
 bg=transparent</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>60</x><y>40</y><w>170</w><h>80</h></coordinates><panel_attributes>
 --
-bg=transparent</panel_attributes><additional_attributes></additional_attributes></element><element><id>Text</id><coordinates><x>70</x><y>70</y><w>110</w><h>30</h></coordinates><panel_attributes>Controllers
+bg=transparent</panel_attributes><additional_attributes></additional_attributes></element><element><id>Text</id><coordinates><x>70</x><y>70</y><w>110</w><h>30</h></coordinates><panel_attributes>Controller
 style=wordwrap</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>270</x><y>40</y><w>170</w><h>80</h></coordinates><panel_attributes>
 --
 bg=transparent</panel_attributes><additional_attributes></additional_attributes></element><element><id>Text</id><coordinates><x>280</x><y>70</y><w>110</w><h>30</h></coordinates><panel_attributes>Util
@@ -25,9 +25,6 @@ bg=transparent</panel_attributes><additional_attributes></additional_attributes>
 style=wordwrap</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>560</x><y>190</y><w>100</w><h>150</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;130;80;130;80;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>560</x><y>570</y><w>100</w><h>150</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;130;80;130;80;10;10;10</additional_attributes></element><element><id>UMLPackage</id><coordinates><x>60</x><y>150</y><w>170</w><h>80</h></coordinates><panel_attributes>
 --
 bg=transparent</panel_attributes><additional_attributes></additional_attributes></element><element><id>Text</id><coordinates><x>70</x><y>180</y><w>110</w><h>30</h></coordinates><panel_attributes>Dto
-style=wordwrap</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>270</x><y>150</y><w>170</w><h>80</h></coordinates><panel_attributes>
---
-bg=transparent</panel_attributes><additional_attributes></additional_attributes></element><element><id>Text</id><coordinates><x>280</x><y>180</y><w>110</w><h>30</h></coordinates><panel_attributes>Vo
 style=wordwrap</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>40</x><y>270</y><w>530</w><h>140</h></coordinates><panel_attributes>Contract
 --
 bg=transparent</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>60</x><y>310</y><w>170</w><h>80</h></coordinates><panel_attributes>
