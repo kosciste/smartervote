@@ -20,7 +20,7 @@ import java.util.UUID;
  *
  * @author Raphael Krebs
  */
-@Component("electionProposalAlgorithm")
+@Component
 public class ElectionProposalAlgorithm {
 
     /**
