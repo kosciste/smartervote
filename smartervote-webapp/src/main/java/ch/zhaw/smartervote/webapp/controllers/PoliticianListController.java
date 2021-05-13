@@ -67,7 +67,7 @@ public class PoliticianListController {
         model.addAttribute("defaultFilter", PoliticianService.DEFAULT_FILTER);
         addPaginiationAttributes(model, result);
 
-        return "proposal";
+        return "proposal-result";
     }
 
     /**
