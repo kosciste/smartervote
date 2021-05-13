@@ -1,6 +1,11 @@
-package ch.zhaw.smartervote.webapp.vo;
+package ch.zhaw.smartervote.webapp.dto;
 
-public class PersonalQuestionVO {
+/**
+ * Contains the text entered in the form to create a new personal question.
+ *
+ * @author Stefan Teodoropol
+ */
+public class PersonalQuestionDTO {
 
     /**
      * Question text.
