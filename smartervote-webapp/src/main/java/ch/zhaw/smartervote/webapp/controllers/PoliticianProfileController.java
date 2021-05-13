@@ -39,6 +39,11 @@ public class PoliticianProfileController {
     private static final String ERROR_MESSAGE_QUESTION_TOO_LONG = "error.question.too.long";
 
     /**
+     * Property key for the success message if the question was successfully added.
+     */
+    private static final String SUCCESS_MESSAGE_QUESTION_ADDED = "success.question.added";
+
+    /**
      * Politician profile service to fetch politicians profile.
      */
     private final PoliticianService politicianService;
@@ -100,10 +105,12 @@ public class PoliticianProfileController {
     public String addQuestion(@PathVariable("id") String id,
                               PersonalQuestionVO personalQuestionVO,
                               RedirectAttributes redirectAttributes) {
-        if ("".equals(personalQuestionVO.getText())) {
+        if (personalQuestionVO.getText() == null || "".equals(personalQuestionVO.getText())) {
             messageUtil.createErrorMessage(redirectAttributes, ERROR_MESSAGE_EMPTY_QUESTION);
+            return "redirect:/politician/" + id;
         } else if (personalQuestionVO.getText().length() > PersonalQuestionService.MAX_QUESTION_LENGTH) {
             messageUtil.createErrorMessage(redirectAttributes, ERROR_MESSAGE_QUESTION_TOO_LONG);
+            return "redirect:/politician/" + id;
         }
 
         try {
@@ -112,7 +119,7 @@ public class PoliticianProfileController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to add question", e);
         }
 
-        // TODO: write success message when add was successful
+        messageUtil.createSuccessMessage(redirectAttributes, SUCCESS_MESSAGE_QUESTION_ADDED);
 
         return "redirect:/politician/" + id;
     }
