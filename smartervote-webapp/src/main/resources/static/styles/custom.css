@@ -1,553 +1,297 @@
-/* @author: stefankoscica
-/* start custom media queries */
+/**
+ * Main stylesheet for the smarter vote website.
+ *
+ * @author Stefan Koscica
+ * @author Leo Rudin
+ */
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
+
 }
 
 /* Medium devices (tablets, 768px and up) */
-@media (min-width: 768px) { 
-  nav.navbar{
-    background-color: transparent;
-  }
-  #footer{
-    padding-top: 0% !important;
-    height: 300px !important;
-  }
-
-  #link{
-    font-size: 35px;
-  }
-  html{
-    font-size: 11px !important;
-  }
-
- }
-
-
-/* Large devices (desktops, 992px and up)*/
-@media (min-width: 992px) { 
-  a.nav-link{
-    visibility: visible !important;
-  }
-  .bar{
-    visibility: hidden !important;
-  }
-  #link{
-    font-size: 40px;
-  }
-  .btn-filter {
-      margin-left: 10px !important;
-      margin-bottom: 0px !important;
-  }
-  .switch-field.switch-filter{
-      margin-bottom: 36px !important;
-  }
+@media (min-width: 768px) {
+    nav #responsive-menu-symbol {
+        visibility: hidden;
+    }
+}
+@media (max-width: 768px) {
+    nav .smartervote-nav .nav {
+        display: none;
+    }
+    .switch-field {
+        margin-top: 10px;
+    }
 }
 
-/* Extra large devices (large desktops, 1200px and up)*/
-@media (min-width: 1200px) { 
-  html{
-    font-size: 13px !important;
-  }
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+
 }
 
-/* end custom medai queries */
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
 
-/* start general section */
-html{
-  font-size: 10px;
 }
 
-body{
-  font-family: 'Roboto', sans-serif;
-}
-
-main{
-  border: none !important;
-}
-
-h1,h2,h3,h4,h5{
-  font-family: 'Open Sans', sans-serif;
-}
-
-h2{
-  font-size: 2.0rem;
-  font-weight: 600;
-}
-
-h3{
-  font-size: 2rem !important;
-  font-weight: 600;
-}
-
-h5{
-  font-size: 1.5rem;
-}
-
-p{
-  font-size: 1.5rem;
-  font-weight: 300;
-  color: gray;
-}
-
-li{
-  font-size: 1.5rem;
-  font-weight: 300;
-  color: gray;
-}
-
-a{
-  font-size: 1.4rem; 
-}
-
-a.text-link{
-  color: black;
-  font-weight: 400;
-  display: inline-block;
-}
-
-a.text-link:hover{
-  text-decoration: none;
-  color: black;
-}
-
-a.text-link::after{
-  display: block !important;
-  content: '' !important;
-  transform: scale(1);
-  border-bottom: 3px solid #5aa8f3 !important;
-}
-
-a.text-link::after{
-  display:block;
-  content: '';
-  border-bottom: 3px solid #5aa8f3;
-  transform: scaleX(0);
-  transition: transform 250ms ease-in-out;
-}
-
-a.text-link:hover::after{
-  transform: scaleX(1);
-}
-
-a.text-link::after{
-  transform-origin: 0% 100%;
-}
-/* end general section */
-
-/*start naviagtion specific*/
-
-#menu-symbol{
-  position: absolute;
-  right: 30px;
-}
-
-a.nav-link{
-  padding: 7px 2vw;
-  margin-top: 3px;
-  display: inline-block;
-  visibility: hidden;
-  font-weight: 500;
-  font-size: 1.3rem;
-  color: white !important;
-}
-
-a.nav-link:hover{
-  color: white !important;
-  transition-duration: 250ms;
-}
-
-
-
-.brand{
-  color: white;
-  font-weight: 800;
-  font-size: 2.2rem;
-  margin-right: 15vw;
-}
-
-
-a.navbar-brand:hover{
- border-bottom: none !important;
-}
-
-.nav-container{
-  position: fixed; /* Set the navbar to fixed position */
-  top: 0; /* Position the navbar at the top of the page */
-  width: 100%; /* Full width */
-  z-index: 2;
-  height: 82px;
-  background-color: #5aa8f3;
-  color: white;
-  padding-left: 13%;
-  padding-top: 30px;
-  padding-right: 10%;
-}
-
- .overlay {  
-  height: 100%;
-  width: 0;
-  position: fixed; 
-  z-index: 100; 
-  left: 0;
-  top: 0;
-  background-color: #5aa8f3;
-  overflow-x: hidden; 
-  transition: 0.5s; 
-}
-
-.overlay-content {
-  position: relative;
-  top: 25%; 
-  width: 100%; 
-  text-align: center; 
-  margin-top: 30px; 
-}
-
-.overlay a {
-  font-weight: 700;
-  padding: 8px;
-  text-decoration: none;
-  font-size: 25px;
-  color: white;
-  display: block; 
-  transition: 0.3s; 
-}
-
-.overlay a:hover, .overlay a:focus {
-  color: white !important;
-}
-
-.overlay .closebtn {
-  position: absolute;
-  top: 20px;
-  right: 45px;
-  font-size: 60px;
-}
-
-.active-link{
-  text-decoration: underline !important;
-}
-
-.bar {
-  height: 3px;
-  background-color: #FFFFFF;
-  margin: 6px 0;
-  border-radius: 10% / 50%;
-  transition-duration: 200ms;
-}
-
-.bar1{
-  width: 35px;
-}
-
-.bar2{
-  width: 30px;
-}
-
-.bar3{
-  width: 25px;
-}
-
-.change-bar{
-  width: 35px;
- /*background-color: #c5b2a2;*/
-  transition-duration: 200ms;
-}
-
-/*end naviagtion specific*/
-
-/*start header specific*/
-
-header{
-  padding-top: 70px;
-}
-
-.header-container-inner{
-  padding: 10% 12%;
-  max-width: 2000px;
-}
-
-.header-inner{
-  height: 240px;
-}
-
-.header-container-start{
-  padding: 0% 12%;
-}
-
-.header-text{
-  padding: 20px;
-  color: whitesmoke;
-  margin-top: 100px;
-  height: 350px;
-  background-color: hsl(0, 0%, 11%);
-  /*background-color: #1c1c1c;*/
-}
-
-
-.font-header-title{
-  font-weight: 700;
-  font-size: 3.0rem;
-}
-
-.under-title{
-  color: gray;
-  font-size: 2.0rem;
-  font-weight: 400;
-}
-
-.font-header-title.start{
-  font-weight: 800;
-  font-size: 3.5rem;
-}
-
-.btn-start{
-  width: 180px;
-  height: 55px;
-  background-color: #c5b2a2;
-  border: none;
-  border-radius: 0%;
-  color: white;
-  font-size: 17px;
-  margin-top: 25px;
-}
-
-.btn-start:hover{
-  color: black !important;
-  background-color: white !important;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 3px 10px 0 rgba(0,0,0,0.19);
-  margin-top: 25px;
-}
-
-/*end header specific*/
-
-/*start footer specific*/
-#footer{
-  padding-top: 0% !important;
-  height: auto;
-}
-.footer-container{
-  color: black;
-  background-color: #f3f3f3;
-}
-
-.footer-container .row{
-  padding: 0% 12%;
-}
-
-.footer-container p, .footer-container a {
-  color: black;
-}
-
-.footer-container a:hover {
-  color: white;
-  text-decoration: none;
-}
-
-.copyright-container {
-  background-color: #5aa8f3;
-  color: white;
-}
-
-.copyright-container a{
-  color: white;
-}
-
-.copyright-container a:hover{
-  color: white;
-  text-decoration: none;
-}
-
-/*end footer specific*/
-
-/* start elections specific */
-.election-row{
-    padding: 10px 0px;
-    margin-bottom: 50px;
-}
-
-
-.election-row:hover{
-    background-color: #5aa8f3;
-    color: white !important;
-}
-
-a.election{
-    font-size: 1.6rem;
-    color: black;
-    font-weight: 500;
-}
-
-/* end elections specific */
-
-/* start topic specific */
-
-.topic-row{
-    padding: 10px 0px;
-    margin-bottom: 20px !important;
-}
-
-/* end topic specific */
-
-/* start questions specific */
+/* ---- start general styles ---- */
 .switch-field {
-  display: flex;
-  margin-bottom: 36px;
-  overflow: hidden;
+    display: flex;
+    margin-bottom: 36px;
+    overflow: hidden;
 }
-
 .switch-field input {
-  position: absolute !important;
-  clip: rect(0, 0, 0, 0);
-  height: 1px;
-  width: 1px;
-  border: 0;
-  overflow: hidden;
+    position: absolute !important;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    width: 1px;
+    border: 0;
+    overflow: hidden;
 }
-
 .switch-field label {
-  background-color: #e4e4e4;
-  color: rgba(0, 0, 0, 0.6);
-  font-size: 1.3rem;
-  line-height: 1;
-  text-align: center;
-  padding: 8px 16px;
-  margin-right: -1px;
-  /*border: 1px solid rgba(0, 0, 0, 0.2);
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);*/
-  transition: all 0.1s ease-in-out;
+    background-color: #e4e4e4;
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 1rem;
+    line-height: 1;
+    text-align: center;
+    padding: 8px 16px;
+    margin-right: -1px;
+    transition: all 0.1s ease-in-out;
 }
-
 .switch-field label:hover {
-  cursor: pointer;
+    cursor: pointer;
 }
-
 .switch-field input:checked + label {
-  background-color: #5aa8f3;
-  color: white;
-  box-shadow: none;
+    background-color: #5aa8f3;
+    color: white;
+    box-shadow: none;
 }
-
-.switch-field label:first-of-type {
-  /*border-radius: 4px 0 0 4px;*/
+.btn-send-holder {
+    margin-top: 50px;
 }
-
-.switch-field label:last-of-type {
-  /*border-radius: 0 4px 4px 0;*/
-}
-
-.question{
-  font-size: 1.5rem;
-}
-
-.questions-row{
-  padding: 10px 0px;
-}
-
-.container-topic{
-  min-height: 600px;
-  /*padding: 10% 12%;*/
-  padding: 8% 12%;
-  margin-top: 80px;
-  max-width: 2000px;
-
-}
-
-.grey-bg{
-  background-color: #f3f3f3;
-}
-
-.container-questions p{
-  color: black;
-}
-
-.container-questions h3{
-  margin-top: 10px;
-  font-size: 2.5rem;
-  font-weight: 600;
-}
-
-.container-send{
-  padding: 0% 12%;
-  margin-bottom: 70px;
-  max-width: 2000px;
-}
-
-.btn-send{
-  border: none;
-  border-radius: 0%;
-  width: 180px;
-  height: 55px;
-  background-color: #5aa8f3;
-  color: white;
-  font-size: 1.5rem;
-  margin-top: 0px;
-  float: right;
-}
-
-.btn-send:hover{
-  color: white !important;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 3px 10px 0 rgba(0,0,0,0.19);
-  margin-top: 0px;
-}
-
-/* end questions specific */
-
-/* start error specific */
-.error-title{
-    min-height: 150px !important;
-}
-/* end error specific */
-
-/* start politician profile specific */
-.profilePic{
-  width: 200px;
-	height: 200px;
-}
-/* end politician profile specific */
-
-/* start filtering specific */
-.custom-select{
-    width: 200px;
-}
-
-.filter-row{
-    padding-top: 20px;
-    margin-bottom: 100px;
-}
-
-.filter-property{
-    font-size: 1.5rem;
-    margin-top: 10px;
-}
-
-.age-field{
-    width: 50px;
-}
-
-.btn-filter{
+.btn-send {
     border: none;
-    border-radius: 0%;
-    width: 160px;
+    border-radius: 0;
+    width: 180px;
     height: 55px;
     background-color: #5aa8f3;
     color: white;
     font-size: 1.5rem;
-    margin-top: 30px;
-    margin-left: 0px !important;
-    margin-bottom: 10px;
-    float: left;
+    margin-top: 0;
 }
-
-.btn-filter:hover{
+.btn-send:hover {
     color: white !important;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 3px 10px 0 rgba(0,0,0,0.19);
+    margin-top: 0;
+}
+.btn-send-small {
+    font-size: 1rem;
+    width: 160px;
+    height: 40px;
+}
+
+/* ---- end general styles ---- */
+
+
+/* ---- start navigation styles ---- */
+.main-nav {
+    background-color: #5aa8f3;
+    padding: 30px 0 10px 0;
+}
+.main-nav .brand-text {
+    font-size: 2rem;
+    font-weight: 900;
+    color: white;
+}
+.main-nav .smartervote-nav {
+    padding-top: 10px;
+}
+.main-nav .smartervote-nav .nav .nav-item .nav-link {
+    color: white;
+    font-size: 1rem;
+    text-transform: uppercase;
+}
+.main-nav #responsive-menu-symbol {
+    cursor: pointer;
+    position: absolute;
+    right: 40px;
+    top: 38px;
+}
+.main-nav #responsive-menu-symbol .bar {
+    height: 3px;
+    background-color: white;
+    margin: 6px 0;
+    border-radius: 10% / 50%;
+    transition-duration: 200ms;
+}
+.main-nav #responsive-menu-symbol .bar.bar1 {
+    width: 35px;
+}
+.main-nav #responsive-menu-symbol .bar.bar2 {
+    width: 30px;
+}
+.main-nav #responsive-menu-symbol .bar.bar3 {
+    width: 25px;
+}
+.main-nav #responsive-menu-symbol .bar.change-bar {
+    width: 35px;
+    transition-duration: 200ms;
+}
+.main-nav #smartervote-overlay {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    background-color: #5aa8f3;
+    overflow-x: hidden;
+    transition: 0.5s;
+}
+.main-nav #smartervote-overlay .overlay-content {
+    position: relative;
+    top: 25%;
+    width: 100%;
+    text-align: center;
     margin-top: 30px;
 }
-
-.switch-field.switch-filter{
-    margin-bottom: 0px;
+.main-nav #smartervote-overlay .overlay-content a {
+    font-weight: 700;
+    padding: 8px;
+    text-decoration: none;
+    font-size: 25px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+}
+.main-nav #smartervote-overlay .overlay-content a:hover,
+.main-nav #smartervote-overlay .overlay-content a:focus {
+    color: white;
+}
+.main-nav #smartervote-overlay .close-btn {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+    color: white;
+    text-decoration: none;
+}
+.main-nav #smartervote-overlay .close-btn:hover {
+    color: white;
+    text-decoration: none;
 }
 
-/* end filtering specific */
+/* ---- end navigation styles ---- */
+
+
+/* ---- start header specific ---- */
+header {
+    padding: 100px 0;
+}
+header h1 {
+    font-weight: 700;
+}
+header h2 {
+    color: gray;
+    font-size: 1.5rem;
+}
+
+/* ---- end header specific ---- */
+
+
+/* ---- start content specific ---- */
+main {
+    min-height: 300px;
+}
+main a {
+    color: black;
+}
+main a:hover {
+    color: black;
+    text-decoration: underline;
+}
+
+/* election selection */
+main .election-row {
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    background-color: #f3f3f3;
+}
+main .election-row:hover {
+    background-color: #5aa8f3;
+}
+main .election-row a {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+/* question subject selection and question catalogue */
+main .question-catalogue-subject-title {
+    margin-top: 40px;
+}
+main .selection-box {
+    background-color: #f3f3f3;
+    margin-bottom: 10px;
+    padding: 10px 0;
+    box-sizing: border-box;
+}
+main .selection-box .selection-box-description {
+    font-size: 1.2rem;
+}
+
+/* politician profile */
+main .politician-profile-box {
+    background-color: #f3f3f3;
+    margin-bottom: 20px;
+}
+main .politician-profile-box img {
+    width: 300px;
+}
+main .politician-profile-box .col-md-8 h3 {
+    margin-bottom: 30px;
+}
+main .politician-profile-content-box {
+    padding: 10px 15px;
+}
+main .profile-box-text {
+    background-color: white;
+    padding: 10px;
+    margin-bottom: 30px;
+}
+
+/* politician list */
+main .politician-list-filter-form {
+    background-color: #f3f3f3;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+}
+main .politician-list-entry {
+    background-color: #f3f3f3;
+    margin: 20px 0;
+}
+main .politician-list-entry img {
+    width: 100px;
+}
+main .politician-profile-header {
+    margin-top: 30px;
+}
+main .politician-profile-open-article-link:hover {
+    text-decoration: none;
+}
+
+/* error page */
+main .error-page {
+    padding-top: 100px;
+}
+
+/* ---- end content specific ---- */
+
+
+/* ---- start footer specific ---- */
+footer {
+    background-color: #5aa8f3;
+    padding: 30px 0;
+    margin-top: 200px;
+}
+
+/* ---- end footer specific ---- */

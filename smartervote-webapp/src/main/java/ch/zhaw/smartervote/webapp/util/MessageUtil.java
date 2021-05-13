@@ -24,9 +24,14 @@ public class MessageUtil {
     private static final String ALERT_MESSAGE_ATTR_NAME = "message";
 
     /**
-     * Class name for the class that should is displaying the alert error messages.
+     * Class name for the class that is displaying the alert error messages.
      */
-    private static final String ALERT_CLASS_NAME = "alert-danger";
+    private static final String ALERT_CLASS_NAME_DANGER = "alert-danger";
+
+    /**
+     * Class name for the class that is displaying the alert success messages.
+     */
+    private static final String ALERT_CLASS_NAME_SUCCESS = "alert-success";
 
     /**
      * Environment used to access the spring environment and properties.
@@ -47,7 +52,20 @@ public class MessageUtil {
     public void createErrorMessage(RedirectAttributes redirectAttributes, String key) {
         String message = environment.getProperty(key, "Unknown property: " + key);
 
-        redirectAttributes.addFlashAttribute(ALERT_CLASS_ATTR_NAME, ALERT_CLASS_NAME);
+        redirectAttributes.addFlashAttribute(ALERT_CLASS_ATTR_NAME, ALERT_CLASS_NAME_DANGER);
+        redirectAttributes.addFlashAttribute(ALERT_MESSAGE_ATTR_NAME, message);
+    }
+
+    /**
+     * Adds a new success message that is flashed to the session using the given redirect attributes object.
+     *
+     * @param redirectAttributes redirect attributes used to flash the message
+     * @param key property id of the message
+     */
+    public void createSuccessMessage(RedirectAttributes redirectAttributes, String key) {
+        String message = environment.getProperty(key, "Unknown property: " + key);
+
+        redirectAttributes.addFlashAttribute(ALERT_CLASS_ATTR_NAME, ALERT_CLASS_NAME_SUCCESS);
         redirectAttributes.addFlashAttribute(ALERT_MESSAGE_ATTR_NAME, message);
     }
 

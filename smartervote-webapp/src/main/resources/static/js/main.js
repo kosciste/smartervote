@@ -1,31 +1,38 @@
-/* This JS-Script is responsible for the action of the navigation
-   @author: stefankoscica */
-
-//Open when someone clicks on the span element
+/**
+ * Open the navigation overlay.
+ */
 function openNav() {
-  document.getElementById("myNav").style.width = "100%";
+    document.getElementById("smartervote-overlay").style.width = "100%";
 }
 
-// Close when someone clicks on the "x" symbol inside the overlay
+/**
+ * Close the navigation overlay.
+ */
 function closeNav() {
-  document.getElementById("myNav").style.width = "0%";
+    document.getElementById("smartervote-overlay").style.width = "0%";
 }
 
-function changeNav(){
-  let bars = document.getElementById("menu-symbol").children;
-  for(let i=0; i <bars.length; i++){
-    if(bars[i].classList.contains("change-bar")){
-      bars[i].classList.remove("change-bar");
-    } else {
-      bars[i].classList.add("change-bar");
+/**
+ * Change the bars.
+ */
+function changeNav() {
+    let bars = document.getElementById("responsive-menu-symbol").children;
+    for (let i = 0; i < bars.length; i++) {
+        if (bars[i].classList.contains("change-bar")) {
+            bars[i].classList.remove("change-bar");
+        } else {
+            bars[i].classList.add("change-bar");
+        }
+
     }
-    
-  }
 }
 
-$(document).ready(function() {
+/**
+ * Event handlers for the upvote ajax request.
+ */
+$(document).ready(function () {
 
-    $(document).on("click", ".upvote", function() {
+    $(document).on("click", ".upvote", function () {
         let id = $(this).attr("id")
         let ref = $(this)
 
@@ -37,8 +44,7 @@ $(document).ready(function() {
             },
             success: function (data) {
                 ref.attr("disabled", true)
-                ref.html("Upvoted")
-                $(".upvotes-" + id).html("Upvotes: " + data)
+                $(".upvotes-" + id).html("Likes: " + data)
             },
             error: function () {
                 window.alert("Der Upvote hat leider nicht funktioniert!")
@@ -47,15 +53,3 @@ $(document).ready(function() {
     });
 
 });
-
-function askQuestion(){
-  alert('Trying to askQuestion');
-  $.ajax({
-    type: 'POST',
-    url:'/addQuestion',
-    data:'Static Test question.',
-    success: function(msg){
-        alert('Danke für Ihre Frage!');
-    }
-});
-}

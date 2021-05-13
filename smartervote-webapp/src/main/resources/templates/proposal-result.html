@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="de">
+<head th:replace="fragments/head :: head"></head>
+<body>
+<nav th:replace="fragments/navigation :: navigation"></nav>
+<header th:replace="fragments/header :: name('Wahlempfehlung', 'Folgend finden Sie Ihre Wahlempfehlungen')"></header>
+<main class="container">
+    <form th:action="@{/result/{id}/page/{page}(id=${id},page=1)}" th:object="${filter}" method="get">
+        <div class="politician-list-filter-form">
+            <div class="row">
+                <div class="col-md">
+                    <div class="form-group">
+                        <label for="gender">Geschlecht:</label>
+                        <select th:field="*{gender}" class="form-control" id="gender">
+                            <option th:text="'Keine Auswahl'" th:value="${defaultFilter}"></option>
+                            <option th:text="'Männlich'" th:value="'Male'"></option>
+                            <option th:text="'Weiblich'" th:value="'Female'"></option>
+                            <option th:text="'Andere'" th:value="'Other'"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="form-group">
+                        <label for="party">Partei:</label>
+                        <select th:field="*{party}" class="form-control" id="party">
+                            <option th:text="'Alle Parteien'" th:value="${defaultFilter}"></option>
+                            <option th:each="p : ${parties}" th:text="${p}" th:value="${p}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="form-group">
+                        <label for="age-from">Alter von:</label>
+                        <input type="text" class="form-control" th:field="*{ageFrom}" id="age-from">
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="form-group">
+                        <label for="age-to">Alter bis:</label>
+                        <input type="text" class="form-control" th:field="*{ageTo}" id="age-to">
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix">
+                <button type="submit" th:value="Filter" class="btn btn-send btn-send-small float-right">Filtern</button>
+            </div>
+        </div>
+    </form>
+
+    <div th:each="politician: ${politicians}" class="politician-list-entry">
+        <div class="row align-items-center">
+            <div class="col-md-2">
+                <img th:src="@{'~/images/politicians/' + ${politician.imageUrl}}" th:alt="${politician.name}">
+            </div>
+            <div class="col-md-3">
+                <a th:href="@{/politician/{id}(id=${politician.id})}" th:text="${politician.name}"></a>
+            </div>
+            <div class="col-md-3">
+                <span th:text="${politician.party} + ' | ' + ${politician.birthYear}"></span>
+            </div>
+            <div class="col-md-3">
+                <div class="progress">
+                    <div class="progress-bar"
+                         role="progressbar"
+                         th:style="'width:' + ${politician.match} + '%'"
+                         th:data-aria-valuenow="${politician.match}"
+                         aria-valuemin="0"
+                         aria-valuemax="100"></div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <span th:text="${politician.match} + ' %'"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert alert-info" th:if="${politicians.size() == 0}">
+        Es konnten keine Politiker mit ihren Filterkriterien gefunden werden.
+    </div>
+
+    <nav aria-label="Politician pagination" th:if="${politicians.size() != 0}">
+        <ul class="pagination">
+            <li th:class="'page-item' + (${prevLinkEnabled} ? '' : ' disabled')">
+                <a class="page-link" th:href="@{/result/{id}/page/{page}(id=${id},page=${prevPage},gender=${filter.gender},ageFrom=${filter.ageFrom},ageTo=${filter.ageTo},party=${filter.party})}">Previous</a>
+            </li>
+            <li th:each="i : ${#numbers.sequence(1,totalPages)}" th:class="'page-item' + (${i == currentPage} ? ' active' : '')">
+                <a class="page-link" th:text="${i}" th:href="@{/result/{id}/page/{page}(id=${id},page=${i},gender=${filter.gender},ageFrom=${filter.ageFrom},ageTo=${filter.ageTo},party=${filter.party})}"></a>
+            </li>
+            <li th:class="'page-item' + (${nextLinkEnabled} ? '' : ' disabled')">
+                <a class="page-link" th:href="@{/result/{id}/page/{page}(id=${id},page=${nextPage},gender=${filter.gender},ageFrom=${filter.ageFrom},ageTo=${filter.ageTo},party=${filter.party})}">Next</a>
+            </li>
+        </ul>
+    </nav>
+
+</main>
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>
