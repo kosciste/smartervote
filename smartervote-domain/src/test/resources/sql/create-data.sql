@@ -1,5 +1,12 @@
 -- please check 'create-database.sql' to see instructions how to setup the database
 
+-- test data for algorithm test
+
+insert into Election
+values ('004c25b6-0000-0000-0000-4b3fd10e9c00', 'Algotestwahlen', current_timestamp, current_timestamp);
+insert into QuestionSubject
+values ('00f718e8-29db-4274-8885-23a6c64e5d00', '004c25b6-0000-0000-0000-4b3fd10e9c00', 'Subject1',
+        current_timestamp, current_timestamp);
 -- questions
 insert into Election
 values ('bc4c25b6-f1ae-45bc-b7ae-4b3fd10e9c29', 'Nationalratswahlen', current_timestamp, current_timestamp);
