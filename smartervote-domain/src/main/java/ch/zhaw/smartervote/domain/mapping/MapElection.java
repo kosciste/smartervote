@@ -4,7 +4,6 @@ import ch.zhaw.smartervote.contract.transferobject.ElectionTO;
 import ch.zhaw.smartervote.persistency.entities.Election;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -25,13 +24,13 @@ public class MapElection {
     }
 
     /**
-     * Maps a list of election entities to a set of transfer objects.
+     * Maps a list of election entities to a list of transfer objects.
      *
      * @param entities the list of entities
-     * @return the set of election transfer objects
+     * @return the list of election transfer objects
      */
-    public static Set<ElectionTO> toTransferObjects(List<Election> entities) {
-        return entities.stream().map(MapElection::toTransferObject).collect(Collectors.toSet());
+    public static List<ElectionTO> toTransferObjects(List<Election> entities) {
+        return entities.stream().map(MapElection::toTransferObject).collect(Collectors.toList());
     }
 
 }

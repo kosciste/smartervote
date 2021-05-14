@@ -10,13 +10,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * This class calculates the election match for a politician based on the answered questions of the user.
  *
  * @author Raphael Krebs
  */
-@Component("electionProposalAlgorithm")
+@Component
 public class ElectionProposalAlgorithm {
 
     public static int NO_ANSWER = 2;
@@ -32,9 +33,9 @@ public class ElectionProposalAlgorithm {
     public int calculateResult(List<QuestionAnswer> politicianAnswers, Map<SubjectTO, Set<QuestionTO>> answeredQuestions) {
         double error = 0;
         double maxError = 0;
-        for (Map.Entry<SubjectTO, Set<QuestionTO>> entry : answeredQuestions.entrySet()) {
+        for (Map.Entry<SubjectTO, List<QuestionTO>> entry : questionSubjects.entrySet()) {
             SubjectTO subject = entry.getKey();
-            Set<QuestionTO> questions = entry.getValue();
+            List<QuestionTO> questions = entry.getValue();
             SubjectWeight weight = subject.getWeight();
             if (weight != SubjectWeight.NOT_INTERESTED) {
                 error += calculateError(politicianAnswers, questions) * weight.ordinal();
@@ -53,6 +54,7 @@ public class ElectionProposalAlgorithm {
      * @param questions the answered questions of the users.
      * @return the squared error for the politician.
      */
+    private double calculateError(PoliticianTO politician, List<QuestionTO> questions) {
     private double calculateError(List<QuestionAnswer> politician, Set<QuestionTO> questions) {
         double error = 0;
         for (QuestionTO question : questions) {

@@ -23,7 +23,7 @@ public class PersonalQuestionTO {
     /**
      * The upvotes this politician question received.
      */
-    private final int upvotes;
+    private final long upvotes;
 
     /**
      * Indicates if the user already upvoted the personal question.
@@ -35,7 +35,7 @@ public class PersonalQuestionTO {
      */
     private final PersonalAnswerTO answer;
 
-    public PersonalQuestionTO(UUID id, String text, int upvotes, boolean upvoted, PersonalAnswerTO answer) {
+    public PersonalQuestionTO(UUID id, String text, long upvotes, boolean upvoted, PersonalAnswerTO answer) {
         this.id = id;
         this.text = text;
         this.upvotes = upvotes;
@@ -51,7 +51,7 @@ public class PersonalQuestionTO {
         return text;
     }
 
-    public int getUpvotes() {
+    public long getUpvotes() {
         return upvotes;
     }
 

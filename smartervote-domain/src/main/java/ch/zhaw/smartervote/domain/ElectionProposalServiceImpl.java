@@ -16,6 +16,7 @@ import ch.zhaw.smartervote.persistency.entities.QuestionAnswer;
 import ch.zhaw.smartervote.persistency.entities.QuestionSubject;
 import ch.zhaw.smartervote.persistency.repositories.ElectionRepository;
 import ch.zhaw.smartervote.persistency.repositories.PoliticianRepository;
+import ch.zhaw.smartervote.persistency.repositories.QuestionRepository;
 import ch.zhaw.smartervote.persistency.repositories.QuestionAnswerRepository;
 import ch.zhaw.smartervote.persistency.repositories.QuestionSubjectRepository;
 import org.springframework.stereotype.Component;
@@ -31,7 +32,7 @@ import java.util.stream.Collectors;
  * @author Leo Rudin
  * @author Karin Birle
  */
-@Component("electionProposalService")
+@Component
 public class ElectionProposalServiceImpl implements ElectionProposalService {
 
     /**
@@ -58,57 +59,69 @@ public class ElectionProposalServiceImpl implements ElectionProposalService {
 
     private final ProposalResultWriter proposalResultWriter;
 
+    /**
+     * The question repository.
+     */
+    private final QuestionRepository questionRepository;
+
+    @Autowired
     public ElectionProposalServiceImpl(ElectionRepository electionRepository,
                                        QuestionSubjectRepository questionSubjectRepository,
                                        ElectionProposalAlgorithm electionProposalAlgorithm,
                                        PoliticianRepository politicianRepository,
                                        ProposalResultWriter proposalResultWriter,
                                        QuestionAnswerRepository questionAnswerRepository) {
+                                       PoliticianRepository politicianRepository,
+                                       QuestionRepository questionRepository) {
         this.electionRepository = electionRepository;
         this.questionSubjectRepository = questionSubjectRepository;
         this.electionProposalAlgorithm = electionProposalAlgorithm;
         this.politicianRepository = politicianRepository;
         this.proposalResultWriter = proposalResultWriter;
         this.questionAnswerRepository = questionAnswerRepository;
+        this.questionRepository = questionRepository;
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @return
      */
     @Override
-    public Set<ElectionTO> getAvailableElections() {
+    public List<ElectionTO> getAvailableElections() {
         return MapElection.toTransferObjects(electionRepository.findAll());
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @return
      */
     @Override
-    public Set<SubjectTO> getQuestionSubjects(UUID electionId) throws DomainException {
+    public List<SubjectTO> getQuestionSubjects(UUID electionId) throws DomainException {
         Optional<Election> electionOptional = electionRepository.findById(electionId);
         if (electionOptional.isEmpty()) throw new DomainException("Election does not exist.");
-        return MapQuestionSubject.toTransferObjects(electionOptional.get().getQuestionSubjects());
+        return MapQuestionSubject.toTransferObjects(
+                questionSubjectRepository.findQuestionSubjectByElectionOrderByName(electionOptional.get()));
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Map<SubjectTO, Set<QuestionTO>> getQuestionCatalogue(UUID electionId, Set<SubjectTO> selection)
+    public Map<SubjectTO, List<QuestionTO>> getQuestionCatalogue(UUID electionId, List<SubjectTO> selection)
             throws DomainException {
-        Map<SubjectTO, Set<QuestionTO>> questions = new HashMap<>();
+        Map<SubjectTO, List<QuestionTO>> questions = new HashMap<>();
         for (SubjectTO subject : selection) {
             if (subject.getWeight() != SubjectWeight.NOT_INTERESTED) {
                 Optional<QuestionSubject> subjectOptional = questionSubjectRepository.findById(subject.getId());
-
                 if (subjectOptional.isEmpty()) throw new DomainException("Provided question subject does not exist.");
                 if (!electionId.equals(subjectOptional.get().getElection().getId()))
                     throw new DomainException("Question subject does not belong to the provided election id.");
-
-                questions.put(subject, MapQuestion.toTransferObjects(subjectOptional.get().getQuestions()));
+                questions.put(subject, MapQuestion.toTransferObjects(
+                        questionRepository.findQuestionByQuestionSubjectOrderById(subjectOptional.get())));
             }
         }
-
         return questions;
     }
 
@@ -116,7 +129,7 @@ public class ElectionProposalServiceImpl implements ElectionProposalService {
      * {@inheritDoc}
      */
     @Override
-    public UUID calculateElectionProposal(UUID electionId, Map<SubjectTO, Set<QuestionTO>> questions)
+    public UUID calculateElectionProposal(UUID electionId, Map<SubjectTO, List<QuestionTO>> questions)
             throws DomainException {
         Optional<Election> electionOptional = electionRepository.findById(electionId);
         if (electionOptional.isEmpty()) throw new DomainException("Election does not exist");

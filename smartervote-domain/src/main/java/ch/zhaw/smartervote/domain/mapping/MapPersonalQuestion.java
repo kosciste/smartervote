@@ -32,7 +32,7 @@ public class MapPersonalQuestion {
             answer = new PersonalAnswerTO(entity.getPersonalQuestionAnswer().getText());
         }
 
-        return new PersonalQuestionTO(entity.getId(), entity.getText(), (int) entity.getUpvotes(), upvoted, answer);
+        return new PersonalQuestionTO(entity.getId(), entity.getText(), entity.getUpvotes(), upvoted, answer);
     }
 
     /**

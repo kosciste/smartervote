@@ -3,7 +3,7 @@ package ch.zhaw.smartervote.domain.mapping;
 import ch.zhaw.smartervote.contract.transferobject.QuestionTO;
 import ch.zhaw.smartervote.persistency.entities.Question;
 
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -24,13 +24,13 @@ public class MapQuestion {
     }
 
     /**
-     * Maps a single entity to transfer object.
+     * Maps a list of entities to a list of transfer objects.
      *
-     * @param entities a set of question entities
-     * @return the set of question transfer objects
+     * @param entities a list of question entities
+     * @return the list of question transfer objects
      */
-    public static Set<QuestionTO> toTransferObjects(Set<Question> entities) {
-        return entities.stream().map(MapQuestion::toTransferObject).collect(Collectors.toSet());
+    public static List<QuestionTO> toTransferObjects(List<Question> entities) {
+        return entities.stream().map(MapQuestion::toTransferObject).collect(Collectors.toList());
     }
 
 }

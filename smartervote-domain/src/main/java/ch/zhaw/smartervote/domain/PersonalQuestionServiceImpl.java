@@ -21,7 +21,7 @@ import java.util.UUID;
  *
  * @author Stefan Teodoropol
  */
-@Component("personalQuestionService")
+@Component
 public class PersonalQuestionServiceImpl implements PersonalQuestionService {
 
     /**

@@ -5,8 +5,8 @@ import ch.zhaw.smartervote.contract.transferobject.PoliticianFilterTO;
 import ch.zhaw.smartervote.contract.transferobject.QuestionTO;
 import ch.zhaw.smartervote.contract.transferobject.SubjectTO;
 
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -22,7 +22,7 @@ public interface ElectionProposalService {
      *
      * @return all available elections.
      */
-    Set<ElectionTO> getAvailableElections();
+    List<ElectionTO> getAvailableElections();
 
     /**
      * Returns all question subjects for a given election.
@@ -31,7 +31,7 @@ public interface ElectionProposalService {
      * @return All question subjects for the given election.
      * @throws DomainException if the election id does not exist.
      */
-    Set<SubjectTO> getQuestionSubjects(UUID electionId) throws DomainException;
+    List<SubjectTO> getQuestionSubjects(UUID electionId) throws DomainException;
 
     /**
      * Returns the question catalogue for a given election, where the topic of the selection does not equal 0.
@@ -42,7 +42,7 @@ public interface ElectionProposalService {
      * @return A map with all subject that where not wighted with 0, and their corresponding questions.
      * @throws DomainException if the election id does not exist.
      */
-    Map<SubjectTO, Set<QuestionTO>> getQuestionCatalogue(UUID electionId, Set<SubjectTO> selection)
+    Map<SubjectTO, List<QuestionTO>> getQuestionCatalogue(UUID electionId, List<SubjectTO> selection)
             throws DomainException;
 
     /**
@@ -55,7 +55,7 @@ public interface ElectionProposalService {
      * @return the UUID of the election proposal.
      * @throws DomainException if the election id does not exist.
      */
-    UUID calculateElectionProposal(UUID electionId, Map<SubjectTO, Set<QuestionTO>> questions)
+    UUID calculateElectionProposal(UUID electionId, Map<SubjectTO, List<QuestionTO>> questions)
             throws DomainException;
 
 }
