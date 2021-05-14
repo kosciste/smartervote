@@ -14,11 +14,8 @@ import ch.zhaw.smartervote.persistency.entities.Election;
 import ch.zhaw.smartervote.persistency.entities.Politician;
 import ch.zhaw.smartervote.persistency.entities.QuestionAnswer;
 import ch.zhaw.smartervote.persistency.entities.QuestionSubject;
-import ch.zhaw.smartervote.persistency.repositories.ElectionRepository;
-import ch.zhaw.smartervote.persistency.repositories.PoliticianRepository;
-import ch.zhaw.smartervote.persistency.repositories.QuestionRepository;
-import ch.zhaw.smartervote.persistency.repositories.QuestionAnswerRepository;
-import ch.zhaw.smartervote.persistency.repositories.QuestionSubjectRepository;
+import ch.zhaw.smartervote.persistency.repositories.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -55,8 +52,14 @@ public class ElectionProposalServiceImpl implements ElectionProposalService {
      */
     private final ElectionProposalAlgorithm electionProposalAlgorithm;
 
+    /**
+     * The question answer repository.
+     */
     private final QuestionAnswerRepository questionAnswerRepository;
 
+    /**
+     * The proposal result writer.
+     */
     private final ProposalResultWriter proposalResultWriter;
 
     /**
@@ -70,8 +73,7 @@ public class ElectionProposalServiceImpl implements ElectionProposalService {
                                        ElectionProposalAlgorithm electionProposalAlgorithm,
                                        PoliticianRepository politicianRepository,
                                        ProposalResultWriter proposalResultWriter,
-                                       QuestionAnswerRepository questionAnswerRepository) {
-                                       PoliticianRepository politicianRepository,
+                                       QuestionAnswerRepository questionAnswerRepository,
                                        QuestionRepository questionRepository) {
         this.electionRepository = electionRepository;
         this.questionSubjectRepository = questionSubjectRepository;
@@ -151,3 +153,4 @@ public class ElectionProposalServiceImpl implements ElectionProposalService {
     }
 
 }
+

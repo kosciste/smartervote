@@ -12,10 +12,10 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 /**
- * The proposal result builder assembles the proposal result and writes it to the database.
+ * The proposal result writer writes the proposal result to the database.
  */
 
-@Component("proposalResultBuilder")
+@Component
 public class ProposalResultWriter {
 
     /**

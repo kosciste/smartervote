@@ -9,8 +9,6 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
 
 /**
  * This class calculates the election match for a politician based on the answered questions of the user.
@@ -30,10 +28,10 @@ public class ElectionProposalAlgorithm {
      * @param answeredQuestions the answered questions and their weighted subjects.
      * @return the proposal result score for the politician.
      */
-    public int calculateResult(List<QuestionAnswer> politicianAnswers, Map<SubjectTO, Set<QuestionTO>> answeredQuestions) {
+    public int calculateResult(List<QuestionAnswer> politicianAnswers, Map<SubjectTO, List<QuestionTO>> answeredQuestions) {
         double error = 0;
         double maxError = 0;
-        for (Map.Entry<SubjectTO, List<QuestionTO>> entry : questionSubjects.entrySet()) {
+        for (Map.Entry<SubjectTO, List<QuestionTO>> entry : answeredQuestions.entrySet()) {
             SubjectTO subject = entry.getKey();
             List<QuestionTO> questions = entry.getValue();
             SubjectWeight weight = subject.getWeight();
@@ -54,8 +52,7 @@ public class ElectionProposalAlgorithm {
      * @param questions the answered questions of the users.
      * @return the squared error for the politician.
      */
-    private double calculateError(PoliticianTO politician, List<QuestionTO> questions) {
-    private double calculateError(List<QuestionAnswer> politician, Set<QuestionTO> questions) {
+    private double calculateError(List<QuestionAnswer> politician, List<QuestionTO> questions) {
         double error = 0;
         for (QuestionTO question : questions) {
             Optional<QuestionAnswer> politicianAnswerOptional = politician.stream()
