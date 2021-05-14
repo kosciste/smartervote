@@ -94,8 +94,9 @@ public class ElectionProposalAlgorithm {
      */
     private int getMaxError(int answer) {
         int maxError;
-        if (answer == 2 || answer == 3) maxError = 2;
-        else maxError = 3;
+        if (answer == 1 || answer == 3) maxError = 3;
+        else if (answer == 0 || answer == 4) maxError = 4;
+        else maxError = 2;
         return maxError;
     }
 
