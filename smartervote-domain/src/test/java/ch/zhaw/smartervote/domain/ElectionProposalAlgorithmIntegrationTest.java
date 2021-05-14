@@ -2,6 +2,7 @@ package ch.zhaw.smartervote.domain;
 
 import ch.zhaw.smartervote.contract.DomainException;
 import ch.zhaw.smartervote.contract.ElectionProposalService;
+import ch.zhaw.smartervote.contract.SubjectWeight;
 import ch.zhaw.smartervote.contract.transferobject.PoliticianTO;
 import ch.zhaw.smartervote.contract.transferobject.QuestionTO;
 import ch.zhaw.smartervote.contract.transferobject.SubjectTO;
@@ -11,7 +12,10 @@ import ch.zhaw.smartervote.domain.mapping.MapQuestionSubject;
 import ch.zhaw.smartervote.persistency.SpringJpaConfiguration;
 import ch.zhaw.smartervote.persistency.entities.ProposalResult;
 import ch.zhaw.smartervote.persistency.entities.ProposalResultScore;
-import ch.zhaw.smartervote.persistency.repositories.*;
+import ch.zhaw.smartervote.persistency.repositories.PoliticianRepository;
+import ch.zhaw.smartervote.persistency.repositories.ProposalResultRepository;
+import ch.zhaw.smartervote.persistency.repositories.QuestionRepository;
+import ch.zhaw.smartervote.persistency.repositories.QuestionSubjectRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,42 +34,85 @@ public class ElectionProposalAlgorithmIntegrationTest extends AbstractIntegratio
 
     private final UUID electionId = UUID.fromString("004c25b6-0000-0000-0000-4b3fd10e9c00");
 
+    /**
+     * The election proposal service.
+     */
     @Autowired
-    ElectionProposalService electionProposalService;
+    private ElectionProposalService electionProposalService;
 
+    /**
+     * The politician repository.
+     */
     @Autowired
-    PoliticianRepository politicianRepository;
+    private PoliticianRepository politicianRepository;
 
+    /**
+     * The question repository.
+     */
     @Autowired
-    QuestionRepository questionRepository;
+    private QuestionRepository questionRepository;
 
+    /**
+     * The question subject repository.
+     */
     @Autowired
-    QuestionSubjectRepository questionSubjectRepository;
+    private QuestionSubjectRepository questionSubjectRepository;
 
+    /**
+     * The proposal result repository.
+     */
     @Autowired
-    ProposalResultRepository proposalResultRepository;
+    private ProposalResultRepository proposalResultRepository;
 
-    @Autowired
-    ProposalResultScoreRepository proposalResultScoreRepository;
-
+    /**
+     * The politician Yes Hess is a yes sayer. All his answers have the maximum value (4).
+     */
     private PoliticianTO politicianYesHess;
 
+    /**
+     * The politician Klara Neinsager says no to everything. All her answers have the minimal value (0).
+     */
     private PoliticianTO politicianKlaraNeinsager;
 
+    /**
+     * The politician Faluer Hans is lazy, so he only answered two of the three questions. The two answered question
+     * have the minimal value (0).
+     */
     private PoliticianTO politicianFaulerHans;
 
+    /**
+     * The question 1 belonging to subject 1.
+     */
     private QuestionTO question1;
 
+    /**
+     * The question 2 belonging to subject 1.
+     */
     private QuestionTO question2;
 
+    /**
+     * The question 3 belonging to subject 2.
+     */
     private QuestionTO question3;
 
+    /**
+     * The subject 1, which contains the questions 1 and 2.
+     */
     private SubjectTO subject1;
 
+    /**
+     * The subject 2 which contains the question 3.
+     */
     private SubjectTO subject2;
 
+    /**
+     * A map with the subjects and the answered questions.
+     */
     private Map<SubjectTO, List<QuestionTO>> questionSubjects;
 
+    /**
+     * Sets up the test data before each test.
+     */
     @BeforeEach
     void setupTestData() {
         question1 = MapQuestion.toTransferObject(
@@ -95,7 +142,7 @@ public class ElectionProposalAlgorithmIntegrationTest extends AbstractIntegratio
     }
 
     /**
-     * Tests if a proposal result is written to the database.
+     * Tests if the proposal result is written to the database.
      */
     @Test
     void testProposalWrittenToDatabase() {
@@ -112,13 +159,38 @@ public class ElectionProposalAlgorithmIntegrationTest extends AbstractIntegratio
     }
 
     /**
-     * Tests if for each politician a valid proposal result was calculated and written to the databsase.
+     * Tests that a {@link DomainException} is thrown, when an invalid election id is passed.
+     */
+    @Test
+    void testInvalidElectionId() {
+        UUID invalidElectionId = UUID.fromString("8ae0f13d-1001-1001-1001-672e6ccc0edc");
+        assertThrows(DomainException.class,
+                () -> electionProposalService.calculateElectionProposal(invalidElectionId, questionSubjects));
+    }
+
+    /**
+     * Tests that a {@link DomainException} is thrown, when an invalid subject id is passed. To verify this, a subject
+     * with an invalid id is passed to the election proposal service.
+     */
+    @Test
+    void testInvalidSubject() {
+        SubjectTO invalidSubject =
+                new SubjectTO(UUID.fromString("8ae0f13d-1001-1001-1001-672e6ccc0edc"), "", SubjectWeight.NORMAL);
+        questionSubjects.remove(subject2);
+        questionSubjects.put(invalidSubject, Collections.singletonList(question3));
+        assertThrows(DomainException.class,
+                () -> electionProposalService.calculateElectionProposal(electionId, questionSubjects));
+    }
+
+    /**
+     * Tests if for each politician a valid proposal result was calculated. To verify this, we check if we have three
+     * result scores, and if each politician has a score associated to him/her.
      */
     @Test
     void testAllPoliticiansWrittenToDatabase() {
-        int expectedPoliticianCount = 3;
-        Set<ProposalResultScore> proposalResultScores = calculateElection(questionSubjects);
-        assertEquals(expectedPoliticianCount, proposalResultScores.size());
+        int expectedProposalResultCount = 3;
+        List<ProposalResultScore> proposalResultScores = calculateElection(questionSubjects);
+        assertEquals(expectedProposalResultCount, proposalResultScores.size());
         assertTrue(proposalResultScores.stream().anyMatch(p -> p.getPolitician().getId() == politicianYesHess.getId()));
         assertTrue(proposalResultScores.stream().anyMatch(p -> p.getPolitician().getId() == politicianKlaraNeinsager.getId()));
         assertTrue(proposalResultScores.stream().anyMatch(p -> p.getPolitician().getId() == politicianFaulerHans.getId()));
@@ -137,7 +209,7 @@ public class ElectionProposalAlgorithmIntegrationTest extends AbstractIntegratio
         int minAnswer = 0;
         int maxAnswer = 4;
         questionSubjects.forEach((key, value) -> value.forEach(q -> q.setAnswer(minAnswer)));
-        Set<ProposalResultScore> proposalResultScores = calculateElection(questionSubjects);
+        List<ProposalResultScore> proposalResultScores = calculateElection(questionSubjects);
         assertTrue(proposalResultScores.stream()
                 .allMatch(p -> p.getMatchingScore() >= minScore && p.getMatchingScore() <= maxScore));
         questionSubjects.forEach((key, value) -> value.forEach(q -> q.setAnswer(maxAnswer)));
@@ -148,57 +220,127 @@ public class ElectionProposalAlgorithmIntegrationTest extends AbstractIntegratio
 
 
     /**
-     * If a politician answers all answers the same as the user, the matching score must have the maximal value, which
+     * If a politician answers all questions the same as the user, the matching score must have the maximal value, which
      * is 100. In this test, all three user answers are set to 0. The matching score is then compared with the
      * politician Klara Neinsager, who has answered all three questions with 0 as well. We expect her matching score to
      * be 100.
      */
     @Test
     void testProposalCalculationMaxScore() {
-        int minAnswer = 0;
+        int bestAnswer = 0;
         int ExpectedKlaraNeinsagerScore = 100;
-        questionSubjects.forEach((key, value) -> value.forEach(q -> q.setAnswer(minAnswer)));
+        questionSubjects.forEach((key, value) -> value.forEach(q -> q.setAnswer(bestAnswer)));
         List<ProposalResultScore> proposalResultScores = new ArrayList<>(calculateElection(questionSubjects));
-        Optional<ProposalResultScore> resultKlaraNeinsager = proposalResultScores.stream()
-                .filter(s -> s.getPolitician().getId().equals(politicianKlaraNeinsager.getId())).findFirst();
-        assertTrue(resultKlaraNeinsager.isPresent());
-        assertEquals(ExpectedKlaraNeinsagerScore, resultKlaraNeinsager.get().getMatchingScore());
+        ProposalResultScore resultKlaraNeinsager = getPoliticianScore(proposalResultScores, politicianKlaraNeinsager);
+        assertEquals(ExpectedKlaraNeinsagerScore, resultKlaraNeinsager.getMatchingScore());
     }
 
     /**
      * If the politicians answers are as far away as possible from the users answers, the politician should get the
-     * worst possible matching score, which is 0. In this test, all three user answers are set to 0. The matching score
-     * is then compared with the politician Yes Hess, who has answered all three questions with 4 (The worst possible
-     * answers). We expect her matching score to be 0.
+     * worst possible matching score, which is 0.
+     * <p>
+     * In this test, all three user answers are set to 0. The matching score is then compared with the politician Yes
+     * Hess, who has answered all three questions with 4 (The worst possible answers). We expect her matching score to
+     * be 0.
      */
     @Test
     void testProposalCalculationMinScore() {
-        int minAnswer = 0;
+        int worstAnswer = 0;
         int ExpectedYesHessScore = 0;
-        questionSubjects.forEach((key, value) -> value.forEach(q -> q.setAnswer(minAnswer)));
+        questionSubjects.forEach((key, value) -> value.forEach(q -> q.setAnswer(worstAnswer)));
         List<ProposalResultScore> proposalResultScores = new ArrayList<>(calculateElection(questionSubjects));
-        Optional<ProposalResultScore> resultYesHess = proposalResultScores.stream()
-                .filter(s -> s.getPolitician().getId().equals(politicianYesHess.getId())).findFirst();
-        assertTrue(resultYesHess.isPresent());
-        assertEquals(ExpectedYesHessScore, resultYesHess.get().getMatchingScore());
+        ProposalResultScore resultYesHess = getPoliticianScore(proposalResultScores, politicianYesHess);
+        assertEquals(ExpectedYesHessScore, resultYesHess.getMatchingScore());
     }
 
+
+    /**
+     * If the answers of a user are closer to the answers of politician A than the ones of politician B, the matching
+     * score of politician A must be better than the matching score of politician B. In this test we use the politician
+     * Yes Hess, who answered all questions with 4, and Klara Neinsager, who answered all questions with 0. We answer
+     * both questions with 3, therefore we expect the score of Yes Hess to be higher than the score of Klara Neinsager.
+     */
     @Test
-    void testInvalidElectionId() {
+    void testClosestAnswersResultInHighestScore() {
+        questionSubjects.remove(subject2);
+        questionSubjects.get(subject1).forEach(a -> a.setAnswer(3));
+        List<ProposalResultScore> proposalResultScores = new ArrayList<>(calculateElection(questionSubjects));
+        ProposalResultScore betterMatch = getPoliticianScore(proposalResultScores, politicianYesHess);
+        ProposalResultScore worseMatch = getPoliticianScore(proposalResultScores, politicianKlaraNeinsager);
+        assertTrue(betterMatch.getMatchingScore() > worseMatch.getMatchingScore());
 
     }
 
+    /**
+     * If a subject is excluded by the user, it the questions of this subject should not be considered in the matching
+     * score. To test if this is the case, we calculate the scores once with the subject2 marked as "not interested" and
+     * once without the subject2. We expect that the score for the politicians is the same in both calculations.
+     */
     @Test
-    void testRightVoterPoliticianRecommendation() {
-
+    void testExcludedSubjectDontInfluenceScore() {
+        questionSubjects.get(subject1).forEach(a -> a.setAnswer(3));
+        question3.setAnswer(1);
+        subject1.setWeight(SubjectWeight.NORMAL);
+        subject2.setWeight(SubjectWeight.NOT_INTERESTED);
+        List<ProposalResultScore> resultWithExcludedSubject = calculateElection(questionSubjects);
+        questionSubjects.remove(subject2);
+        List<ProposalResultScore> resultWithoutSubject = calculateElection(questionSubjects);
+        assertEquals(getPoliticianScore(resultWithoutSubject, politicianYesHess).getMatchingScore(),
+                getPoliticianScore(resultWithExcludedSubject, politicianYesHess).getMatchingScore());
+        assertEquals(getPoliticianScore(resultWithoutSubject, politicianKlaraNeinsager).getMatchingScore(),
+                getPoliticianScore(resultWithExcludedSubject, politicianKlaraNeinsager).getMatchingScore());
+        assertEquals(getPoliticianScore(resultWithoutSubject, politicianFaulerHans).getMatchingScore(),
+                getPoliticianScore(resultWithExcludedSubject, politicianFaulerHans).getMatchingScore());
     }
 
+    /**
+     * If a politician does not answer a question which the user answered, the score must be influenced negatively. To
+     * verify this, we compare the answers of the politician Klara Neinsager with the ones of Fauler Hans. Fauler Hans
+     * was lazy and did not answer one of the questions. For the other two questions he gave the same answers as Klara
+     * Neinsager. Therefore we expect the matching score of Hans to be worse than the one of Klara.
+     */
     @Test
-    void testLeftVoterPoliticianRecommendation() {
-
+    void testUnansweredQuestionByPoliticianResultsInWorseScore() {
+        questionSubjects.get(subject1).forEach(a -> a.setAnswer(2));
+        question3.setAnswer(2);
+        subject1.setWeight(SubjectWeight.NORMAL);
+        subject2.setWeight(SubjectWeight.NORMAL);
+        List<ProposalResultScore> proposalResultScores = calculateElection(questionSubjects);
+        assertTrue(getPoliticianScore(proposalResultScores, politicianFaulerHans).getMatchingScore() <
+                getPoliticianScore(proposalResultScores, politicianKlaraNeinsager).getMatchingScore());
     }
 
-    private Set<ProposalResultScore> calculateElection(Map<SubjectTO, List<QuestionTO>> questionSubjects) {
+    /**
+     * If a subject is weighted higher than another subject, its answers must be weighed higher. To verify this, we pass
+     * two subjects with one question each to the algorithm. The questions are answered in a way, that would result in
+     * the same score for the politician Klara Neinsager and Yes Hess, if both subjects are weighted equally. By
+     * weighting the subject containing the question closer to Klaras answer higher than the other, the matching score
+     * of Klara should be higher of the score of Yes Hess.
+     */
+    @Test
+    void testSubjectWeightInfluencesScore() {
+        question1.setAnswer(3); // subject 1
+        question3.setAnswer(1); // subject 2
+        questionSubjects.get(subject1).remove(question2);
+        subject1.setWeight(SubjectWeight.NORMAL);
+        subject2.setWeight(SubjectWeight.NORMAL);
+        List<ProposalResultScore> proposalResultScores = calculateElection(questionSubjects);
+        assertEquals(getPoliticianScore(proposalResultScores, politicianYesHess).getMatchingScore(),
+                getPoliticianScore(proposalResultScores, politicianKlaraNeinsager).getMatchingScore());
+
+        subject2.setWeight(SubjectWeight.IMPORTANT);
+        proposalResultScores = calculateElection(questionSubjects);
+        assertTrue(getPoliticianScore(proposalResultScores, politicianYesHess).getMatchingScore() <
+                getPoliticianScore(proposalResultScores, politicianKlaraNeinsager).getMatchingScore());
+    }
+
+    /**
+     * Calculates an election.
+     *
+     * @param questionSubjects the question subjects.
+     * @return the election proposal result.
+     */
+    private List<ProposalResultScore> calculateElection(Map<SubjectTO, List<QuestionTO>> questionSubjects) {
         UUID proposalId = null;
         try {
             proposalId = electionProposalService.calculateElectionProposal(electionId, questionSubjects);
@@ -207,7 +349,21 @@ public class ElectionProposalAlgorithmIntegrationTest extends AbstractIntegratio
         }
         Optional<ProposalResult> proposalResultOptional = proposalResultRepository.findById(proposalId);
         assertTrue(proposalResultOptional.isPresent());
-        return proposalResultOptional.get().getProposalResultScores();
+        return new ArrayList<>(proposalResultOptional.get().getProposalResultScores());
+    }
+
+    /**
+     * Finds a politicians proposal result score.
+     *
+     * @param proposalResultScores the proposal result scores.
+     * @param politician the politician to be found.
+     * @return the politicians proposal result score.
+     */
+    private ProposalResultScore getPoliticianScore(List<ProposalResultScore> proposalResultScores, PoliticianTO politician) {
+        Optional<ProposalResultScore> politicianScore = proposalResultScores.stream()
+                .filter(s -> s.getPolitician().getId().equals(politician.getId())).findFirst();
+        assertTrue(politicianScore.isPresent());
+        return politicianScore.get();
     }
 
 }
