@@ -1,12 +1,11 @@
 package ch.zhaw.smartervote.persistency.repositories;
 
-import ch.zhaw.smartervote.persistency.entities.Politician;
 import ch.zhaw.smartervote.persistency.entities.QuestionAnswer;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -17,18 +16,17 @@ import java.util.UUID;
 public interface QuestionAnswerRepository extends SmarterVoteRepository<QuestionAnswer> {
 
     /**
-     * Finds a politician question that matches a politician id and a question id.
+     * Finds politician question of a politician for a set of subjects.
      *
      * @param politicianId the id of the politician.
-     * @param questionId the id of the question.
-     * @return an optional containing the matching answer.
+     * @param subjectIds the ids of the subjects.
+     * @return a list of all matching questions.
      */
-    @Query("SELECT qa FROM QuestionAnswer qa WHERE qa.politician.id = :politicianId AND qa.question.id = :questionId")
-    Optional<QuestionAnswer> findPoliticianQuestion(@Param("politicianId") UUID politicianId, @Param("questionId") UUID questionId);
-
-    @Query("SELECT qa FROM QuestionAnswer qa, QuestionSubject qs, Question where qs.id = :questionSubjectId")
-    List<QuestionAnswer> findQuestionAnswers(@Param("questionSubjectId") UUID questionSubjectId);
-
-    List<QuestionAnswer> findQuestionAnswerByPolitician(Politician politician);
+    @Query("SELECT qa FROM QuestionSubject qs " +
+            "LEFT JOIN Question q on qs.id = q.questionSubject " +
+            "LEFT JOIN QuestionAnswer qa on q.id = qa.question " +
+            "WHERE qa.politician.id = :politicianId AND qs.id in :subjectIds")
+    List<QuestionAnswer> findPoliticianQuestion(@Param("politicianId") UUID politicianId,
+                                                @Param("subjectIds") Set<UUID> subjectIds);
 
 }

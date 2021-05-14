@@ -47,7 +47,7 @@ public interface ElectionProposalService {
 
     /**
      * Returns the UUID of the calculated election proposal for the answers of the user. The UUID can be used to get the
-     * politician match by passing it to {@link PoliticianService#getPoliticians(int, int, UUID)} or {@link
+     * politician match by passing it to {@link PoliticianService#getPoliticianData(UUID, String)} or {@link
      * PoliticianService#filterPoliticians(int, int, PoliticianFilterTO, UUID)}
      *
      * @param electionId the UUID of the election.

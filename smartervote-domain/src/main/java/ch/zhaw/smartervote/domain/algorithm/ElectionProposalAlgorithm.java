@@ -12,21 +12,22 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * This class calculates the election match of each politician based on the answered questions of the user. This is a
- * prototype implementation of the algorithm. The full algorithm will be implemented in the beta release.
+ * This class calculates the election match for a politician based on the answered questions of the user.
  *
  * @author Raphael Krebs
  */
 @Component("electionProposalAlgorithm")
 public class ElectionProposalAlgorithm {
 
+    public static int NO_ANSWER = 2;
+
     /**
-     * Calculates the results to be filled into tha database. In case an question was not answered by the politician,
-     * the maximal possible error is calculated for that answer.
+     * Calculates matching score based on the answers of a politician and the answers of the user. In case an question
+     * was not answered by the politician, the maximal possible error is calculated for that answer.
      *
-     * @param politicianAnswers the politician.
+     * @param politicianAnswers the politicians answers.
      * @param answeredQuestions the answered questions and their weighted subjects.
-     * @return the proposal result scores for each politician.
+     * @return the proposal result score for the politician.
      */
     public int calculateResult(List<QuestionAnswer> politicianAnswers, Map<SubjectTO, Set<QuestionTO>> answeredQuestions) {
         double error = 0;
@@ -37,7 +38,7 @@ public class ElectionProposalAlgorithm {
             SubjectWeight weight = subject.getWeight();
             if (weight != SubjectWeight.NOT_INTERESTED) {
                 error += calculateError(politicianAnswers, questions) * weight.ordinal();
-                maxError += questions.stream()
+                maxError += questions.stream().filter(q -> q.getAnswer() != NO_ANSWER)
                         .map(question -> getTotalMaxError(subject, question))
                         .reduce(0, Integer::sum);
             }
@@ -64,7 +65,7 @@ public class ElectionProposalAlgorithm {
                 error += Math.pow(getMaxError(question.getAnswer()), 2);
             } else {
                 int politicianAnswer = politicianAnswerOptional.get().getAnswer();
-                if (politicianAnswer != QuestionAnswerMatcher.NO_ANSWER) {
+                if (question.getAnswer() != NO_ANSWER) {
                     error += Math.pow(question.getAnswer() - politicianAnswer, 2);
                 }
             }
@@ -83,9 +84,15 @@ public class ElectionProposalAlgorithm {
         int answer = question.getAnswer();
         int weight = subject.getWeight().ordinal();
         int maxError = getMaxError(answer);
-        return (int) Math.pow(maxError * weight, 2);
+        return (int) Math.pow(maxError, 2) * weight;
     }
 
+    /**
+     * Calculates the maximal possible deviation from an answer.
+     *
+     * @param answer the answer value
+     * @return the maximal possible deviation from the answer
+     */
     private int getMaxError(int answer) {
         int maxError;
         if (answer == 2 || answer == 3) maxError = 2;

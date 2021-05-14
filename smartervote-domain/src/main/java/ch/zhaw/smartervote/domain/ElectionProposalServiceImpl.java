@@ -7,7 +7,6 @@ import ch.zhaw.smartervote.contract.transferobject.ElectionTO;
 import ch.zhaw.smartervote.contract.transferobject.QuestionTO;
 import ch.zhaw.smartervote.contract.transferobject.SubjectTO;
 import ch.zhaw.smartervote.domain.algorithm.ElectionProposalAlgorithm;
-import ch.zhaw.smartervote.domain.algorithm.ProposalResultBuilder;
 import ch.zhaw.smartervote.domain.mapping.MapElection;
 import ch.zhaw.smartervote.domain.mapping.MapQuestion;
 import ch.zhaw.smartervote.domain.mapping.MapQuestionSubject;
@@ -57,19 +56,19 @@ public class ElectionProposalServiceImpl implements ElectionProposalService {
 
     private final QuestionAnswerRepository questionAnswerRepository;
 
-    private final ProposalResultBuilder proposalResultBuilder;
+    private final ProposalResultWriter proposalResultWriter;
 
     public ElectionProposalServiceImpl(ElectionRepository electionRepository,
                                        QuestionSubjectRepository questionSubjectRepository,
                                        ElectionProposalAlgorithm electionProposalAlgorithm,
                                        PoliticianRepository politicianRepository,
-                                       ProposalResultBuilder proposalResultBuilder,
+                                       ProposalResultWriter proposalResultWriter,
                                        QuestionAnswerRepository questionAnswerRepository) {
         this.electionRepository = electionRepository;
         this.questionSubjectRepository = questionSubjectRepository;
         this.electionProposalAlgorithm = electionProposalAlgorithm;
         this.politicianRepository = politicianRepository;
-        this.proposalResultBuilder = proposalResultBuilder;
+        this.proposalResultWriter = proposalResultWriter;
         this.questionAnswerRepository = questionAnswerRepository;
     }
 
@@ -123,14 +122,19 @@ public class ElectionProposalServiceImpl implements ElectionProposalService {
         if (electionOptional.isEmpty()) throw new DomainException("Election does not exist");
 
         Set<UUID> subjectIds = questions.keySet().stream().map(SubjectTO::getId).collect(Collectors.toSet());
+        for (UUID subjectId : subjectIds) {
+            if (questionSubjectRepository.findById(subjectId).isEmpty()) {
+                throw new DomainException("Subject id " + subjectId + " does not exist.");
+            }
+        }
         List<Politician> politicians = politicianRepository.findPoliticianBySubject(subjectIds);
-
         Map<Politician, Integer> matchingScores = new HashMap<>();
         for (Politician politician : politicians) {
-            List<QuestionAnswer> questionAnswers = questionAnswerRepository.findQuestionAnswerByPolitician(politician);
+            List<QuestionAnswer> questionAnswers =
+                    questionAnswerRepository.findPoliticianQuestion(politician.getId(), subjectIds);
             matchingScores.put(politician, electionProposalAlgorithm.calculateResult(questionAnswers, questions));
         }
-        return proposalResultBuilder.writeScores(matchingScores);
+        return proposalResultWriter.writeScores(matchingScores);
     }
 
 }

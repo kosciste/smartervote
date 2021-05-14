@@ -1,4 +1,4 @@
-package ch.zhaw.smartervote.domain.algorithm;
+package ch.zhaw.smartervote.domain;
 
 import ch.zhaw.smartervote.persistency.entities.Politician;
 import ch.zhaw.smartervote.persistency.entities.ProposalResult;
@@ -16,7 +16,7 @@ import java.util.*;
  */
 
 @Component("proposalResultBuilder")
-public class ProposalResultBuilder {
+public class ProposalResultWriter {
 
     /**
      * The repository for politicians.
@@ -34,9 +34,9 @@ public class ProposalResultBuilder {
     private final ProposalResultScoreRepository proposalResultScoreRepository;
 
     @Autowired
-    public ProposalResultBuilder(ProposalResultRepository proposalResultRepository,
-                                 PoliticianRepository politicianRepository,
-                                 ProposalResultScoreRepository proposalResultScoreRepository) {
+    public ProposalResultWriter(ProposalResultRepository proposalResultRepository,
+                                PoliticianRepository politicianRepository,
+                                ProposalResultScoreRepository proposalResultScoreRepository) {
         this.politicianRepository = politicianRepository;
         this.proposalResultRepository = proposalResultRepository;
         this.proposalResultScoreRepository = proposalResultScoreRepository;
@@ -44,10 +44,10 @@ public class ProposalResultBuilder {
     }
 
     /**
-     * Adds the matching score for a politician to the proposal result.
+     * Writes the matching scores for all politicians to the database.
      *
-     * @param politician the politician for which the score is added.
-     * @param matchingScore the score of the politician.
+     * @param politicianMatches the politicians and their matching score.
+     * @return the UUID of the created proposal result.
      */
     public UUID writeScores(Map<Politician, Integer> politicianMatches) {
         ProposalResult proposalResult = new ProposalResult();

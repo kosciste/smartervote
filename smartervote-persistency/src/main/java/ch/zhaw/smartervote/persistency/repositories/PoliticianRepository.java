@@ -16,6 +16,12 @@ import java.util.UUID;
  */
 public interface PoliticianRepository extends SmarterVoteRepository<Politician>, JpaSpecificationExecutor<Politician> {
 
+    /**
+     * Finds all politicians that answered at least one question in a set of subjects.
+     *
+     * @param questionSubjects the question subject id's.
+     * @return all politician that answered at least one question in the given subjects.
+     */
     @Query(value = "SELECT DISTINCT p FROM QuestionSubject qs LEFT JOIN Question q on qs.id = q.questionSubject " +
             "LEFT JOIN QuestionAnswer qa on q.id = qa.question " +
             "LEFT JOIN Politician p on qa.politician = p.id " +
