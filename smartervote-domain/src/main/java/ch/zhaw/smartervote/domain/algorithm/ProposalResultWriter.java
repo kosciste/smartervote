@@ -1,4 +1,4 @@
-package ch.zhaw.smartervote.domain;
+package ch.zhaw.smartervote.domain.algorithm;
 
 import ch.zhaw.smartervote.persistency.entities.Politician;
 import ch.zhaw.smartervote.persistency.entities.ProposalResult;
@@ -12,9 +12,10 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 /**
- * The proposal result writer writes the proposal result to the database.
+ * Writes the proposal result to the database.
+ *
+ * @author Raphael Krebs
  */
-
 @Component
 public class ProposalResultWriter {
 

@@ -7,6 +7,7 @@ import ch.zhaw.smartervote.contract.transferobject.ElectionTO;
 import ch.zhaw.smartervote.contract.transferobject.QuestionTO;
 import ch.zhaw.smartervote.contract.transferobject.SubjectTO;
 import ch.zhaw.smartervote.domain.algorithm.ElectionProposalAlgorithm;
+import ch.zhaw.smartervote.domain.algorithm.ProposalResultWriter;
 import ch.zhaw.smartervote.domain.mapping.MapElection;
 import ch.zhaw.smartervote.domain.mapping.MapQuestion;
 import ch.zhaw.smartervote.domain.mapping.MapQuestionSubject;
