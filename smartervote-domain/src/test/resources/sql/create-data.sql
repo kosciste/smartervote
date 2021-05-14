@@ -1,12 +1,5 @@
 -- please check 'create-database.sql' to see instructions how to setup the database
 
--- test data for algorithm test
-
-insert into Election
-values ('004c25b6-0000-0000-0000-4b3fd10e9c00', 'Algotestwahlen', current_timestamp, current_timestamp);
-insert into QuestionSubject
-values ('00f718e8-29db-4274-8885-23a6c64e5d00', '004c25b6-0000-0000-0000-4b3fd10e9c00', 'Subject1',
-        current_timestamp, current_timestamp);
 -- questions
 insert into Election
 values ('bc4c25b6-f1ae-45bc-b7ae-4b3fd10e9c29', 'Nationalratswahlen', current_timestamp, current_timestamp);
@@ -9541,3 +9534,58 @@ values ('c60d0fbe-5bc1-4255-bd76-9e24a33f4f2a', 'eaa9530f-bb8c-453f-b634-c859903
 insert into QuestionAnswer
 values ('a4e4eb69-42ac-4018-9916-b59536b79867', 'bdc5f279-42bf-491c-b87a-409b3c7bff89',
         'c5648fcd-d80d-48ab-b9a5-4db2a64f4a5a', 1, current_timestamp, current_timestamp);
+
+-- test data for algorithm test
+insert into Election
+values ('004c25b6-0000-0000-0000-4b3fd10e9c00', 'Algotestwahlen', current_timestamp, current_timestamp);
+insert into QuestionSubject
+values ('00f718e8-29db-4274-8885-23a6c64e5d00', '004c25b6-0000-0000-0000-4b3fd10e9c00', 'Subject1',
+        current_timestamp, current_timestamp);
+insert into QuestionSubject
+values ('10f718e8-29db-4274-8885-23a6c64e5d00', '004c25b6-0000-0000-0000-4b3fd10e9c00', 'Subject2',
+        current_timestamp, current_timestamp);
+insert into Question
+values ('a335650d-06b4-4e92-ba77-d5f8964cebaa', '00f718e8-29db-4274-8885-23a6c64e5d00',
+        'Question 1', current_timestamp, current_timestamp);
+insert into Question
+values ('b335650d-06b4-4e92-ba77-d5f8964cebaa', '00f718e8-29db-4274-8885-23a6c64e5d00',
+        'Question 2', current_timestamp, current_timestamp);
+insert into Question
+values ('c335650d-06b4-4e92-ba77-d5f8964cebaa', '10f718e8-29db-4274-8885-23a6c64e5d00',
+        'Question 3', current_timestamp, current_timestamp);
+-- politician 1
+insert into Politician
+values ('ab1d763b-ca76-4ac5-81ef-a98d4f34eabc', '78d47363-fb09-4041-9d2a-0e637b272b51', 'Yes Hess', 1990,
+        'Female', 'Metzgerin', '1.jpg', current_timestamp, current_timestamp);
+insert into QuestionAnswer
+values ('1d5abc16-1edd-4139-a876-3c25e9e77fb0', 'a335650d-06b4-4e92-ba77-d5f8964cebaa',
+        'ab1d763b-ca76-4ac5-81ef-a98d4f34eabc', 4, current_timestamp, current_timestamp);
+insert into QuestionAnswer
+values ('2d5abc16-1edd-4139-a876-3c25e9e77fb0', 'b335650d-06b4-4e92-ba77-d5f8964cebaa',
+        'ab1d763b-ca76-4ac5-81ef-a98d4f34eabc', 4, current_timestamp, current_timestamp);
+insert into QuestionAnswer
+values ('3d5abc16-1edd-4139-a876-3c25e9e77fb0', 'c335650d-06b4-4e92-ba77-d5f8964cebaa',
+        'ab1d763b-ca76-4ac5-81ef-a98d4f34eabc', 4, current_timestamp, current_timestamp);
+-- politician 2
+insert into Politician
+values ('bb1d763b-ca76-4ac5-81ef-a98d4f34eabc', '78d47363-fb09-4041-9d2a-0e637b272b51', 'Klara Neinsager', 1991,
+        'Female', 'Metzgerin', '1.jpg', current_timestamp, current_timestamp);
+insert into QuestionAnswer
+values ('4d5abc16-1edd-4139-a876-3c25e9e77fb0', 'a335650d-06b4-4e92-ba77-d5f8964cebaa',
+        'bb1d763b-ca76-4ac5-81ef-a98d4f34eabc', 0, current_timestamp, current_timestamp);
+insert into QuestionAnswer
+values ('5d5abc16-1edd-4139-a876-3c25e9e77fb0', 'b335650d-06b4-4e92-ba77-d5f8964cebaa',
+        'bb1d763b-ca76-4ac5-81ef-a98d4f34eabc', 0, current_timestamp, current_timestamp);
+insert into QuestionAnswer
+values ('6d5abc16-1edd-4139-a876-3c25e9e77fb0', 'c335650d-06b4-4e92-ba77-d5f8964cebaa',
+        'bb1d763b-ca76-4ac5-81ef-a98d4f34eabc', 0, current_timestamp, current_timestamp);
+-- politician 3
+insert into Politician
+values ('cb1d763b-ca76-4ac5-81ef-a98d4f34eabc', '78d47363-fb09-4041-9d2a-0e637b272b51', 'Fauler Hans', 1992,
+        'Female', 'Metzgerin', '1.jpg', current_timestamp, current_timestamp);
+insert into QuestionAnswer
+values ('8d5abc16-1edd-4139-a876-3c25e9e77fb0', 'a335650d-06b4-4e92-ba77-d5f8964cebaa',
+        'cb1d763b-ca76-4ac5-81ef-a98d4f34eabc', 1, current_timestamp, current_timestamp);
+insert into QuestionAnswer
+values ('9d5abc16-1edd-4139-a876-3c25e9e77fb0', 'b335650d-06b4-4e92-ba77-d5f8964cebaa',
+        'cb1d763b-ca76-4ac5-81ef-a98d4f34eabc', 2, current_timestamp, current_timestamp);
