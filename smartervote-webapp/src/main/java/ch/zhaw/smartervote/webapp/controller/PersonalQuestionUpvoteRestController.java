@@ -1,4 +1,4 @@
-package ch.zhaw.smartervote.webapp.controllers;
+package ch.zhaw.smartervote.webapp.controller;
 
 import ch.zhaw.smartervote.contract.DomainException;
 import ch.zhaw.smartervote.contract.PersonalQuestionService;

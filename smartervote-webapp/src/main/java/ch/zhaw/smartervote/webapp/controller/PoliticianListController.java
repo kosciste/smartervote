@@ -1,11 +1,11 @@
-package ch.zhaw.smartervote.webapp.controllers;
+package ch.zhaw.smartervote.webapp.controller;
 
 import ch.zhaw.smartervote.contract.DomainException;
 import ch.zhaw.smartervote.contract.PoliticianList;
 import ch.zhaw.smartervote.contract.PoliticianService;
 import ch.zhaw.smartervote.contract.transferobject.PoliticianFilterTO;
-import ch.zhaw.smartervote.webapp.vo.Converter;
-import ch.zhaw.smartervote.webapp.vo.PoliticianFilterVO;
+import ch.zhaw.smartervote.webapp.dto.Converter;
+import ch.zhaw.smartervote.webapp.dto.PoliticianFilterDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -50,7 +50,7 @@ public class PoliticianListController {
     @GetMapping("/result/{id}/page/{page}")
     public String showResult(@PathVariable("id") String id,
                              @PathVariable("page") String page,
-                             @ModelAttribute PoliticianFilterVO politicianFilterVO,
+                             @ModelAttribute PoliticianFilterDTO politicianFilterVO,
                              Model model) {
         PoliticianList result;
         try {
