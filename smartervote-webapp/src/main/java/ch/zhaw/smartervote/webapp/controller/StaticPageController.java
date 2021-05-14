@@ -1,4 +1,4 @@
-package ch.zhaw.smartervote.webapp.controllers;
+package ch.zhaw.smartervote.webapp.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

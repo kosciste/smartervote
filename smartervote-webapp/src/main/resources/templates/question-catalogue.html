@@ -7,27 +7,27 @@
 <main class="container">
     <div th:replace="fragments/alert :: alert"/>
     <form th:action="@{/save-questions}" action="#" th:object="${form}" method="post">
-        <div th:each="subject, itemStat : *{subjectVOS}">
+        <div th:each="subject, itemStat : *{questionSubjectDTOS}">
             <h3 th:text="${subject.name}" class="question-catalogue-subject-title"></h3>
-            <div th:each="question, qStat: *{subjectVOS[__${itemStat.index}__].questionVOS}" class="row selection-box">
+            <div th:each="question, qStat: *{questionSubjectDTOS[__${itemStat.index}__].questionDTOS}" class="row selection-box">
                 <div class="col-md-6">
                     <span th:text="${question.text}"></span>
                 </div>
                 <div class="col-md-6 clearfix">
                     <div class="switch-field float-right">
-                        <input type="radio" th:field="*{subjectVOS[__${itemStat.index}__].questionVOS[__${qStat.index}__].answer}"
+                        <input type="radio" th:field="*{questionSubjectDTOS[__${itemStat.index}__].questionDTOS[__${qStat.index}__].answer}"
                                th:id="'radio-one-'+${question.id}" th:name="'radio-one-'+${question.id}" value="0"/>
                         <label th:for="'radio-one-'+${question.id}">Nein</label>
-                        <input type="radio" th:field="*{subjectVOS[__${itemStat.index}__].questionVOS[__${qStat.index}__].answer}"
+                        <input type="radio" th:field="*{questionSubjectDTOS[__${itemStat.index}__].questionDTOS[__${qStat.index}__].answer}"
                                th:id="'radio-two-'+${question.id}" th:name="'radio-two-'+${question.id}"  value="1"/>
                         <label th:for="'radio-two-'+${question.id}">Eher Nein</label>
-                        <input type="radio" th:field="*{subjectVOS[__${itemStat.index}__].questionVOS[__${qStat.index}__].answer}"
+                        <input type="radio" th:field="*{questionSubjectDTOS[__${itemStat.index}__].questionDTOS[__${qStat.index}__].answer}"
                                th:id="'radio-three-'+${question.id}" th:name="'radio-three-'+${question.id}"  value="2"/>
                         <label th:for="'radio-three-'+${question.id}">Enthalten</label>
-                        <input type="radio" th:field="*{subjectVOS[__${itemStat.index}__].questionVOS[__${qStat.index}__].answer}"
+                        <input type="radio" th:field="*{questionSubjectDTOS[__${itemStat.index}__].questionDTOS[__${qStat.index}__].answer}"
                                th:id="'radio-four-'+${question.id}" th:name="'radio-four-'+${question.id}"  value="3"/>
                         <label th:for="'radio-four-'+${question.id}">Eher ja</label>
-                        <input type="radio" th:field="*{subjectVOS[__${itemStat.index}__].questionVOS[__${qStat.index}__].answer}"
+                        <input type="radio" th:field="*{questionSubjectDTOS[__${itemStat.index}__].questionDTOS[__${qStat.index}__].answer}"
                                th:id="'radio-five-'+${question.id}" th:name="'radio-five-'+${question.id}"  value="4"/>
                         <label th:for="'radio-five-'+${question.id}">Ja</label>
                     </div>
