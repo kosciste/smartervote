@@ -27,6 +27,23 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * <p>
+ * These integration tests verify the election proposal of the smarter vote algorithm. The election proposal is
+ * calculated by calling the {@link ElectionProposalService#calculateElectionProposal(UUID, Map)} method.
+ * </p><p>
+ * For this integration test, a separate election, "Algotestwahlen", with its own questions and politicians is used.
+ * There are two subjects in this election. "Subject 1" contains the questions "Queston 1" and "Question 2", and
+ * "Subject 2" contains the "Question 3".
+ * </p>
+ * The three politicians for the tests are setup as follows:
+ * <ul>
+ *     <li>Yes Hess: Answered all three questions with Yes (4)</li>
+ *     <li>Klara Neinsager: Answered all three questions with no (0)</li>
+ *     <li>Fauler Hans: Only answered question 1 and 2. Both where answered with no (0)</li>
+ *     <li>Max Mix: Gave a different answer for each question (Question 1: 1, Question 2: 2, Question 3: 3)</li>
+ * </ul>
+ */
 @DataJpaTest
 @ContextConfiguration(classes = {TestApplication.class, SpringJpaConfiguration.class})
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -81,6 +98,11 @@ public class ElectionProposalAlgorithmIntegrationTest extends AbstractIntegratio
     private PoliticianTO politicianFaulerHans;
 
     /**
+     * The politician Max Mix gave a mixed answer. (Question 1: 1, Question 2: 2, Question 3: 3)
+     */
+    private PoliticianTO politicianMaxMix;
+
+    /**
      * The question 1 belonging to subject 1.
      */
     private QuestionTO question1;
@@ -127,6 +149,8 @@ public class ElectionProposalAlgorithmIntegrationTest extends AbstractIntegratio
                 politicianRepository.findById(UUID.fromString("bb1d763b-ca76-4ac5-81ef-a98d4f34eabc")).get());
         politicianFaulerHans = MapPolitician.toTransferObject(
                 politicianRepository.findById(UUID.fromString("cb1d763b-ca76-4ac5-81ef-a98d4f34eabc")).get());
+        politicianMaxMix = MapPolitician.toTransferObject(
+                politicianRepository.findById(UUID.fromString("db1d763b-ca76-4ac5-81ef-a98d4f34eabc")).get());
         subject1 = MapQuestionSubject.toTransferObject(
                 questionSubjectRepository.findById(UUID.fromString("00f718e8-29db-4274-8885-23a6c64e5d00")).get());
         subject2 = MapQuestionSubject.toTransferObject(
@@ -188,12 +212,13 @@ public class ElectionProposalAlgorithmIntegrationTest extends AbstractIntegratio
      */
     @Test
     void testAllPoliticiansWrittenToDatabase() {
-        int expectedProposalResultCount = 3;
+        int expectedProposalResultCount = 4;
         List<ProposalResultScore> proposalResultScores = calculateElection(questionSubjects);
         assertEquals(expectedProposalResultCount, proposalResultScores.size());
         assertTrue(proposalResultScores.stream().anyMatch(p -> p.getPolitician().getId() == politicianYesHess.getId()));
         assertTrue(proposalResultScores.stream().anyMatch(p -> p.getPolitician().getId() == politicianKlaraNeinsager.getId()));
         assertTrue(proposalResultScores.stream().anyMatch(p -> p.getPolitician().getId() == politicianFaulerHans.getId()));
+        assertTrue(proposalResultScores.stream().anyMatch(p -> p.getPolitician().getId() == politicianMaxMix.getId()));
 
     }
 
@@ -332,6 +357,39 @@ public class ElectionProposalAlgorithmIntegrationTest extends AbstractIntegratio
         proposalResultScores = calculateElection(questionSubjects);
         assertTrue(getPoliticianScore(proposalResultScores, politicianYesHess).getMatchingScore() <
                 getPoliticianScore(proposalResultScores, politicianKlaraNeinsager).getMatchingScore());
+    }
+
+    /**
+     * <p>
+     * In this test, we verify that the election proposal result has the intended value.<br> Our answers to the
+     * questions are as follows: Question 1: 3, Question 2: 2, Question 3: 0<br> Max Mix answered the questions like
+     * this: Question 1: 1, Question 2: 2, Question 3: 3<br><br>
+     * </p>
+     * <b>Calculation of expected result</b><br>
+     * The algorithm must take the squared difference of the user and politician answers:<br> Answer 1: (3 - 1)^2 =
+     * 4<br> Answer 2: User answered with 2 (Enthalten), so this question is ignored --> 0<br> Answer 3: (0 - 3)^2 =
+     * 9<br><br> Next the weight for each question is applied, then all numbers are added together. The subject of
+     * questions 1 and 2 has the weight normal (2), and the subject of question 3 has the weight important (3).<br> 4 *
+     * 2 + 0 * 2 + 9 * 3 = 35 <br><br> To calculate the score, the worst possible politician answer for each of the user
+     * answers is calculated. The formula for this is (user answer - worst possible answer)^2 * subject weight.<br>
+     * Answer 1: The user answer was 3, so the worst possible politician answer would be 0: (3-0)^2 * 2 = 18 <br> Answer
+     * 2: Question answered with "Enthalten" (2) by the user, so this question is ignored. --> 0<br> Answer 3: (4-0)^2 *
+     * 3 = 48 (User answer: 0, Worst answer: 4)<br><br> The sum of the worst possible answers is the worst possible
+     * error score that can be archived by a politician: 18 + 0 + 48 = 66 <br> To get a relative error in percentage we
+     * use the following formula: (100 / maxError) * error : (100 / 66) * 35 = 53.03 <br> From the error percentage we
+     * can get the matching percentage with abs(errorPercentage - 100) : 46.97 <br> Finally we round to the next
+     * integer, to get the final matching score. We expect the matching score for the politician Max Mix to be 47.
+     */
+    @Test
+    void testCorrectCalculation() {
+        int expectedScore = 47;
+        question1.setAnswer(3);
+        question2.setAnswer(2);
+        question3.setAnswer(0);
+        subject1.setWeight(SubjectWeight.NORMAL);
+        subject2.setWeight(SubjectWeight.IMPORTANT);
+        List<ProposalResultScore> proposalResultScores = calculateElection(questionSubjects);
+        assertEquals(expectedScore, getPoliticianScore(proposalResultScores, politicianMaxMix).getMatchingScore());
     }
 
     /**
