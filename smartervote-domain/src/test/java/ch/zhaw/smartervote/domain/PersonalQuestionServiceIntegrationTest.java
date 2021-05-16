@@ -427,8 +427,7 @@ public class PersonalQuestionServiceIntegrationTest extends AbstractIntegrationT
 
         // null question UUID
         Exception exception = assertThrows(DomainException.class, () -> {
-            UUID qId = null;
-            personalQuestionService.upvoteQuestion(qId, ip);
+            personalQuestionService.upvoteQuestion(null, ip);
             commitAndCreateNewTransaction(); // required for the checks below
         });    
     
