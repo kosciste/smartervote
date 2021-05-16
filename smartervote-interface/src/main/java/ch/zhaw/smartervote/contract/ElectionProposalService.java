@@ -21,10 +21,10 @@ public interface ElectionProposalService {
      * Error messages for the implementations to use.
      */
     public String INVALID_INPUT = "Invalid input.";
-    public String ELECTION_DOES_NOT_EXIST = "Election does not exist.";
-    public String SUBJECT_ID_DOES_NOT_EXIST = "Subject id does not exist.";
-    public String PROVIDED_QUESTION_SUBJECT_DOES_NOT_EXIST = "Provided question subject does not exist.";
-    public String QUESTION_SUBJECT_DOES_NOT_BELONG_TO_THE_PROVIDED_ELECTION_ID = "Question subject does not belong to the provided election id.";
+    public String ELECTION_NOT_FOUND = "Election not found.";
+    public String SUBJECT_NOT_FOUND = "Subject not found.";
+    public String QUESTION_SUBJECT_NOT_FOUND = "Question subject not found.";
+    public String QUESTION_SUBJECT_ELECTION_MISMATCH = "Question subject does not match the provided election id.";
 
     /**
      * Returns all available elections, for which questions exist.

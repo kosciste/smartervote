@@ -104,7 +104,7 @@ public class ElectionProposalServiceImpl implements ElectionProposalService {
     public List<SubjectTO> getQuestionSubjects(UUID electionId) throws DomainException {
         if (electionId == null) throw new DomainException(ElectionProposalService.INVALID_INPUT);
         Optional<Election> electionOptional = electionRepository.findById(electionId);
-        if (electionOptional.isEmpty()) throw new DomainException(ElectionProposalService.ELECTION_DOES_NOT_EXIST);
+        if (electionOptional.isEmpty()) throw new DomainException(ElectionProposalService.ELECTION_NOT_FOUND);
         return MapQuestionSubject.toTransferObjects(
                 questionSubjectRepository.findQuestionSubjectByElectionOrderByName(electionOptional.get()));
     }
@@ -120,9 +120,9 @@ public class ElectionProposalServiceImpl implements ElectionProposalService {
         for (SubjectTO subject : selection) {
             if (subject.getWeight() != SubjectWeight.NOT_INTERESTED) {
                 Optional<QuestionSubject> subjectOptional = questionSubjectRepository.findById(subject.getId());
-                if (subjectOptional.isEmpty()) throw new DomainException(ElectionProposalService.PROVIDED_QUESTION_SUBJECT_DOES_NOT_EXIST);
+                if (subjectOptional.isEmpty()) throw new DomainException(ElectionProposalService.QUESTION_SUBJECT_NOT_FOUND);
                 if (!electionId.equals(subjectOptional.get().getElection().getId()))
-                    throw new DomainException(ElectionProposalService.QUESTION_SUBJECT_DOES_NOT_BELONG_TO_THE_PROVIDED_ELECTION_ID);
+                    throw new DomainException(ElectionProposalService.QUESTION_SUBJECT_ELECTION_MISMATCH);
                 questions.put(subject, MapQuestion.toTransferObjects(
                         questionRepository.findQuestionByQuestionSubjectOrderById(subjectOptional.get())));
             }
@@ -138,12 +138,12 @@ public class ElectionProposalServiceImpl implements ElectionProposalService {
             throws DomainException {
         if (electionId == null || questions == null) throw new DomainException(ElectionProposalService.INVALID_INPUT);
         Optional<Election> electionOptional = electionRepository.findById(electionId);
-        if (electionOptional.isEmpty()) throw new DomainException(ELECTION_DOES_NOT_EXIST);
+        if (electionOptional.isEmpty()) throw new DomainException(ELECTION_NOT_FOUND);
 
         Set<UUID> subjectIds = questions.keySet().stream().map(SubjectTO::getId).collect(Collectors.toSet());
         for (UUID subjectId : subjectIds) {
             if (questionSubjectRepository.findById(subjectId).isEmpty()) {
-                throw new DomainException(ElectionProposalService.SUBJECT_ID_DOES_NOT_EXIST + " ("+subjectId+")");
+                throw new DomainException(ElectionProposalService.SUBJECT_NOT_FOUND + " ("+subjectId+")");
             }
         }
         List<Politician> politicians = politicianRepository.findPoliticianBySubject(subjectIds);

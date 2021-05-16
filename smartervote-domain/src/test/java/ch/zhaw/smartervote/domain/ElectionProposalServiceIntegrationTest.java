@@ -63,7 +63,7 @@ class ElectionProposalServiceIntegrationTest extends AbstractIntegrationTest {
             electionProposalService.getQuestionSubjects(INVALID_ELECTION_ID);
         });
 
-        assertEquals(ElectionProposalService.ELECTION_DOES_NOT_EXIST, ex.getMessage());
+        assertEquals(ElectionProposalService.ELECTION_NOT_FOUND, ex.getMessage());
     }
 
     @Test
@@ -92,7 +92,7 @@ class ElectionProposalServiceIntegrationTest extends AbstractIntegrationTest {
             electionProposalService.getQuestionCatalogue(INVALID_ELECTION_ID, Collections.singletonList(createValidTestSubject()));
         });
 
-        assertEquals(ElectionProposalService.QUESTION_SUBJECT_DOES_NOT_BELONG_TO_THE_PROVIDED_ELECTION_ID, ex.getMessage());
+        assertEquals(ElectionProposalService.QUESTION_SUBJECT_ELECTION_MISMATCH, ex.getMessage());
     }
 
     @Test
@@ -124,7 +124,7 @@ class ElectionProposalServiceIntegrationTest extends AbstractIntegrationTest {
             electionProposalService.getQuestionCatalogue(VALID_ELECTION_ID, Collections.singletonList(invalidSubject));
         });
 
-        assertEquals(ElectionProposalService.PROVIDED_QUESTION_SUBJECT_DOES_NOT_EXIST, ex.getMessage());
+        assertEquals(ElectionProposalService.QUESTION_SUBJECT_NOT_FOUND, ex.getMessage());
     }
 
     private SubjectTO createValidTestSubject() {
