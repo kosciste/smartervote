@@ -44,7 +44,7 @@ class ElectionProposalServiceIntegrationTest extends AbstractIntegrationTest {
     private ElectionProposalService electionProposalService;
 
     @Test
-    void testGetAvailableSelections() {
+    void testGetAvailableElections() {
         List<ElectionTO> result = electionProposalService.getAvailableElections();
         assertEquals(2, result.size());
         assertTrue(result.stream().anyMatch(r -> r.getId().equals(VALID_ELECTION_ID)));
@@ -63,7 +63,16 @@ class ElectionProposalServiceIntegrationTest extends AbstractIntegrationTest {
             electionProposalService.getQuestionSubjects(INVALID_ELECTION_ID);
         });
 
-        assertEquals("Election does not exist.", ex.getMessage());
+        assertEquals(ElectionProposalService.ELECTION_DOES_NOT_EXIST, ex.getMessage());
+    }
+
+    @Test
+    void testGetQuestionSubjectsWithNullParameter() {
+        DomainException ex = assertThrows(DomainException.class, () -> {
+            electionProposalService.getQuestionSubjects(null);
+        });
+
+        assertEquals(ElectionProposalService.INVALID_INPUT, ex.getMessage());
     }
 
     @Test
@@ -83,7 +92,25 @@ class ElectionProposalServiceIntegrationTest extends AbstractIntegrationTest {
             electionProposalService.getQuestionCatalogue(INVALID_ELECTION_ID, Collections.singletonList(createValidTestSubject()));
         });
 
-        assertEquals("Question subject does not belong to the provided election id.", ex.getMessage());
+        assertEquals(ElectionProposalService.QUESTION_SUBJECT_DOES_NOT_BELONG_TO_THE_PROVIDED_ELECTION_ID, ex.getMessage());
+    }
+
+    @Test
+    void testGetQuestionCatalogueWithNullElection() {
+        DomainException ex = assertThrows(DomainException.class, () -> {
+            electionProposalService.getQuestionCatalogue(null, Collections.singletonList(createValidTestSubject()));
+        });
+
+        assertEquals(ElectionProposalService.INVALID_INPUT, ex.getMessage());
+    }
+
+    @Test
+    void testGetQuestionCatalogueWithNullSelection() {
+        DomainException ex = assertThrows(DomainException.class, () -> {
+            electionProposalService.getQuestionCatalogue(VALID_ELECTION_ID, null);
+        });
+
+        assertEquals(ElectionProposalService.INVALID_INPUT, ex.getMessage());
     }
 
     @Test
@@ -97,7 +124,7 @@ class ElectionProposalServiceIntegrationTest extends AbstractIntegrationTest {
             electionProposalService.getQuestionCatalogue(VALID_ELECTION_ID, Collections.singletonList(invalidSubject));
         });
 
-        assertEquals("Provided question subject does not exist.", ex.getMessage());
+        assertEquals(ElectionProposalService.PROVIDED_QUESTION_SUBJECT_DOES_NOT_EXIST, ex.getMessage());
     }
 
     private SubjectTO createValidTestSubject() {

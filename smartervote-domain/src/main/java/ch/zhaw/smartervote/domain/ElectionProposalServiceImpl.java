@@ -102,8 +102,9 @@ public class ElectionProposalServiceImpl implements ElectionProposalService {
      */
     @Override
     public List<SubjectTO> getQuestionSubjects(UUID electionId) throws DomainException {
+        if (electionId == null) throw new DomainException(ElectionProposalService.INVALID_INPUT);
         Optional<Election> electionOptional = electionRepository.findById(electionId);
-        if (electionOptional.isEmpty()) throw new DomainException("Election does not exist.");
+        if (electionOptional.isEmpty()) throw new DomainException(ElectionProposalService.ELECTION_DOES_NOT_EXIST);
         return MapQuestionSubject.toTransferObjects(
                 questionSubjectRepository.findQuestionSubjectByElectionOrderByName(electionOptional.get()));
     }
@@ -114,13 +115,14 @@ public class ElectionProposalServiceImpl implements ElectionProposalService {
     @Override
     public Map<SubjectTO, List<QuestionTO>> getQuestionCatalogue(UUID electionId, List<SubjectTO> selection)
             throws DomainException {
+        if (electionId == null || selection == null) throw new DomainException(ElectionProposalService.INVALID_INPUT);
         Map<SubjectTO, List<QuestionTO>> questions = new HashMap<>();
         for (SubjectTO subject : selection) {
             if (subject.getWeight() != SubjectWeight.NOT_INTERESTED) {
                 Optional<QuestionSubject> subjectOptional = questionSubjectRepository.findById(subject.getId());
-                if (subjectOptional.isEmpty()) throw new DomainException("Provided question subject does not exist.");
+                if (subjectOptional.isEmpty()) throw new DomainException(ElectionProposalService.PROVIDED_QUESTION_SUBJECT_DOES_NOT_EXIST);
                 if (!electionId.equals(subjectOptional.get().getElection().getId()))
-                    throw new DomainException("Question subject does not belong to the provided election id.");
+                    throw new DomainException(ElectionProposalService.QUESTION_SUBJECT_DOES_NOT_BELONG_TO_THE_PROVIDED_ELECTION_ID);
                 questions.put(subject, MapQuestion.toTransferObjects(
                         questionRepository.findQuestionByQuestionSubjectOrderById(subjectOptional.get())));
             }
@@ -134,13 +136,14 @@ public class ElectionProposalServiceImpl implements ElectionProposalService {
     @Override
     public UUID calculateElectionProposal(UUID electionId, Map<SubjectTO, List<QuestionTO>> questions)
             throws DomainException {
+        if (electionId == null || questions == null) throw new DomainException(ElectionProposalService.INVALID_INPUT);
         Optional<Election> electionOptional = electionRepository.findById(electionId);
-        if (electionOptional.isEmpty()) throw new DomainException("Election does not exist");
+        if (electionOptional.isEmpty()) throw new DomainException(ELECTION_DOES_NOT_EXIST);
 
         Set<UUID> subjectIds = questions.keySet().stream().map(SubjectTO::getId).collect(Collectors.toSet());
         for (UUID subjectId : subjectIds) {
             if (questionSubjectRepository.findById(subjectId).isEmpty()) {
-                throw new DomainException("Subject id " + subjectId + " does not exist.");
+                throw new DomainException(ElectionProposalService.SUBJECT_ID_DOES_NOT_EXIST + " ("+subjectId+")");
             }
         }
         List<Politician> politicians = politicianRepository.findPoliticianBySubject(subjectIds);
