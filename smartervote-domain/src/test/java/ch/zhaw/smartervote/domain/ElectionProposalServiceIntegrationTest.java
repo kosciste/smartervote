@@ -46,9 +46,9 @@ class ElectionProposalServiceIntegrationTest extends AbstractIntegrationTest {
     @Test
     void testGetAvailableSelections() {
         List<ElectionTO> result = electionProposalService.getAvailableElections();
-        assertEquals(1, result.size());
-        assertEquals(VALID_ELECTION_ID, result.iterator().next().getId());
-        assertEquals("Nationalratswahlen", result.iterator().next().getName());
+        assertEquals(2, result.size());
+        assertTrue(result.stream().anyMatch(r -> r.getId().equals(VALID_ELECTION_ID)));
+        assertTrue(result.stream().anyMatch(r -> r.getName().equals("Nationalratswahlen")));
     }
 
     @Test
