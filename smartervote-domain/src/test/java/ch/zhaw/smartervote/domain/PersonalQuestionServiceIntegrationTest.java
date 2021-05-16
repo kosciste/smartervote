@@ -71,10 +71,13 @@ public class PersonalQuestionServiceIntegrationTest extends AbstractIntegrationT
     }
     // END HELPER METHOD
 
+    /**
+     * Tests succesfully adding a question.
+     */
     @Test
-    void testAddQuestionSimple() throws DomainException {
+    void testAddQuestionSimple() {
 
-        UUID polId = polIds[0]; // edited 'Karina Tatiana', 1992
+        UUID polId = polIds[0]; // 'Karina Tatiana', 1992
 
         Politician politician = politicianRepository.findById(polId).get();
         assertEquals(0, politician.getPersonalQuestions().size());
@@ -91,8 +94,11 @@ public class PersonalQuestionServiceIntegrationTest extends AbstractIntegrationT
 
     }
 
+    /**
+     * Tests failing to add a question with an unknow politician uuid.
+     */
     @Test
-    void testAddQuestionFailRandomPoliticianUUID() throws DomainException {
+    void testAddQuestionFailRandomPoliticianUUID() {
 
         UUID polId = UUID.randomUUID();
 
@@ -104,8 +110,12 @@ public class PersonalQuestionServiceIntegrationTest extends AbstractIntegrationT
         String expectedMessage = PersonalQuestionService.POLITICIAN_NOT_FOUND;
         String actualMessage = exception.getMessage();
         assertTrue(actualMessage.contains(expectedMessage));
+
     }
 
+    /**
+     * Tests failing to add a question due to null inputs.
+     */
     @Test
     void testAddQuestionFailNullInput() {
 
@@ -135,6 +145,9 @@ public class PersonalQuestionServiceIntegrationTest extends AbstractIntegrationT
         
     }    
 
+    /**
+     * Tests getting the upvote count.
+     */
     @Test
     void testGetUpvotes() {
 
@@ -160,6 +173,9 @@ public class PersonalQuestionServiceIntegrationTest extends AbstractIntegrationT
 
     }
 
+    /**
+     * Tests sucessfully upvoting a question.
+     */
     @Test
     void testUpvoteQuestion1Upvote() {
 
@@ -197,12 +213,14 @@ public class PersonalQuestionServiceIntegrationTest extends AbstractIntegrationT
         long upvotesAfter = q.getUpvotes();
         assertEquals(1, upvotesAfter);
         assertEquals(upvotes + 1, upvotesAfter);
+
     }
 
-
+    /**
+     * Tests sucessfully upvoting a question with 10 different ips.
+     */
     @Test
-
-    void testUpvoteQuestion10Upvotes() throws DomainException, InterruptedException {
+    void testUpvoteQuestion10Upvotes() {
 
         UUID polId = polIds[4];
         String text = "Test 4";
@@ -239,7 +257,12 @@ public class PersonalQuestionServiceIntegrationTest extends AbstractIntegrationT
             }
         }
         for (int i = 0; i < numThreads; i++) {
-            threads[i].join();
+            try {
+                threads[i].join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                fail();
+            }
             commitAndCreateNewTransaction(); // required for the checks below
         }
 
@@ -249,10 +272,8 @@ public class PersonalQuestionServiceIntegrationTest extends AbstractIntegrationT
 
     }
 
-
-
     /**
-     * Upvoted thread used to test multithreaded upvoting
+     * Upvoted thread used to test multiple upvotes at once.
      */
     private class UpvoteThread extends Thread {
 
@@ -280,6 +301,9 @@ public class PersonalQuestionServiceIntegrationTest extends AbstractIntegrationT
         }
     }
 
+    /**
+     * Tests failing to upvote a question due to already upvoted.
+     */
     @Test
     void testUpvoteQuestionFailAlreadyUpvoted() {
 
@@ -332,8 +356,13 @@ public class PersonalQuestionServiceIntegrationTest extends AbstractIntegrationT
         upvotesAfter = q.getUpvotes();
         assertEquals(1, upvotesAfter);
         assertEquals(upvotes + 1, upvotesAfter);
+
     }
 
+        
+    /**
+     * Tests failing to upvote a question due to unknown politician id.
+     */
     @Test
     void testUpvoteQuestionFailRandomQuestionUUID() {
 
@@ -370,8 +399,12 @@ public class PersonalQuestionServiceIntegrationTest extends AbstractIntegrationT
         q = getPersonalQuestion(polId, text);
         long upvotesAfter = q.getUpvotes();
         assertEquals(0, upvotesAfter);
+
     }
 
+    /**
+     * Tests failing to upvote a question due to null input.
+     */
     @Test
     void testUpvoteQuestionFailNullInput() {
 
@@ -418,6 +451,7 @@ public class PersonalQuestionServiceIntegrationTest extends AbstractIntegrationT
         PersonalQuestion q = getPersonalQuestion(polId, text);
         long upvotesAfter = q.getUpvotes();
         assertEquals(0, upvotesAfter);
+
     }
 
 }
