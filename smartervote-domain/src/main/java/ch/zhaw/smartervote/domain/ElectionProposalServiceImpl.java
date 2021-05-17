@@ -143,7 +143,7 @@ public class ElectionProposalServiceImpl implements ElectionProposalService {
         Set<UUID> subjectIds = questions.keySet().stream().map(SubjectTO::getId).collect(Collectors.toSet());
         for (UUID subjectId : subjectIds) {
             if (questionSubjectRepository.findById(subjectId).isEmpty()) {
-                throw new DomainException(ElectionProposalService.SUBJECT_NOT_FOUND + " ("+subjectId+")");
+                throw new DomainException(ElectionProposalService.SUBJECT_NOT_FOUND);
             }
         }
         List<Politician> politicians = politicianRepository.findPoliticianBySubject(subjectIds);
