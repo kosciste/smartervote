@@ -26,7 +26,7 @@ public interface QuestionAnswerRepository extends SmarterVoteRepository<Question
             "LEFT JOIN Question q on qs.id = q.questionSubject " +
             "LEFT JOIN QuestionAnswer qa on q.id = qa.question " +
             "WHERE qa.politician.id = :politicianId AND qs.id in :subjectIds")
-    List<QuestionAnswer> findPoliticianQuestion(@Param("politicianId") UUID politicianId,
-                                                @Param("subjectIds") Set<UUID> subjectIds);
+    List<QuestionAnswer> findPoliticianAnswers(@Param("politicianId") UUID politicianId,
+                                               @Param("subjectIds") Set<UUID> subjectIds);
 
 }
