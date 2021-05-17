@@ -18,6 +18,15 @@ import java.util.UUID;
 public interface ElectionProposalService {
 
     /**
+     * Error messages for the implementations to use.
+     */
+    public String INVALID_INPUT = "Invalid input.";
+    public String ELECTION_NOT_FOUND = "Election not found.";
+    public String SUBJECT_NOT_FOUND = "Subject not found.";
+    public String QUESTION_SUBJECT_NOT_FOUND = "Question subject not found.";
+    public String QUESTION_SUBJECT_ELECTION_MISMATCH = "Question subject does not match the provided election id.";
+
+    /**
      * Returns all available elections, for which questions exist.
      *
      * @return all available elections.
