@@ -15,6 +15,15 @@ public interface PersonalQuestionService {
     int MAX_QUESTION_LENGTH = 255;
 
     /**
+     * Error messages for the implementations to use.
+     */
+    String INVALID_INPUT = "Invalid input.";
+    String POLITICIAN_NOT_FOUND = "Politician not found.";
+    String PERSONAL_QUESTION_NOT_FOUND = "Personal question not found.";
+    String ALREADY_UPVOTED = "Question was already upvoted by given ip address.";
+    String UPVOTE_FAILED = "Upvote failed.";
+
+    /**
      * Adds a question to the politicians profile.
      *
      * @param politicianId the id of the politician
@@ -22,7 +31,7 @@ public interface PersonalQuestionService {
      * @return true if the question was added, false otherwise
      * @throws DomainException in case of any issues e.g. politician id does not exist
      */
-    boolean addQuestion(UUID politicianId, String questionText) throws DomainException;
+    void addQuestion(UUID politicianId, String questionText) throws DomainException;
 
     /**
      * Upvotes a specific question.

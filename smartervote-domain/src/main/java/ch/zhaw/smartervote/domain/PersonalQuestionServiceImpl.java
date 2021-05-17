@@ -53,9 +53,10 @@ public class PersonalQuestionServiceImpl implements PersonalQuestionService {
      * {@inheritDoc}
      */
     @Override
-    public boolean addQuestion(UUID politicianId, String questionText) {
+    public void addQuestion(UUID politicianId, String questionText) throws DomainException {
+        if (politicianId == null || questionText == null) throw new DomainException(PersonalQuestionService.INVALID_INPUT);
         Optional<Politician> queryResult = politicianRepository.findById(politicianId);
-        if (queryResult.isEmpty()) return false; // false if politician doesnt exist
+        if (queryResult.isEmpty()) throw new DomainException(PersonalQuestionService.POLITICIAN_NOT_FOUND);
 
         Politician politician = queryResult.get();
 
@@ -64,8 +65,6 @@ public class PersonalQuestionServiceImpl implements PersonalQuestionService {
         personalQuestion.setText(questionText);
 
         personalQuestionRepository.save(personalQuestion);
-
-        return true;
     }
 
     /**
@@ -73,14 +72,15 @@ public class PersonalQuestionServiceImpl implements PersonalQuestionService {
      */
     @Override
     public long upvoteQuestion(UUID questionId, String ipAddress) throws DomainException {
+        if (questionId == null || ipAddress == null) throw new DomainException(PersonalQuestionService.INVALID_INPUT);
         Optional<PersonalQuestion> questionOptional = personalQuestionRepository.findById(questionId);
-        if (questionOptional.isEmpty()) throw new DomainException("Personal question not found.");
+        if (questionOptional.isEmpty()) throw new DomainException(PersonalQuestionService.PERSONAL_QUESTION_NOT_FOUND);
 
         List<PersonalQuestion> upvotedPersonalQuestions =
                 personalQuestionRepository.findPersonalQuestionsByIdsAndIpAddress(
                         Collections.singleton(questionOptional.get().getId()), ipAddress);
         if (upvotedPersonalQuestions.size() > 0) {
-            throw new DomainException("Question was already upvoted by given ip address.");
+            throw new DomainException(PersonalQuestionService.ALREADY_UPVOTED);
         }
 
         int updated = personalQuestionRepository.upvotePersonalQuestion(questionId);
@@ -95,7 +95,7 @@ public class PersonalQuestionServiceImpl implements PersonalQuestionService {
 
         }
 
-        throw new DomainException("Upvote failed.");
+        throw new DomainException(PersonalQuestionService.UPVOTE_FAILED);
     }
 
 }
