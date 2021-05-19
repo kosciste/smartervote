@@ -21,6 +21,8 @@ public interface PoliticianService {
      */
     String DEFAULT_FILTER = "all";
 
+    String INVALID_PROPOSAL_RESULT = "Proposal result does not exist.";
+
     /**
      * Returns a filtered list of all politicians. It is possible to give the page number that should be displayed and
      * page size for a page. The returned politician list will then contain the total amount of pages and the current

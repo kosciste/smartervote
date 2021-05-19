@@ -43,6 +43,8 @@ import static org.junit.jupiter.api.Assertions.*;
  *     <li>Fauler Hans: Only answered question 1 and 2. Both where answered with no (0)</li>
  *     <li>Max Mix: Gave a different answer for each question (Question 1: 1, Question 2: 2, Question 3: 3)</li>
  * </ul>
+ *
+ * @author Raphael Krebs
  */
 @DataJpaTest
 @ContextConfiguration(classes = {TestApplication.class, SpringJpaConfiguration.class})
