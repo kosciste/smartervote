@@ -123,24 +123,24 @@ insert into Politician values('4d7b74e2-503c-42cc-b86c-2a7b1b28b093', '51cdefc2-
 insert into Politician values('840a8d98-56a5-4b79-b7db-019d60454b7d', '51cdefc2-0cf7-42f1-9df9-4e97dabab17d', 'Josef Philipp', 1962, 'Male', 'Radiomoderator', '32.jpg', current_timestamp, current_timestamp);
 insert into Politician values('47f1e554-bf38-4a6e-a31d-023b57d35eaa', '51cdefc2-0cf7-42f1-9df9-4e97dabab17d', 'Ben Kuno', 1970, 'Male', 'Designer', '33.jpg', current_timestamp, current_timestamp);
 
---additional politicians that would require filled out question catalogues
---insert into Politician values('802f66ed-fd65-4d37-8177-dd7ec6938c4b', 'e26fb46a-87ed-4c1d-8afe-d9e5d42308fd', 'Pascal Abraham', 1967, 'Male', 'Architekt', '34.jpg', current_timestamp, current_timestamp);
---insert into Politician values('9178eee0-ee5e-4f13-88d4-43eea8aa9179', 'e26fb46a-87ed-4c1d-8afe-d9e5d42308fd', 'Eberhard Matthias', 1989, 'Male', 'Autohändler', '35.jpg', current_timestamp, current_timestamp);
---insert into Politician values('ab9a8281-5fe2-4efc-b2be-12ef35d57786', 'e26fb46a-87ed-4c1d-8afe-d9e5d42308fd', 'Kilian Carl', 1980, 'Male', 'Pflegefachmann', '36.jpg', current_timestamp, current_timestamp);
---insert into Politician values('dc1d49a5-a3b9-4ea9-90be-489930db6823', 'e26fb46a-87ed-4c1d-8afe-d9e5d42308fd', 'Arne Adelbert', 1960, 'Male', 'Kaufmann', '37.jpg', current_timestamp, current_timestamp);
---insert into Politician values('7a3c9972-f7da-4f5a-9de7-80dd1d28f50a', 'e26fb46a-87ed-4c1d-8afe-d9e5d42308fd', 'Franz Hugo', 1977, 'Male', 'Autohändler', '38.jpg', current_timestamp, current_timestamp);
---insert into Politician values('89678908-7e8d-4f9c-9c15-cbab24936a8e', 'e26fb46a-87ed-4c1d-8afe-d9e5d42308fd', 'Gereon Linus', 1994, 'Male', 'Komponist', '39.jpg', current_timestamp, current_timestamp);
---insert into Politician values('e4730035-205f-485e-bd91-23308b4b956e', 'e26fb46a-87ed-4c1d-8afe-d9e5d42308fd', 'Manu Hasso', 1972, 'Male', 'Architekt', '40.jpg', current_timestamp, current_timestamp);
---insert into Politician values('8eabc811-d976-4e85-95f2-a91f15ebf6c2', '51cdefc2-0cf7-42f1-9df9-4e97dabab17d', 'Gabriel Richard', 1981, 'Male', 'Designer', '41.jpg', current_timestamp, current_timestamp);
---insert into Politician values('667a75d5-f922-40a7-b0de-4b3b3b6cce08', '51cdefc2-0cf7-42f1-9df9-4e97dabab17d', 'Beat Leo', 1986, 'Male', 'Herausgeber', '42.jpg', current_timestamp, current_timestamp);
---insert into Politician values('6ecd0c78-d06f-4e33-93b6-24382cbc93e5', '51cdefc2-0cf7-42f1-9df9-4e97dabab17d', 'Justus Alwin', 1983, 'Male', 'Hausmann', '43.jpg', current_timestamp, current_timestamp);
---insert into Politician values('9dfc0bbb-353c-4dc0-8409-5d32b4b44afd', '51cdefc2-0cf7-42f1-9df9-4e97dabab17d', 'Benedikt Samuel', 1982, 'Male', 'Kaufmann', '44.jpg', current_timestamp, current_timestamp);
---insert into Politician values('e6274305-cdde-4b62-b7ac-a0cc4f0c3b1e', '51cdefc2-0cf7-42f1-9df9-4e97dabab17d', 'Simon Michel', 1958, 'Male', 'Pflegefachmann', '45.jpg', current_timestamp, current_timestamp);
---insert into Politician values('94b21ab6-c285-49ed-ba31-b060d01eb498', '51cdefc2-0cf7-42f1-9df9-4e97dabab17d', 'Lars Gerhard', 1986, 'Male', 'IT Consultant', '46.jpg', current_timestamp, current_timestamp);
---insert into Politician values('aa2aa826-bc0f-4b0c-b36f-979b2b104e28', '51cdefc2-0cf7-42f1-9df9-4e97dabab17d', 'Wulf Erich', 1974, 'Male', 'Designer', '47.jpg', current_timestamp, current_timestamp);
---insert into Politician values('ef63f015-5776-4b1e-a458-3fc10534bac4', '51cdefc2-0cf7-42f1-9df9-4e97dabab17d', 'Gernot Dennis', 1994, 'Male', 'Designer', '48.jpg', current_timestamp, current_timestamp);
---insert into Politician values('8dee210a-cd6e-41fa-8191-52104772ec17', '51cdefc2-0cf7-42f1-9df9-4e97dabab17d', 'Oliver Clemens', 1979, 'Male', 'Architekt', '49.jpg', current_timestamp, current_timestamp);
---insert into Politician values('c5648fcd-d80d-48ab-b9a5-4db2a64f4a5a', '51cdefc2-0cf7-42f1-9df9-4e97dabab17d', 'Jupp Hartwig', 1969, 'Male', 'Hausmann', '50.jpg', current_timestamp, current_timestamp);
+-- additional politicians that would require filled out question catalogues
+-- insert into Politician values('802f66ed-fd65-4d37-8177-dd7ec6938c4b', 'e26fb46a-87ed-4c1d-8afe-d9e5d42308fd', 'Pascal Abraham', 1967, 'Male', 'Architekt', '34.jpg', current_timestamp, current_timestamp);
+-- insert into Politician values('9178eee0-ee5e-4f13-88d4-43eea8aa9179', 'e26fb46a-87ed-4c1d-8afe-d9e5d42308fd', 'Eberhard Matthias', 1989, 'Male', 'Autohändler', '35.jpg', current_timestamp, current_timestamp);
+-- insert into Politician values('ab9a8281-5fe2-4efc-b2be-12ef35d57786', 'e26fb46a-87ed-4c1d-8afe-d9e5d42308fd', 'Kilian Carl', 1980, 'Male', 'Pflegefachmann', '36.jpg', current_timestamp, current_timestamp);
+-- insert into Politician values('dc1d49a5-a3b9-4ea9-90be-489930db6823', 'e26fb46a-87ed-4c1d-8afe-d9e5d42308fd', 'Arne Adelbert', 1960, 'Male', 'Kaufmann', '37.jpg', current_timestamp, current_timestamp);
+-- insert into Politician values('7a3c9972-f7da-4f5a-9de7-80dd1d28f50a', 'e26fb46a-87ed-4c1d-8afe-d9e5d42308fd', 'Franz Hugo', 1977, 'Male', 'Autohändler', '38.jpg', current_timestamp, current_timestamp);
+-- insert into Politician values('89678908-7e8d-4f9c-9c15-cbab24936a8e', 'e26fb46a-87ed-4c1d-8afe-d9e5d42308fd', 'Gereon Linus', 1994, 'Male', 'Komponist', '39.jpg', current_timestamp, current_timestamp);
+-- insert into Politician values('e4730035-205f-485e-bd91-23308b4b956e', 'e26fb46a-87ed-4c1d-8afe-d9e5d42308fd', 'Manu Hasso', 1972, 'Male', 'Architekt', '40.jpg', current_timestamp, current_timestamp);
+-- insert into Politician values('8eabc811-d976-4e85-95f2-a91f15ebf6c2', '51cdefc2-0cf7-42f1-9df9-4e97dabab17d', 'Gabriel Richard', 1981, 'Male', 'Designer', '41.jpg', current_timestamp, current_timestamp);
+-- insert into Politician values('667a75d5-f922-40a7-b0de-4b3b3b6cce08', '51cdefc2-0cf7-42f1-9df9-4e97dabab17d', 'Beat Leo', 1986, 'Male', 'Herausgeber', '42.jpg', current_timestamp, current_timestamp);
+-- insert into Politician values('6ecd0c78-d06f-4e33-93b6-24382cbc93e5', '51cdefc2-0cf7-42f1-9df9-4e97dabab17d', 'Justus Alwin', 1983, 'Male', 'Hausmann', '43.jpg', current_timestamp, current_timestamp);
+-- insert into Politician values('9dfc0bbb-353c-4dc0-8409-5d32b4b44afd', '51cdefc2-0cf7-42f1-9df9-4e97dabab17d', 'Benedikt Samuel', 1982, 'Male', 'Kaufmann', '44.jpg', current_timestamp, current_timestamp);
+-- insert into Politician values('e6274305-cdde-4b62-b7ac-a0cc4f0c3b1e', '51cdefc2-0cf7-42f1-9df9-4e97dabab17d', 'Simon Michel', 1958, 'Male', 'Pflegefachmann', '45.jpg', current_timestamp, current_timestamp);
+-- insert into Politician values('94b21ab6-c285-49ed-ba31-b060d01eb498', '51cdefc2-0cf7-42f1-9df9-4e97dabab17d', 'Lars Gerhard', 1986, 'Male', 'IT Consultant', '46.jpg', current_timestamp, current_timestamp);
+-- insert into Politician values('aa2aa826-bc0f-4b0c-b36f-979b2b104e28', '51cdefc2-0cf7-42f1-9df9-4e97dabab17d', 'Wulf Erich', 1974, 'Male', 'Designer', '47.jpg', current_timestamp, current_timestamp);
+-- insert into Politician values('ef63f015-5776-4b1e-a458-3fc10534bac4', '51cdefc2-0cf7-42f1-9df9-4e97dabab17d', 'Gernot Dennis', 1994, 'Male', 'Designer', '48.jpg', current_timestamp, current_timestamp);
+-- insert into Politician values('8dee210a-cd6e-41fa-8191-52104772ec17', '51cdefc2-0cf7-42f1-9df9-4e97dabab17d', 'Oliver Clemens', 1979, 'Male', 'Architekt', '49.jpg', current_timestamp, current_timestamp);
+-- insert into Politician values('c5648fcd-d80d-48ab-b9a5-4db2a64f4a5a', '51cdefc2-0cf7-42f1-9df9-4e97dabab17d', 'Jupp Hartwig', 1969, 'Male', 'Hausmann', '50.jpg', current_timestamp, current_timestamp);
 
 -- answered questions
 
@@ -2016,19 +2016,17 @@ insert into QuestionAnswer values('e9f764a8-c23a-49a8-b973-f67411e663d1', '926c4
 insert into QuestionAnswer values('08d2f445-68ce-409f-8985-871c67941cb9', 'eaa9530f-bb8c-453f-b634-c8599039e296', '47f1e554-bf38-4a6e-a31d-023b57d35eaa', 3, current_timestamp, current_timestamp);
 insert into QuestionAnswer values('b5b7ca15-eb7e-4786-b1df-740b0173bca0', 'bdc5f279-42bf-491c-b87a-409b3c7bff89', '47f1e554-bf38-4a6e-a31d-023b57d35eaa', 4, current_timestamp, current_timestamp);
 
--- Medienbeiträge
+-- media entries
 
 insert into MediaCoverage values('c72c5322-990c-452d-a1a1-ff1996ef6e80', 'bb1d763b-ca76-4ac5-81ef-a98d4f34e669', 'Skandal im Bundeshaus?', 'War Gretchen Gertraud verwickelt im letzten Skandal im Bundeshaus?', 'https://www.blick.ch/schweiz/bundesrat-plant-lockerungen-svp-will-noch-schneller-oeffnen-id16525651.html', '2021-05-16', current_timestamp, current_timestamp);
 insert into MediaCoverage values('42c681b2-3935-41e8-8e3d-f809854874e2', '7d712000-ffc9-4703-a308-7aca6bb00554', 'Skandal im Bundeshaus?', 'War Caroline Gunda verwickelt im letzten Skandal im Bundeshaus?', 'https://www.20min.ch/story/sp-nationalraetin-will-suessigkeiten-an-supermarkt-kassen-verbieten-939292758252', '2021-05-16', current_timestamp, current_timestamp);
-insert into MediaCoverage values('b1bd4b3d-3e4b-4926-83c4-cc2acc00e94d', 'e868ccc3-50eb-4d54-a8f2-dec07b1c9f03', 'Ein Titel', 'Das ist die Beschreibung dieses Medienartikels.', 'https://www.20min.ch/', '2021-05-16', current_timestamp, current_timestamp);
-insert into MediaCoverage values('6742531f-d3e1-4dca-bdde-9ae11c2cf4fb', 'e868ccc3-50eb-4d54-a8f2-dec07b1c9f03', 'Der Titel', 'Das ist die Beschreibung dieses Medienartikels.', 'https://www.20min.ch/', '2021-03-12', current_timestamp, current_timestamp);
-insert into MediaCoverage values('692b26cb-6e40-4db5-8aa3-9b12290d40d0', '6f4467de-61c7-4da4-8437-81fd94f8caea', 'Ein Titel', 'Das ist die Beschreibung dieses Medienartikels.', 'https://www.20min.ch/', '2021-03-11', current_timestamp, current_timestamp);
-insert into MediaCoverage values('5ab91833-a2b3-4ea9-ac11-bab7e2167d35', 'c3860bfb-0975-4a07-941e-7ce550250b55', 'Ein Titel', 'Das ist die Beschreibung dieses Medienartikels.', 'https://www.20min.ch/', '2021-05-16', current_timestamp, current_timestamp);
-insert into MediaCoverage values('718682f4-9c1c-494b-b41a-4a5519fd5e98', 'a044da59-0467-4dea-8e30-e0dee2b053a5', 'Der Titel', 'Das ist die Beschreibung dieses Medienartikels.', 'https://www.20min.ch/', '2021-03-12', current_timestamp, current_timestamp);
-insert into MediaCoverage values('fa2d3429-8c65-4f7a-ba48-bf8e127faaf7', '04bbc8fd-b00e-428d-8a76-158d03394bf7', 'Ein Titel', 'Das ist die Beschreibung dieses Medienartikels.', 'https://www.20min.ch/', '2021-03-11', current_timestamp, current_timestamp);
-insert into MediaCoverage values('644cd06c-e284-42cd-afe0-4a9913fc0d0b', '5bcc77e3-86a1-47b8-82c4-75443b5023c2', 'Ein Titel', 'Das ist die Beschreibung dieses Medienartikels.', 'https://www.20min.ch/', '2021-05-16', current_timestamp, current_timestamp);
-insert into MediaCoverage values('3cfd31f9-d5e6-4118-aebd-877838896d2a', '621767cc-f8fb-4947-8e27-a3ec8512ddc6', 'Der Titel', 'Das ist die Beschreibung dieses Medienartikels.', 'https://www.20min.ch/', '2021-03-12', current_timestamp, current_timestamp);
-insert into MediaCoverage values('8a9e6fef-fd8d-4840-9c99-f6ec37fecffa', '9017a1c3-6d81-4393-8b8c-5f68fd78f6fc', 'Ein Titel', 'Das ist die Beschreibung dieses Medienartikels.', 'https://www.20min.ch/', '2021-03-11', current_timestamp, current_timestamp);
-insert into MediaCoverage values('295f0e05-5c9e-4e5d-bf3e-e7470bf91e93', 'a882f183-0c6e-41a2-8745-ba9f570ecf8b', 'Ein Titel', 'Das ist die Beschreibung dieses Medienartikels.', 'https://www.20min.ch/', '2021-05-16', current_timestamp, current_timestamp);
-insert into MediaCoverage values('08838d5e-1ad9-4b8e-8e36-dcdfe6948373', 'aed41ae7-e8d9-4944-aee1-ae138623bdd7', 'Der Titel', 'Das ist die Beschreibung dieses Medienartikels.', 'https://www.20min.ch/', '2021-03-12', current_timestamp, current_timestamp);
-insert into MediaCoverage values('f51c7429-95c6-4fc9-a8d5-7c0b5ab3daad', '2eb55491-aa91-47ed-9f68-42836101c334', 'Ein Titel', 'Das ist die Beschreibung dieses Medienartikels.', 'https://www.20min.ch/', '2021-03-11', current_timestamp, current_timestamp);
+insert into MediaCoverage values('b1bd4b3d-3e4b-4926-83c4-cc2acc00e94d', 'e868ccc3-50eb-4d54-a8f2-dec07b1c9f03', 'Ein Titel', 'Das ist die Beschreibung dieses Medienartikels.', 'https://www.20min.ch', '2021-05-16', current_timestamp, current_timestamp);
+insert into MediaCoverage values('6742531f-d3e1-4dca-bdde-9ae11c2cf4fb', 'e868ccc3-50eb-4d54-a8f2-dec07b1c9f03', 'Der Titel', 'Das ist die Beschreibung dieses Medienartikels.', 'https://www.20min.ch', '2021-03-12', current_timestamp, current_timestamp);
+insert into MediaCoverage values('692b26cb-6e40-4db5-8aa3-9b12290d40d0', '6f4467de-61c7-4da4-8437-81fd94f8caea', 'Ein Titel', 'Das ist die Beschreibung dieses Medienartikels.', 'https://www.20min.ch', '2021-03-11', current_timestamp, current_timestamp);
+insert into MediaCoverage values('5ab91833-a2b3-4ea9-ac11-bab7e2167d35', 'c3860bfb-0975-4a07-941e-7ce550250b55', 'Ein Titel', 'Das ist die Beschreibung dieses Medienartikels.', 'https://www.20min.ch', '2021-05-16', current_timestamp, current_timestamp);
+insert into MediaCoverage values('718682f4-9c1c-494b-b41a-4a5519fd5e98', 'a044da59-0467-4dea-8e30-e0dee2b053a5', 'Der Titel', 'Das ist die Beschreibung dieses Medienartikels.', 'https://www.20min.ch', '2021-03-12', current_timestamp, current_timestamp);
+insert into MediaCoverage values('fa2d3429-8c65-4f7a-ba48-bf8e127faaf7', '04bbc8fd-b00e-428d-8a76-158d03394bf7', 'Ein Titel', 'Das ist die Beschreibung dieses Medienartikels.', 'https://www.20min.ch', '2021-03-11', current_timestamp, current_timestamp);
+insert into MediaCoverage values('8a9e6fef-fd8d-4840-9c99-f6ec37fecffa', '9017a1c3-6d81-4393-8b8c-5f68fd78f6fc', 'Ein Titel', 'Das ist die Beschreibung dieses Medienartikels.', 'https://www.20min.ch', '2021-03-11', current_timestamp, current_timestamp);
+insert into MediaCoverage values('295f0e05-5c9e-4e5d-bf3e-e7470bf91e93', 'a882f183-0c6e-41a2-8745-ba9f570ecf8b', 'Ein Titel', 'Das ist die Beschreibung dieses Medienartikels.', 'https://www.20min.ch', '2021-05-16', current_timestamp, current_timestamp);
+insert into MediaCoverage values('08838d5e-1ad9-4b8e-8e36-dcdfe6948373', 'aed41ae7-e8d9-4944-aee1-ae138623bdd7', 'Der Titel', 'Das ist die Beschreibung dieses Medienartikels.', 'https://www.20min.ch', '2021-03-12', current_timestamp, current_timestamp);
+insert into MediaCoverage values('f51c7429-95c6-4fc9-a8d5-7c0b5ab3daad', '2eb55491-aa91-47ed-9f68-42836101c334', 'Ein Titel', 'Das ist die Beschreibung dieses Medienartikels.', 'https://www.20min.ch', '2021-03-11', current_timestamp, current_timestamp);
