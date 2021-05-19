@@ -138,11 +138,11 @@ public class ElectionProposalServiceImpl implements ElectionProposalService {
             throws DomainException {
 
         // check the input
-        if (electionId == null || questions == null) throw new DomainException(ElectionProposalService.INVALID_INPUT);
+        if (electionId == null || selection == null) throw new DomainException(ElectionProposalService.INVALID_INPUT);
         Optional<Election> electionOptional = electionRepository.findById(electionId);
         if (electionOptional.isEmpty()) throw new DomainException(ELECTION_NOT_FOUND);
 
-        Set<UUID> subjectIds = questions.keySet().stream().map(SubjectTO::getId).collect(Collectors.toSet());
+        Set<UUID> subjectIds = selection.keySet().stream().map(SubjectTO::getId).collect(Collectors.toSet());
         for (UUID subjectId : subjectIds) {
             if (questionSubjectRepository.findById(subjectId).isEmpty()) {
                 throw new DomainException(ElectionProposalService.SUBJECT_NOT_FOUND);
