@@ -28,6 +28,10 @@ class ElectionProposalAlgorithmImplTest {
 
     Question question_1;
     QuestionTO questionTO_1;
+
+    Question question_2;
+    QuestionTO questionTO_2;
+
     QuestionSubject questionSubject_1;
     List<QuestionTO> questionList_1;
     SubjectTO questionSubjectTO_1;
@@ -43,30 +47,41 @@ class ElectionProposalAlgorithmImplTest {
         question_1.setT("5");
         question_1.setQuestionSubject(questionSubject_1);*/
         question_1 =  mock(Question.class);
-        question_1.setT("5");
+        question_1.setT("question 1");
         question_1.setQuestionSubject(questionSubject_1);
-        when(question_1.getId()).thenReturn(new UUID(3,3));
+        when(question_1.getId()).thenReturn(new UUID(1,1));
 
-
+        question_2 =  mock(Question.class);
+        question_2.setT("question 2");
+        question_2.setQuestionSubject(questionSubject_1);
+        when(question_2.getId()).thenReturn(new UUID(2,2));
+        
 
         questionAnswerLeft= new QuestionAnswer();
         questionAnswerLeft.setQuestion(question_1);
         questionAnswerLeft.setAnswer(1);
 
+        questionAnswerRight= new QuestionAnswer();
+        questionAnswerRight.setQuestion(question_2);
+        questionAnswerRight.setAnswer(4);
+
         politicianAnswers = new ArrayList<>();
         politicianAnswers.add(questionAnswerLeft);
+        politicianAnswers.add(questionAnswerRight);
 
         weight = SubjectWeight.NORMAL;
         questionSubjectTO_1 = new SubjectTO(questionSubject_1.getId(), questionSubject_1.getName(),weight);
         questionTO_1= new QuestionTO(question_1.getId(), "23");
         questionTO_1.setAnswer(1);
+
+        questionTO_2= new QuestionTO(question_2.getId(), "24");
+        questionTO_2.setAnswer(1);
+
         questionList_1 = new ArrayList<>();
         questionList_1.add(questionTO_1);
+        questionList_1.add(questionTO_2);
         userAnsweredQuestions = new HashMap<>();
         userAnsweredQuestions.put(questionSubjectTO_1, questionList_1);
-
-
-
 
 
     }
@@ -77,7 +92,7 @@ class ElectionProposalAlgorithmImplTest {
 
     @Test
     void calculateResult() {
-        int  expectedValue =0;
+        int  expectedValue =50;
         assertEquals(expectedValue, electionProposalAlgorithm.calculateResult(politicianAnswers, userAnsweredQuestions));
 
 
