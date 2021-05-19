@@ -6,6 +6,8 @@ DROP TABLE IF EXISTS PersonalQuestionAnswer;
 DROP TABLE IF EXISTS PersonalQuestion;
 DROP TABLE IF EXISTS MediaCoverage;
 DROP TABLE IF EXISTS QuestionAnswer;
+DROP TABLE IF EXISTS ProposalResultScore;
+DROP TABLE IF EXISTS ProposalResult;
 DROP TABLE IF EXISTS Politician;
 DROP TABLE IF EXISTS Party;
 DROP TABLE IF EXISTS Question;
