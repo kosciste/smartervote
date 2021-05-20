@@ -103,7 +103,7 @@ public class PoliticianServiceImpl implements PoliticianService {
     public PoliticianList filterPoliticians(int page, int pageSize, PoliticianFilterTO filter, UUID resultId)
             throws DomainException {
         Optional<ProposalResult> proposalResultOptional = proposalResultRepository.findById(resultId);
-        if (proposalResultOptional.isEmpty()) throw new DomainException("Proposal result does not exist.");
+        if (proposalResultOptional.isEmpty()) throw new DomainException(PoliticianService.INVALID_PROPOSAL_RESULT);
 
         PoliticianFilterSpecification specification = new PoliticianFilterSpecification(
                 PoliticianService.DEFAULT_FILTER,
