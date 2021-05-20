@@ -134,25 +134,30 @@ public class ElectionProposalServiceImpl implements ElectionProposalService {
      * {@inheritDoc}
      */
     @Override
-    public UUID calculateElectionProposal(UUID electionId, Map<SubjectTO, List<QuestionTO>> questions)
+    public UUID calculateElectionProposal(UUID electionId, Map<SubjectTO, List<QuestionTO>> selection)
             throws DomainException {
-        if (electionId == null || questions == null) throw new DomainException(ElectionProposalService.INVALID_INPUT);
+
+        // check the input
+        if (electionId == null || selection == null) throw new DomainException(ElectionProposalService.INVALID_INPUT);
         Optional<Election> electionOptional = electionRepository.findById(electionId);
         if (electionOptional.isEmpty()) throw new DomainException(ELECTION_NOT_FOUND);
 
-        Set<UUID> subjectIds = questions.keySet().stream().map(SubjectTO::getId).collect(Collectors.toSet());
+        Set<UUID> subjectIds = selection.keySet().stream().map(SubjectTO::getId).collect(Collectors.toSet());
         for (UUID subjectId : subjectIds) {
             if (questionSubjectRepository.findById(subjectId).isEmpty()) {
                 throw new DomainException(ElectionProposalService.SUBJECT_NOT_FOUND);
             }
         }
-        List<Politician> politicians = politicianRepository.findPoliticianBySubject(subjectIds);
+
+        // fetch data and calculate result for each politician
+        List<Politician> politicians = politicianRepository.findPoliticiansBySubjects(subjectIds);
         Map<Politician, Integer> matchingScores = new HashMap<>();
         for (Politician politician : politicians) {
-            List<QuestionAnswer> questionAnswers =
-                    questionAnswerRepository.findPoliticianQuestion(politician.getId(), subjectIds);
-            matchingScores.put(politician, electionProposalAlgorithm.calculateResult(questionAnswers, questions));
+            List<QuestionAnswer> politicianAnswers = questionAnswerRepository.findPoliticianAnswers(politician.getId(), subjectIds);
+            matchingScores.put(politician, electionProposalAlgorithm.calculateResult(politicianAnswers, selection));
         }
+
+        // write data to database
         return proposalResultWriter.writeScores(matchingScores);
     }
 

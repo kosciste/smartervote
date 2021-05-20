@@ -1,0 +1,67 @@
+<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>50</x><y>220</y><w>140</w><h>90</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
+PartyRepository
+--
+
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>30</x><y>330</y><w>180</w><h>90</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
+ProposalResultRepository
+--
+
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>120</x><y>580</y><w>460</w><h>110</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
+PersonalQuestionRepository
+--
++ upvotePersonalQuestion() : int
++ findPersonalQuestionByPoliticianIdOrderByUpvotesDesc : List&lt;PersonalQuestion&gt;
++ findPersonalQuestionsByIdsAndIpAddress() : List&lt;PersonalQuestion&gt;
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>30</x><y>460</y><w>470</w><h>90</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
+MediaCoverageRepository
+--
++ findMediaCoverageByPoliticianIdOrderByCreationTime() : List&lt;MediaCoverage&gt;
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>750</x><y>350</y><w>260</w><h>90</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
+PoliticianRepository
+--
++ findPoliticiansBySubjects() : List&lt;Politician&gt;
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>60</x><y>70</y><w>140</w><h>90</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
+ElectionRepository
+--
+
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>620</x><y>600</y><w>410</w><h>80</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
+QuestionSubjectRepository
+--
++ findQuestionSubjectByElectionOrderByName() : List&lt;QuestionSubject&gt;
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>630</x><y>190</y><w>350</w><h>90</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
+QuestionRepository
+--
++ findQuestionByQuestionSubjectOrderById() : List&lt;Question&gt;
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>710</x><y>480</y><w>290</w><h>90</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
+QuestionAnswerRepository
+--
++ findPoliticianAnswers() : List&lt;QuestionAnswer&gt;
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>400</x><y>260</y><w>190</w><h>90</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
+SmartervoteRepository&lt;T, UUID&gt;
+--
++ findAll() : List&lt;T&gt;
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>530</x><y>340</y><w>30</w><h>260</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;240</additional_attributes></element><element><id>Relation</id><coordinates><x>450</x><y>340</y><w>30</w><h>140</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;120</additional_attributes></element><element><id>Relation</id><coordinates><x>200</x><y>340</y><w>240</w><h>90</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>220;10;220;70;10;70</additional_attributes></element><element><id>Relation</id><coordinates><x>180</x><y>280</y><w>240</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>220;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>190</x><y>120</y><w>230</w><h>170</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>210;150;70;150;70;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>580</x><y>330</y><w>70</w><h>290</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;50;10;50;270</additional_attributes></element><element><id>Relation</id><coordinates><x>580</x><y>310</y><w>160</w><h>190</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;140;10;140;170</additional_attributes></element><element><id>Relation</id><coordinates><x>580</x><y>290</y><w>210</w><h>80</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;190;10;190;60</additional_attributes></element><element><id>Relation</id><coordinates><x>560</x><y>220</y><w>90</w><h>60</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;40;10;10;70;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>400</x><y>50</y><w>170</w><h>130</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
+CrudRepository&lt;T, ID&gt;
+--
++ save() : void
++ findById() : Optional&lt;T&gt;
++ findAll() : Iterable&lt;T&gt;
+...
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>470</x><y>170</y><w>30</w><h>110</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;90</additional_attributes></element><element><id>UMLClass</id><coordinates><x>660</x><y>60</y><w>230</w><h>110</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
+JpaSpecificationExecutor&lt;T&gt;
+--
++ findAll(spec : Specification) : List&lt;T&gt;
+...
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>880</x><y>110</y><w>140</w><h>260</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;120;10;120;240</additional_attributes></element></diagram>

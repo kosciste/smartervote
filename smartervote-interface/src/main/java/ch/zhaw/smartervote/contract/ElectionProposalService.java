@@ -60,11 +60,11 @@ public interface ElectionProposalService {
      * PoliticianService#filterPoliticians(int, int, PoliticianFilterTO, UUID)}
      *
      * @param electionId the UUID of the election.
-     * @param questions a map with the weighted subjects, and the answered questions.
+     * @param selection a map with the weighted subjects, and the answered questions.
      * @return the UUID of the election proposal.
      * @throws DomainException if the election id does not exist.
      */
-    UUID calculateElectionProposal(UUID electionId, Map<SubjectTO, List<QuestionTO>> questions)
+    UUID calculateElectionProposal(UUID electionId, Map<SubjectTO, List<QuestionTO>> selection)
             throws DomainException;
 
 }
