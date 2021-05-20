@@ -12,11 +12,16 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-class ElectionProposalAlgorithmImplTest {
+/**
+ * This is the unit test for the election proposal algorithm.
+ *
+ * @author Karin Birle
+ */
+class ElectionProposalAlgorithmTest {
 
     ElectionProposalAlgorithm electionProposalAlgorithm;
     List<QuestionAnswer> politicianAnswers;
@@ -76,20 +81,21 @@ class ElectionProposalAlgorithmImplTest {
 
     }
 
-    @AfterEach
     /**
      * Clearing the Lists for a fresh start
      */
+    @AfterEach
     void tearDown() {
         politicianAnswers.clear();
         questionList_1.clear();
     }
 
 
-    @Test
     /**
-     * Calculates matching score based on the answers of a politician and the answers of the user. In case half of the questions are answered identically.
+     * Calculates matching score based on the answers of a politician and the answers of the user.
+     * In case half of the questions are answered identically.
      */
+    @Test
     void calculateResult50() {
         weight = SubjectWeight.NORMAL;
         questionSubjectTO_1 = new SubjectTO(questionSubject_1.getId(), questionSubject_1.getName(),weight);
@@ -104,10 +110,11 @@ class ElectionProposalAlgorithmImplTest {
         assertEquals(expectedValue, electionProposalAlgorithm.calculateResult(politicianAnswers, userAnsweredQuestions));
     }
 
-    @Test
     /**
-     * Calculates matching score based on the answers of a politician and the answers of the user. In case all questions are answered identically.
+     * Calculates matching score based on the answers of a politician and the answers of the user.
+     * In case all questions are answered identically.
      */
+    @Test
     void calculateResult100() {
         weight = SubjectWeight.NORMAL;
         questionSubjectTO_1 = new SubjectTO(questionSubject_1.getId(), questionSubject_1.getName(),weight);
@@ -121,10 +128,11 @@ class ElectionProposalAlgorithmImplTest {
         assertEquals(expectedValue, electionProposalAlgorithm.calculateResult(politicianAnswers, userAnsweredQuestions));
     }
 
-    @Test
+
     /**
      * checks if the Subject weight has the correct impact and multitopics ar working.
      */
+    @Test
     void calculateResultmultiTopic() {
         weight = SubjectWeight.NORMAL;
         questionSubjectTO_1 = new SubjectTO(questionSubject_1.getId(), questionSubject_1.getName(),weight);
@@ -158,10 +166,11 @@ class ElectionProposalAlgorithmImplTest {
 
 
     }
-    @Test
+
     /**
      * checks if the Subject weight NOT_INRESTED has the correct impact.
      */
+    @Test
     void calculateResultNot_Intrested() {
         weight = SubjectWeight.NORMAL;
         questionSubjectTO_1 = new SubjectTO(questionSubject_1.getId(), questionSubject_1.getName(),weight);
@@ -186,10 +195,11 @@ class ElectionProposalAlgorithmImplTest {
         assertEquals(expectedValue, electionProposalAlgorithm.calculateResult(politicianAnswers, userAnsweredQuestions));
     }
 
-    @Test
+
     /**
      * checks if an not intrested (2) Question answer has no impact on the calculated value.
      */
+    @Test
     void calculateResultNot_Answered() {
         weight = SubjectWeight.NORMAL;
         questionSubjectTO_1 = new SubjectTO(questionSubject_1.getId(), questionSubject_1.getName(),weight);
@@ -213,10 +223,11 @@ class ElectionProposalAlgorithmImplTest {
         assertEquals(expectedValue, electionProposalAlgorithm.calculateResult(politicianAnswers, userAnsweredQuestions));
     }
 
-    @Test
+
     /**
      * checks if an not answered Questionby the politician is calculated as an max error value.
      */
+    @Test
     void calculateResultNoPoliticianAnswer() {
         weight = SubjectWeight.NORMAL;
         questionSubjectTO_1 = new SubjectTO(questionSubject_1.getId(), questionSubject_1.getName(),weight);
