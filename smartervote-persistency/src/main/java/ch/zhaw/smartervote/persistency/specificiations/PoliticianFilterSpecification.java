@@ -78,8 +78,8 @@ public class PoliticianFilterSpecification implements Specification<Politician> 
         int yearTo = LocalDate.now().getYear() - ageFrom;
         int yearFrom = LocalDate.now().getYear() - ageTo;
 
-        predicates.add(criteriaBuilder.and(criteriaBuilder.greaterThan(root.get("birthyear"), yearFrom)));
-        predicates.add(criteriaBuilder.and(criteriaBuilder.lessThan(root.get("birthyear"), yearTo)));
+        predicates.add(criteriaBuilder.and(criteriaBuilder.greaterThanOrEqualTo(root.get("birthyear"), yearFrom)));
+        predicates.add(criteriaBuilder.and(criteriaBuilder.lessThanOrEqualTo(root.get("birthyear"), yearTo)));
 
         if (gender != null && !EMPTY.equals(gender) && !defaultFilter.equals(gender)) {
             predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("gender"), gender)));

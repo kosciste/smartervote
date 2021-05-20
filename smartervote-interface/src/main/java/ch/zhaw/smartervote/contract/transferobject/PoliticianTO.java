@@ -46,21 +46,28 @@ public class PoliticianTO {
      */
     private final int match;
 
-    public PoliticianTO(UUID id, String imageUrl, String name, String party, int birthYear) {
+    /**
+     * The politicians gender
+     */
+    private final String gender;
+
+    public PoliticianTO(UUID id, String imageUrl, String name, String party, String gender, int birthYear) {
         this.id = id;
         this.imageUrl = imageUrl;
         this.name = name;
         this.party = party;
         this.birthYear = birthYear;
+        this.gender = gender;
         this.match = DEFAULT_MATCH;
     }
 
-    public PoliticianTO(UUID id, String imageUrl, String name, String party, int birthYear, int match) {
+    public PoliticianTO(UUID id, String imageUrl, String name, String party, String gender, int birthYear, int match) {
         this.id = id;
         this.imageUrl = imageUrl;
         this.name = name;
         this.party = party;
         this.birthYear = birthYear;
+        this.gender = gender;
         this.match = match;
     }
 
@@ -82,6 +89,10 @@ public class PoliticianTO {
 
     public int getBirthYear() {
         return birthYear;
+    }
+
+    public String getGender() {
+        return gender;
     }
 
     public int getMatch() {

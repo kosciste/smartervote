@@ -39,7 +39,7 @@ public class PoliticianProfileTO extends PoliticianTO {
                                String gender,
                                List<MediaEntryTO> mediaEntries,
                                List<PersonalQuestionTO> questions) {
-        super(id, imageUrl, name, party, birthYear);
+        super(id, imageUrl, name, party, gender, birthYear);
         this.profession = profession;
         this.gender = gender;
         this.mediaEntries = mediaEntries;
