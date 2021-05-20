@@ -21,6 +21,9 @@ public interface PoliticianService {
      */
     String DEFAULT_FILTER = "all";
 
+    /**
+     * Error messages that are used in the exception.
+     */
     String INVALID_PROPOSAL_RESULT = "Proposal result does not exist.";
 
     /**
@@ -44,13 +47,13 @@ public interface PoliticianService {
      * @param pageSize number of politician on the page
      * @param filter to filter the returned list of politicians
      * @param resultId UUID of the election proposal result
-     * @return filtered list of politicians.
+     * @return filtered list of politicians
      * @throws DomainException if the result id does not exist
      */
     PoliticianList filterPoliticians(int page, int pageSize, PoliticianFilterTO filter, UUID resultId) throws DomainException;
 
     /**
-     * Returns all available parties.
+     * Returns all available party names.
      *
      * @return list of party names
      */
@@ -62,7 +65,7 @@ public interface PoliticianService {
      * @param politicianId the UUID of the politician.
      * @param ipAddress ip address of the user so that the personal question can be marked as already upvoted if the
      * user did so
-     * @return an optional containing the politicians profile.
+     * @return an optional containing the politicians profile
      */
     Optional<PoliticianProfileTO> getPoliticianData(UUID politicianId, String ipAddress);
 

@@ -28,7 +28,6 @@ public interface PersonalQuestionService {
      *
      * @param politicianId the id of the politician
      * @param questionText the question text to be added to the politicians profile
-     * @return true if the question was added, false otherwise
      * @throws DomainException in case of any issues e.g. politician id does not exist
      */
     void addQuestion(UUID politicianId, String questionText) throws DomainException;

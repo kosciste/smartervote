@@ -36,43 +36,36 @@ public class PoliticianServiceImpl implements PoliticianService {
     /**
      * The politician repository.
      */
-    PoliticianRepository politicianRepository;
+    private final PoliticianRepository politicianRepository;
 
     /**
      * The proposal result repository.
      */
-    ProposalResultRepository proposalResultRepository;
-
-    /**
-     * The proposal result score repository.
-     */
-    ProposalResultScoreRepository proposalResultScoreRepository;
+    private final ProposalResultRepository proposalResultRepository;
 
     /**
      * The party repository.
      */
-    PartyRepository partyRepository;
+    private final PartyRepository partyRepository;
 
     /**
      * Personal question repository.
      */
-    PersonalQuestionRepository personalQuestionRepository;
+    private final PersonalQuestionRepository personalQuestionRepository;
 
     /**
      * Media coverage repository.
      */
-    MediaCoverageRepository mediaCoverageRepository;
+    private final MediaCoverageRepository mediaCoverageRepository;
 
     @Autowired
     public PoliticianServiceImpl(PoliticianRepository politicianRepository,
                                  ProposalResultRepository proposalResultRepository,
                                  PersonalQuestionRepository personalQuestionRepository,
                                  MediaCoverageRepository mediaCoverageRepository,
-                                 ProposalResultScoreRepository proposalResultScoreRepository,
                                  PartyRepository partyRepository) {
         this.politicianRepository = politicianRepository;
         this.proposalResultRepository = proposalResultRepository;
-        this.proposalResultScoreRepository = proposalResultScoreRepository;
         this.personalQuestionRepository = personalQuestionRepository;
         this.mediaCoverageRepository = mediaCoverageRepository;
         this.partyRepository = partyRepository;

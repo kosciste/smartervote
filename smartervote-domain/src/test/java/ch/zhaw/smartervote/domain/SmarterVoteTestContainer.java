@@ -7,6 +7,7 @@ import org.testcontainers.utility.DockerImageName;
  * Singleton that is used by all tests to create the test container. Will only create one test container
  * for all integration tests. Shutdown of the test container is handled by the JVM.
  *
+ * @author Raphael Krebs
  * @author Leo Rudin
  */
 public class SmarterVoteTestContainer {

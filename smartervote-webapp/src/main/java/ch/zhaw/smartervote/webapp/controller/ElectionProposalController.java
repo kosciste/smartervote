@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * This class represents the controller for managing the interaction with the ElectionProposalService.
+ * This controller manages all requests related to the election proposal.
  *
  * @author Stefan Koscica
  */
@@ -53,7 +53,7 @@ public class ElectionProposalController {
     private final ElectionProposalService electionProposalService;
 
     /**
-     * Message utility that allows setting error messages.
+     * Message utility that allows adding error messages after redirect.
      */
     private final MessageUtil messageUtil;
 

@@ -4,7 +4,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 /**
- * This class represents a question of the questionnaire. It also contains the answer of the user.
+ * This class represents a question of the question catalogue. It also contains the answer of the user.
  *
  * @author Raphael Krebs
  */

@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * The politician list extends an ArrayList containing PoliticianTO objects. It also contains the total size of the
- * Politicians in the database, so the UI can handle pagination properly.
+ * The politician list extends an ArrayList containing PoliticianTO objects. It also contains the total amount of pages
+ * as well as the current page so the UI can render the pagination accordingly.
  *
  * @author Raphael Krebs
  */
