@@ -25,6 +25,7 @@ public class MapPolitician {
                 entity.getPicture(),
                 entity.getName(),
                 entity.getParty().getName(),
+                entity.getGender(),
                 entity.getBirthyear());
     }
 
@@ -40,6 +41,7 @@ public class MapPolitician {
                 entity.getPicture(),
                 entity.getName(),
                 entity.getParty().getName(),
+                entity.getGender(),
                 entity.getBirthyear(),
                 match);
 
