@@ -31,6 +31,8 @@ class ElectionProposalAlgorithmImplTest {
     List<QuestionTO> questionList_2;
     SubjectTO questionSubjectTO_2;
     SubjectWeight weight2;
+
+
     @BeforeEach
     void setUp() {
         electionProposalAlgorithm = new ElectionProposalAlgorithm();
@@ -47,6 +49,12 @@ class ElectionProposalAlgorithmImplTest {
         userAnsweredQuestions = new HashMap<>();
     }
 
+    /**
+     * Creating the questions list entry's
+     * @param count number of (new) entrys
+     * @param questionSubject the subject the new questions belong to
+     * @return the new user answer/question list
+     */
     private List<QuestionTO> createQuestions(int count, QuestionSubject questionSubject ) {
         int n =politicianAnswers.size();
         List<QuestionTO> questionList = new ArrayList<>();
@@ -69,12 +77,19 @@ class ElectionProposalAlgorithmImplTest {
     }
 
     @AfterEach
+    /**
+     * Clearing the Lists for a fresh start
+     */
     void tearDown() {
         politicianAnswers.clear();
         questionList_1.clear();
     }
 
+
     @Test
+    /**
+     * Calculates matching score based on the answers of a politician and the answers of the user. In case half of the questions are answered identically.
+     */
     void calculateResult50() {
         weight = SubjectWeight.NORMAL;
         questionSubjectTO_1 = new SubjectTO(questionSubject_1.getId(), questionSubject_1.getName(),weight);
@@ -90,6 +105,9 @@ class ElectionProposalAlgorithmImplTest {
     }
 
     @Test
+    /**
+     * Calculates matching score based on the answers of a politician and the answers of the user. In case all questions are answered identically.
+     */
     void calculateResult100() {
         weight = SubjectWeight.NORMAL;
         questionSubjectTO_1 = new SubjectTO(questionSubject_1.getId(), questionSubject_1.getName(),weight);
@@ -104,6 +122,9 @@ class ElectionProposalAlgorithmImplTest {
     }
 
     @Test
+    /**
+     * checks if the Subject weight has the correct impact and multitopics ar working.
+     */
     void calculateResultmultiTopic() {
         weight = SubjectWeight.NORMAL;
         questionSubjectTO_1 = new SubjectTO(questionSubject_1.getId(), questionSubject_1.getName(),weight);
@@ -138,11 +159,15 @@ class ElectionProposalAlgorithmImplTest {
 
     }
     @Test
+    /**
+     * checks if the Subject weight NOT_INRESTED has the correct impact.
+     */
     void calculateResultNot_Intrested() {
         weight = SubjectWeight.NORMAL;
         questionSubjectTO_1 = new SubjectTO(questionSubject_1.getId(), questionSubject_1.getName(),weight);
         questionList_1=createQuestions(2, questionSubject_1);
         userAnsweredQuestions.put(questionSubjectTO_1, questionList_1);
+
         weight2 = SubjectWeight.NOT_INTERESTED;
         questionSubjectTO_2 = new SubjectTO(questionSubject_2.getId(), questionSubject_2.getName(),weight2);
         questionList_2=createQuestions(1, questionSubject_2);
@@ -162,6 +187,9 @@ class ElectionProposalAlgorithmImplTest {
     }
 
     @Test
+    /**
+     * checks if an not intrested (2) Question answer has no impact on the calculated value.
+     */
     void calculateResultNot_Answered() {
         weight = SubjectWeight.NORMAL;
         questionSubjectTO_1 = new SubjectTO(questionSubject_1.getId(), questionSubject_1.getName(),weight);
@@ -180,8 +208,26 @@ class ElectionProposalAlgorithmImplTest {
         questionList_1.get(1).setAnswer(4);
 
         politicianAnswers.get(2).setAnswer(4);
-        questionList_2.get(0).setAnswer(2);
+        questionList_2.get(0).setAnswer(2);     //not intrested Question
 
+        assertEquals(expectedValue, electionProposalAlgorithm.calculateResult(politicianAnswers, userAnsweredQuestions));
+    }
+
+    @Test
+    /**
+     * checks if an not answered Questionby the politician is calculated as an max error value.
+     */
+    void calculateResultNoPoliticianAnswer() {
+        weight = SubjectWeight.NORMAL;
+        questionSubjectTO_1 = new SubjectTO(questionSubject_1.getId(), questionSubject_1.getName(),weight);
+        questionList_1=createQuestions(2,questionSubject_1);
+        userAnsweredQuestions.put(questionSubjectTO_1, questionList_1);
+
+        int  expectedValue =50;
+       // politicianAnswer is missing -> counting as max error
+        questionList_1.get(0).setAnswer(3);
+        politicianAnswers.get(1).setAnswer(3);
+        questionList_1.get(1).setAnswer(3);
         assertEquals(expectedValue, electionProposalAlgorithm.calculateResult(politicianAnswers, userAnsweredQuestions));
     }
 
