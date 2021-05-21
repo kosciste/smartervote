@@ -3,7 +3,7 @@ package ch.zhaw.smartervote.persistency.entities;
 import javax.persistence.*;
 
 /**
- * Represents the PersonalProposalScore table.
+ * Represents the ProposalResultScore table.
  *
  * @author Leo Rudin
  */

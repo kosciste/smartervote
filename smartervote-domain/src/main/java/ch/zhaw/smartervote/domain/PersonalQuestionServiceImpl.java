@@ -48,7 +48,6 @@ public class PersonalQuestionServiceImpl implements PersonalQuestionService {
         this.personalQuestionUpvoteRepository = personalQuestionUpvoteRepository;
     }
 
-
     /**
      * {@inheritDoc}
      */

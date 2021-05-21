@@ -20,36 +20,36 @@ public interface ElectionProposalService {
     /**
      * Error messages for the implementations to use.
      */
-    public String INVALID_INPUT = "Invalid input.";
-    public String ELECTION_NOT_FOUND = "Election not found.";
-    public String SUBJECT_NOT_FOUND = "Subject not found.";
-    public String QUESTION_SUBJECT_NOT_FOUND = "Question subject not found.";
-    public String QUESTION_SUBJECT_ELECTION_MISMATCH = "Question subject does not match the provided election id.";
+    String INVALID_INPUT = "Invalid input.";
+    String ELECTION_NOT_FOUND = "Election not found.";
+    String SUBJECT_NOT_FOUND = "Subject not found.";
+    String QUESTION_SUBJECT_NOT_FOUND = "Question subject not found.";
+    String QUESTION_SUBJECT_ELECTION_MISMATCH = "Question subject does not match the provided election id.";
 
     /**
      * Returns all available elections, for which questions exist.
      *
-     * @return all available elections.
+     * @return all available elections
      */
     List<ElectionTO> getAvailableElections();
 
     /**
      * Returns all question subjects for a given election.
      *
-     * @param electionId the UUID of the election.
-     * @return All question subjects for the given election.
-     * @throws DomainException if the election id does not exist.
+     * @param electionId the UUID of the election
+     * @return all question subjects for the given election
+     * @throws DomainException if the election id does not exist
      */
     List<SubjectTO> getQuestionSubjects(UUID electionId) throws DomainException;
 
     /**
      * Returns the question catalogue for a given election, where the topic of the selection does not equal 0.
      *
-     * @param electionId the UUID of the election.
+     * @param electionId the UUID of the election
      * @param selection a map containing the UUID of the topics, and the weight of these topics. Topics with weight zero
-     * will be ignored.
-     * @return A map with all subject that where not wighted with 0, and their corresponding questions.
-     * @throws DomainException if the election id does not exist.
+     * will be ignored
+     * @return a map with all subject that where not wighted with 0, and their corresponding questions
+     * @throws DomainException if the election id does not exist
      */
     Map<SubjectTO, List<QuestionTO>> getQuestionCatalogue(UUID electionId, List<SubjectTO> selection)
             throws DomainException;
@@ -57,12 +57,12 @@ public interface ElectionProposalService {
     /**
      * Returns the UUID of the calculated election proposal for the answers of the user. The UUID can be used to get the
      * politician match by passing it to {@link PoliticianService#getPoliticianData(UUID, String)} or {@link
-     * PoliticianService#filterPoliticians(int, int, PoliticianFilterTO, UUID)}
+     * PoliticianService#filterPoliticians(int, int, PoliticianFilterTO, UUID)}.
      *
-     * @param electionId the UUID of the election.
-     * @param selection a map with the weighted subjects, and the answered questions.
-     * @return the UUID of the election proposal.
-     * @throws DomainException if the election id does not exist.
+     * @param electionId the UUID of the election
+     * @param selection a map with the weighted subjects, and the answered questions
+     * @return the UUID of the election proposal
+     * @throws DomainException if the election id does not exist
      */
     UUID calculateElectionProposal(UUID electionId, Map<SubjectTO, List<QuestionTO>> selection)
             throws DomainException;

@@ -23,6 +23,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Tests the {@link PersonalQuestionServiceImpl}.
+ *
+ * @author Stefan Teodoropol
+ */
 // declare this test as a jpa test which loads the spring context with
 // just relevant configuration to work with spring jpa
 @DataJpaTest
@@ -287,14 +292,13 @@ public class PersonalQuestionServiceIntegrationTest extends AbstractIntegrationT
             this.questionId = questionId;
             this.ip = ip;
         }
-    
+
         @Override
         public void run() {
-            
+
             try {
                 pqs.upvoteQuestion(questionId, ip);
             } catch (DomainException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
                 throw new RuntimeException(e);
             }

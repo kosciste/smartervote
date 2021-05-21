@@ -31,7 +31,7 @@ public class PoliticianListController {
     private final PoliticianService politicianService;
 
     /**
-     * Default size.
+     * Default size of a single page.
      */
     private final static int PAGE_SIZE = 10;
 
