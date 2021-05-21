@@ -3,7 +3,7 @@ package ch.zhaw.smartervote.webapp.dto;
 import java.util.UUID;
 
 /**
- * Class that stores the entries for the questions from the view.
+ * Class that stores the question selection in the question catalogue.
  *
  * @author Stefan Koscica
  */

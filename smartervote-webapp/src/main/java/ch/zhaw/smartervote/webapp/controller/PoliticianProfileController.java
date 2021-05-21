@@ -4,8 +4,8 @@ import ch.zhaw.smartervote.contract.DomainException;
 import ch.zhaw.smartervote.contract.PersonalQuestionService;
 import ch.zhaw.smartervote.contract.PoliticianService;
 import ch.zhaw.smartervote.contract.transferobject.PoliticianProfileTO;
-import ch.zhaw.smartervote.webapp.util.MessageUtil;
 import ch.zhaw.smartervote.webapp.dto.PersonalQuestionDTO;
+import ch.zhaw.smartervote.webapp.util.MessageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -68,11 +68,11 @@ public class PoliticianProfileController {
     }
 
     /**
-     * Displays the result of politicians.
+     * Displays the politician profile.
      *
-     * @param id id of the result to display
+     * @param id id of the politician
      * @param model model used to display data on the view
-     * @return result page
+     * @return politician page
      */
     @GetMapping("/politician/{id}")
     public String showPolitician(@PathVariable("id") String id, Model model, HttpServletRequest request) {

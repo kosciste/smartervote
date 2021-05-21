@@ -1,7 +1,6 @@
 package ch.zhaw.smartervote.webapp.dto;
 
 import ch.zhaw.smartervote.contract.SubjectWeight;
-import ch.zhaw.smartervote.webapp.dto.QuestionDTO;
 
 import java.util.List;
 import java.util.UUID;

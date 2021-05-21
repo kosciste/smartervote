@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.UUID;
 
 /**
- * Super class that contains attributes that are added on all tables.
+ * Super class that contains attributes that are shared on all tables.
  *
  * @author Stefan Teodoropol
  */
